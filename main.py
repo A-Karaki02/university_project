@@ -1,10 +1,8 @@
 import test
-import turtle
 
-
-def fun():
-    print("test")
-
+# import turtle
 
 print(test.test)
-timmy = turtle.Turtle()
+# timmy = turtle.Turtle()
+# def fun():
+#     print("test")
