@@ -1,8 +1,9 @@
 import test
 import turtle
 
-# def fun():
-#     print("test")
+
+def fun():
+    print("test")
 
 
 print(test.test)
