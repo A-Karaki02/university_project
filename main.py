@@ -1,6 +1,5 @@
 import test
-
-# import turtle
+import turtle
 
 print(test.test)
-# timmy = turtle.Turtle()
+timmy = turtle.Turtle()
