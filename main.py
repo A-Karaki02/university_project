@@ -1,1 +1,5 @@
-print("test")
+import test
+import turtle
+
+print(test.test)
+timmy = turtle.Turtle()
