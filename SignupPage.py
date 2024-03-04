@@ -1,0 +1,99 @@
+from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QLineEdit
+from PySide6.QtGui import QColor
+from PySide6.QtCore import Qt
+import LoginPage
+
+class signup_page(QWidget):
+    def __init__(self1):
+        super().__init__()
+
+        self1.initUI()
+
+    def initUI(self1):
+        self1.setWindowTitle("GRADUATION PROJECT")
+        self1.setGeometry(0, 0, 1200, 600)
+
+        # the label for the Title
+        self1.label_build_smart = QLabel("BuildSmart", self1)
+        self1.label_build_smart.setGeometry(0, 50, 1200, 100)
+        self1.label_build_smart.setStyleSheet(
+            "font-size: 32px;color: rgb(0, 0, 0); background-color: rgb(140, 140, 140);font-style: italic;font-weight: bold;"
+        )  # Gray text on gray background
+        self1.label_build_smart.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
+
+        # the textbox for First Name
+        self1.first_name_textbox = QLineEdit(self1)
+        self1.first_name_textbox.setGeometry(450, 250, 125, 30)
+        self1.first_name_textbox.setPlaceholderText("First Name")
+        self1.first_name_textbox.setStyleSheet(
+            "background-color: rgb(255, 255, 255);"
+        )  # White
+
+        # the textbox for last Name
+        self1.last_name_textbox = QLineEdit(self1)
+        self1.last_name_textbox.setGeometry(625, 250, 125, 30)
+        self1.last_name_textbox.setPlaceholderText("Last Name")
+        self1.last_name_textbox.setStyleSheet(
+            "background-color: rgb(255, 255, 255);"
+        )  # White
+
+        # the textbox for Email
+        self1.email_textbox = QLineEdit(self1)
+        self1.email_textbox.setGeometry(450, 300, 300, 30)
+        self1.email_textbox.setPlaceholderText("Email")
+        self1.email_textbox.setStyleSheet(
+            "background-color: rgb(255, 255, 255);"
+        )  # White
+
+        # the textbox for Phone Number
+        self1.phone_number_textbox = QLineEdit(self1)
+        self1.phone_number_textbox.setGeometry(450, 350, 300, 30)
+        self1.phone_number_textbox.setPlaceholderText("Phone Number")
+        self1.phone_number_textbox.setStyleSheet(
+            "background-color: rgb(255, 255, 255);"
+        )  # White
+
+        # the textbox for Password
+        self1.password_textbox = QLineEdit(self1)
+        self1.password_textbox.setGeometry(450, 400, 300, 30)
+        self1.password_textbox.setPlaceholderText("Password")
+        self1.password_textbox.setStyleSheet(
+            "background-color: rgb(255, 255, 255);"
+        )  # White
+
+        # the textbox for Confirm Password
+        self1.confirm_password_textbox = QLineEdit(self1)
+        self1.confirm_password_textbox.setGeometry(450, 450, 300, 30)
+        self1.confirm_password_textbox.setPlaceholderText("Confirm Password")
+        self1.confirm_password_textbox.setStyleSheet(
+            "background-color: rgb(255, 255, 255);"
+        )  # White
+
+        # the button for Sign Up
+        self1.signup_button = QPushButton("Sign Up", self1)
+        self1.signup_button.setGeometry(450, 500, 300, 30)
+        self1.signup_button.setStyleSheet(
+            "background-color: rgb(255, 255, 255);"
+        )  # White
+        self1.signup_button.clicked.connect(self1.openLoginPage)
+
+        # the label for the contact
+        self1.contact_label = QLabel(
+            "Contact Us\nEmail: jom.proj@gmail.com\nTelephone: 0798727686\nFax: 06111111",
+            self1,
+        )
+        self1.contact_label.setGeometry(50, 500, 200, 100)
+        self1.contact_label.setStyleSheet("color: rgb(140, 140, 140);")  # gray
+
+        # Set background color using RGB for the window
+        self1.setStyleSheet(
+            "background-color: rgb(0, 0, 0);font-weight: bold;"
+        )  # Black
+
+        self1.show()
+
+    def openLoginPage(self):
+        self.loginPage = LoginPage.login_page()
+        self.loginPage.show()
+        self.close()
+
