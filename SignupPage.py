@@ -2,6 +2,10 @@ from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QLineE
 from PySide6.QtGui import QColor
 from PySide6.QtCore import Qt
 import LoginPage
+import hashlib
+
+USER_FILE = 'users.txt'
+
 
 class signup_page(QWidget):
     def __init__(self1):
@@ -69,6 +73,14 @@ class signup_page(QWidget):
             "background-color: rgb(255, 255, 255);"
         )  # White
 
+        def confirm_password(password):
+            Confirm = input("Confirm the password: ")
+            if Confirm == password:
+                return True
+            else:
+                print("Confirm the password: ")
+                confirm_password(password)
+
         # the button for Sign Up
         self1.signup_button = QPushButton("Sign Up", self1)
         self1.signup_button.setGeometry(450, 500, 300, 30)
@@ -76,6 +88,31 @@ class signup_page(QWidget):
             "background-color: rgb(255, 255, 255);"
         )  # White
         self1.signup_button.clicked.connect(self1.openLoginPage)
+
+        def hash_password(password):
+            """Hash the password ."""
+            return hashlib.sha3_512(password.encode()).hexdigest()
+
+        def save_user(F_Name, L_Name, Email, phone_number, username, password):
+            """Save a new user with a hashed password."""
+            with open(USER_FILE, 'a') as file:
+                file.write(f"{username}:{hash_password(password)}:{F_Name}:{L_Name}:{Email}:{phone_number}\n")
+
+        def sign_up():
+            """Sign up a new user."""
+            F_Name = input("Enter your First name: ")
+            L_Name = input("Enter your your Last name: ")
+            Email = input("Enter your E-mail: ")
+            phone_number = input("Enter your Phone Number: ")
+            username = input("Enter a new username: ")
+            if user_exists(username):
+                print("Username already exists. Try a different one.")
+                return
+            password = input("Enter a new password: ")
+            confirm_password(password)
+
+            save_user(F_Name, L_Name, Email, phone_number, username, password)
+            print("User created successfully.")
 
         # the label for the contact
         self1.contact_label = QLabel(
@@ -96,4 +133,3 @@ class signup_page(QWidget):
         self.loginPage = LoginPage.login_page()
         self.loginPage.show()
         self.close()
-

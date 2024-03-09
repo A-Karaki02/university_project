@@ -1,8 +1,10 @@
-
 from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QLineEdit
 from PySide6.QtGui import QColor
 from PySide6.QtCore import Qt
 from SignupPage import signup_page
+import os
+
+USER_FILE = 'users.txt'
 
 
 class login_page(QWidget):
@@ -38,6 +40,36 @@ class login_page(QWidget):
             "background-color: rgb(255, 255, 255);"
         )  # White
 
+        def user_exists(username):
+            """Check if a user exists."""
+            if not os.path.exists(USER_FILE):
+                return False
+            with open(USER_FILE, 'r') as file:
+                for line in file:
+                    if line.split(':')[0] == username:
+                        return True
+            return False
+
+        def verify_login(Email, password):
+            """Verify a user's login credentials."""
+            if not os.path.exists(USER_FILE):
+                return False
+            with open(USER_FILE, 'r') as file:
+                for line in file:
+                    stored_Email, stored_password = line.strip().split(':')
+                    if stored_Email == Email and stored_password == hash_password(password):
+                        return True
+            return False
+
+        def log_in():
+            """Log in an existing user."""
+            Email = input("Enter your username: ")
+            password = input("Enter your password: ")
+            if verify_login(Email, password):
+                print("Login successful!")
+            else:
+                print("Invalid username or password.")
+
         # the button for Sign Up
         self.signup_button = QPushButton("Sign Up", self)
         self.signup_button.setGeometry(525, 400, 150, 30)
@@ -71,4 +103,3 @@ class login_page(QWidget):
         self.signup_page = signup_page()
         self.signup_page.show()
         self.close()
-        
