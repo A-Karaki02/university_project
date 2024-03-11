@@ -1,10 +1,13 @@
-from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QLineEdit
-from PySide6.QtGui import QColor
-from PySide6.QtCore import Qt
-import LoginPage
 import hashlib
 
-USER_FILE = 'users.txt'
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QColor
+from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QPushButton,
+                               QWidget)
+
+import LoginPage
+
+USER_FILE = "users.txt"
 
 
 class signup_page(QWidget):
@@ -95,8 +98,10 @@ class signup_page(QWidget):
 
         def save_user(F_Name, L_Name, Email, phone_number, username, password):
             """Save a new user with a hashed password."""
-            with open(USER_FILE, 'a') as file:
-                file.write(f"{username}:{hash_password(password)}:{F_Name}:{L_Name}:{Email}:{phone_number}\n")
+            with open(USER_FILE, "a") as file:
+                file.write(
+                    f"{username}:{hash_password(password)}:{F_Name}:{L_Name}:{Email}:{phone_number}\n"
+                )
 
         def sign_up():
             """Sign up a new user."""
@@ -133,3 +138,6 @@ class signup_page(QWidget):
         self.loginPage = LoginPage.login_page()
         self.loginPage.show()
         self.close()
+
+
+# checking with isort

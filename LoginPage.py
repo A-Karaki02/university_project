@@ -1,10 +1,13 @@
-from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QLineEdit
-from PySide6.QtGui import QColor
-from PySide6.QtCore import Qt
-from SignupPage import signup_page
 import os
 
-USER_FILE = 'users.txt'
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QColor
+from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QPushButton,
+                               QWidget)
+
+from SignupPage import signup_page
+
+USER_FILE = "users.txt"
 
 
 class login_page(QWidget):
@@ -44,9 +47,9 @@ class login_page(QWidget):
             """Check if a user exists."""
             if not os.path.exists(USER_FILE):
                 return False
-            with open(USER_FILE, 'r') as file:
+            with open(USER_FILE, "r") as file:
                 for line in file:
-                    if line.split(':')[0] == username:
+                    if line.split(":")[0] == username:
                         return True
             return False
 
@@ -54,10 +57,12 @@ class login_page(QWidget):
             """Verify a user's login credentials."""
             if not os.path.exists(USER_FILE):
                 return False
-            with open(USER_FILE, 'r') as file:
+            with open(USER_FILE, "r") as file:
                 for line in file:
-                    stored_Email, stored_password = line.strip().split(':')
-                    if stored_Email == Email and stored_password == hash_password(password):
+                    stored_Email, stored_password = line.strip().split(":")
+                    if stored_Email == Email and stored_password == hash_password(
+                        password
+                    ):
                         return True
             return False
 
@@ -103,3 +108,6 @@ class login_page(QWidget):
         self.signup_page = signup_page()
         self.signup_page.show()
         self.close()
+
+
+# checking with isort
