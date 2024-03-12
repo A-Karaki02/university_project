@@ -5,7 +5,7 @@ from PySide6.QtGui import QColor
 from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QPushButton,
                                QWidget)
 
-from SignupPage import signup_page
+import SignupPage
 
 USER_FILE = "users.txt"
 
@@ -60,7 +60,7 @@ class login_page(QWidget):
             with open(USER_FILE, "r") as file:
                 for line in file:
                     stored_Email, stored_password = line.strip().split(":")
-                    if stored_Email == Email and stored_password == hash_password(
+                    if stored_Email == Email and stored_password == SignupPage.hash_password(
                         password
                     ):
                         return True
@@ -105,7 +105,7 @@ class login_page(QWidget):
         self.show()
 
     def openSignupPage(self):
-        self.signup_page = signup_page()
+        self.signup_page = SignupPage.signup_page()
         self.signup_page.show()
         self.close()
 
