@@ -44,9 +44,17 @@ class signup_page(QWidget):
             "background-color: rgb(255, 255, 255);"
         )  # White
 
+        # the textbox for User Name
+        self1.last_name_textbox = QLineEdit(self1)
+        self1.last_name_textbox.setGeometry(450, 300, 300, 30)
+        self1.last_name_textbox.setPlaceholderText("User Name")
+        self1.last_name_textbox.setStyleSheet(
+            "background-color: rgb(255, 255, 255);"
+        )  # White
+
         # the textbox for Email
         self1.email_textbox = QLineEdit(self1)
-        self1.email_textbox.setGeometry(450, 300, 300, 30)
+        self1.email_textbox.setGeometry(450, 350, 300, 30)
         self1.email_textbox.setPlaceholderText("Email")
         self1.email_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
@@ -54,7 +62,7 @@ class signup_page(QWidget):
 
         # the textbox for Phone Number
         self1.phone_number_textbox = QLineEdit(self1)
-        self1.phone_number_textbox.setGeometry(450, 350, 300, 30)
+        self1.phone_number_textbox.setGeometry(450, 400, 300, 30)
         self1.phone_number_textbox.setPlaceholderText("Phone Number")
         self1.phone_number_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
@@ -62,7 +70,7 @@ class signup_page(QWidget):
 
         # the textbox for Password
         self1.password_textbox = QLineEdit(self1)
-        self1.password_textbox.setGeometry(450, 400, 300, 30)
+        self1.password_textbox.setGeometry(450, 450, 300, 30)
         self1.password_textbox.setPlaceholderText("Password")
         self1.password_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
@@ -70,7 +78,7 @@ class signup_page(QWidget):
 
         # the textbox for Confirm Password
         self1.confirm_password_textbox = QLineEdit(self1)
-        self1.confirm_password_textbox.setGeometry(450, 450, 300, 30)
+        self1.confirm_password_textbox.setGeometry(450, 500, 300, 30)
         self1.confirm_password_textbox.setPlaceholderText("Confirm Password")
         self1.confirm_password_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
@@ -86,7 +94,7 @@ class signup_page(QWidget):
 
         # the button for Sign Up
         self1.signup_button = QPushButton("Sign Up", self1)
-        self1.signup_button.setGeometry(450, 500, 300, 30)
+        self1.signup_button.setGeometry(450, 550, 300, 30)
         self1.signup_button.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
         )  # White
