@@ -44,7 +44,7 @@ class login_page(QWidget):
         )  # White
 
         def user_exists(username):
-            """Check if a user exists."""
+            # """Check if a user exists."""
             if not os.path.exists(USER_FILE):
                 return False
             with open(USER_FILE, "r") as file:
@@ -54,7 +54,7 @@ class login_page(QWidget):
             return False
 
         def verify_login(Email, password):
-            """Verify a user's login credentials."""
+            # """Verify a user's login credentials."""
             if not os.path.exists(USER_FILE):
                 return False
             with open(USER_FILE, "r") as file:
@@ -67,7 +67,7 @@ class login_page(QWidget):
             return False
 
         def log_in():
-            """Log in an existing user."""
+            # """Log in an existing user."""
             Email = input("Enter your username: ")
             password = input("Enter your password: ")
             if verify_login(Email, password):

@@ -93,26 +93,29 @@ class signup_page(QWidget):
         self1.signup_button.clicked.connect(self1.openLoginPage)
 
         def hash_password(password):
-            """Hash the password ."""
+            # """Hash the password ."""
             return hashlib.sha3_512(password.encode()).hexdigest()
 
         def save_user(F_Name, L_Name, Email, phone_number, username, password):
-            """Save a new user with a hashed password."""
+            # """Save a new user with a hashed password."""
             with open(USER_FILE, "a") as file:
                 file.write(
                     f"{username}:{hash_password(password)}:{F_Name}:{L_Name}:{Email}:{phone_number}\n"
                 )
 
         def sign_up():
-            """Sign up a new user."""
+            # """Sign up a new user."""
             F_Name = input("Enter your First name: ")
             L_Name = input("Enter your your Last name: ")
             Email = input("Enter your E-mail: ")
             phone_number = input("Enter your Phone Number: ")
             username = input("Enter a new username: ")
-            if user_exists(username):
-                print("Username already exists. Try a different one.")
-                return
+
+            # The commented code below is commented because at the moment it doesnt work ********************************************************
+
+            # if user_exists(username):
+            #     print("Username already exists. Try a different one.")
+            #     return
             password = input("Enter a new password: ")
             confirm_password(password)
 
