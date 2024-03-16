@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWid
 
 import SignupPage
 
-USER_FILE = "users.txt"
+# USER_FILE = "users.txt"
 
 
 class login_page(QWidget):
@@ -102,7 +102,6 @@ class login_page(QWidget):
         #         print("Login successful!")
         #     else:
         #         print("Invalid username or password.")
-
 
     def openSignupPage(self):
         self.signup_page = SignupPage.signup_page()

@@ -9,3 +9,5 @@ repos:
     rev: v5.10.1
     hooks:
       - id: isort
+      args: ["--profile", "black", "--filter-files"]
+      
