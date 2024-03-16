@@ -7,6 +7,6 @@ import LoginPage
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     ex = LoginPage.login_page()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 
 # checking with isort
