@@ -86,12 +86,19 @@ class signup_page(QWidget):
 
         # the button for Sign Up
         self.signup_button = QPushButton("Sign Up", self)
-        self.signup_button.setGeometry(450, 550, 300, 30)
+        self.signup_button.setGeometry(625, 550, 125, 30)
         self.signup_button.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
         )  # White
         self.signup_button.clicked.connect(self.openLoginPage)
 
+        #back button
+        self.back_button = QPushButton("Back", self)
+        self.back_button.setGeometry(450, 550, 125, 30)
+        self.back_button.setStyleSheet(
+            "background-color: rgb(255, 255, 255);"
+        )  # White
+        self.back_button.clicked.connect(self.openLoginPage)
 
         # the label for the contact
         self.contact_label = QLabel(
