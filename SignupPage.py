@@ -1,6 +1,6 @@
 import hashlib
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QColor
 from PySide6.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget
 
@@ -17,8 +17,8 @@ class signup_page(QWidget):
 
     def initUI(self):
         self.setWindowTitle("GRADUATION PROJECT")
-        self.setGeometry(0, 0, 1200, 600)
-
+        self.setFixedSize(QSize(1200, 600))
+        
         # the label for the Title
         self.label_build_smart = QLabel("BuildSmart", self)
         self.label_build_smart.setGeometry(0, 50, 1200, 100)

@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushBut
 import LoginPage
 import SignupPage
 
-class MainPage(QWidget):
+class Basket(QWidget):
     def __init__(self):
         super().__init__()
 
@@ -29,5 +29,3 @@ class MainPage(QWidget):
         self.Login_page = LoginPage.login_page()
         self.Login_page.show()
         self.close()
-
-        
