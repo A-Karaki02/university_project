@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushBut
 import LoginPage
 import SignupPage
 
-class Basket(QWidget):
+class basket(QWidget):
     def __init__(self):
         super().__init__()
 

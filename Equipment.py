@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushBut
 import LoginPage
 import SignupPage
 
-class stores(QWidget):
+class Equipment_Prices(QWidget):
     def __init__(self):
         super().__init__()
 

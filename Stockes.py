@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushBut
 import LoginPage
 import SignupPage
 
-class Stockes(QWidget):
+class stockes(QWidget):
     def __init__(self):
         super().__init__()
 
