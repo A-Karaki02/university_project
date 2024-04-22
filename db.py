@@ -21,27 +21,3 @@ db = firebase.database()
 dat = {"name ": "john", "id ": "1"}
 db.push(dat)
 db.child("Data").set(dat)
-
-
-def login():
-    try:
-        login = auth.sign_in_with_email_and_password(email, password)
-        print("Successfully logged in!")
-        print(auth.get_account_info(login['idToken']))
-        email = auth.get_account_info(login['idToken'])['users'][0]['email']
-        print(email)
-    except:
-        print("Invalid email or password")
-    return
-
-#Signup Function
-
-    try:
-        user = auth.create_user_with_email_and_password(email, password)
-        ask=input("Do you want to login?[y/n]")
-        if ask=='y':
-            login()
-    except: 
-        print("Email already exists")
-    return
-
