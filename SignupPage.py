@@ -20,6 +20,7 @@ class signup_page(QWidget):
         self.__password = ""
         self.__phone_number = ""
         self.dtbs = db.firebase.database()
+        self.auth = db.firebase.auth()
         self.initUI()
 
     def initUI(self):
@@ -117,7 +118,7 @@ class signup_page(QWidget):
 
         self.show()
 
-    def handle_signup_click(self):
+    def handle_signup_info(self):
         # Get user input from text boxes
         self.__first_name = self.first_name_textbox.text()
         self.__last_name = self.last_name_textbox.text()
@@ -127,17 +128,17 @@ class signup_page(QWidget):
         self.__email = self.email_textbox.text()
 
     def push_data_to_database(self):
-        self.handle_signup_click()
-        user_info = {
-            "UserName": self.__username,
-            "FirstName": self.__first_name,
-            "LastName": self.__last_name,
-            "PhoneNumber": self.__phone_number,
-            "Email": self.__email,
-            "Password": self.__password,
-        }
-
-        self.dtbs.child("Users").push(user_info)
+        self.handle_signup_info()
+        # user_info = {
+        #     "userName": self.__username,
+        #     "firstName": self.__first_name,
+        #     "lastName": self.__last_name,
+        #     "phoneNumber": self.__phone_number,
+        #     "email": self.__email,
+        #     "password": self.__password,
+        # }
+        self.auth.create_user_with_email_and_password(self.__email, self.__password)
+        # self.dtbs.child("users").push(user_info)
 
     def openLoginPage(self):
         self.push_data_to_database()

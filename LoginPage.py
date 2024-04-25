@@ -1,18 +1,22 @@
 import os
 
+import pyrebase
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QColor
-from PySide6.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget
+from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QPushButton,
+                               QWidget)
 
+import db
 import Mainpage
 import SignupPage
-
-USER_FILE = "users.txt"
 
 
 class login_page(QWidget):
     def __init__(self):
         super().__init__()
+
+        self.email = ""
+        self.password = ""
 
         self.initUI()
 
@@ -21,25 +25,25 @@ class login_page(QWidget):
         self.setFixedSize(QSize(1200, 600))
 
         # the textbox for email
-        self.email_text_box = QLineEdit(self)
-        self.email_text_box.setGeometry(450, 250, 300, 30)
-        self.email_text_box.setPlaceholderText("Email")
-        self.email_text_box.setStyleSheet(
+        self.email_textbox = QLineEdit(self)
+        self.email_textbox.setGeometry(450, 250, 300, 30)
+        self.email_textbox.setPlaceholderText("Email")
+        self.email_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
         )  # White
 
         # the textbox for password
-        self.password_text_box = QLineEdit(self)
-        self.password_text_box.setGeometry(450, 300, 300, 30)
-        self.password_text_box.setPlaceholderText("Password")
-        self.password_text_box.setStyleSheet(
+        self.password_textbox = QLineEdit(self)
+        self.password_textbox.setGeometry(450, 300, 300, 30)
+        self.password_textbox.setPlaceholderText("Password")
+        self.password_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
         )  # White
 
         # the button for login
         self.login_button = QPushButton("Login", self)
         self.login_button.setGeometry(500, 350, 200, 30)
-        self.login_button.clicked.connect(self.openMainPage)
+        self.login_button.clicked.connect(self.handle_login_click)
         self.login_button.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
         )  # White
@@ -73,42 +77,17 @@ class login_page(QWidget):
 
         self.show()
 
-    def user_exists(username):
-        """Check if a user exists."""
-        if not os.path.exists(USER_FILE):
-            return False
-        with open(USER_FILE, "r") as file:
-            for line in file:
-                if line.split(":")[0] == username:
-                    return True
-        return False
-
-    # def verify_login(Email, password):
-    #     """Verify a user's login credentials."""
-    #     if not os.path.exists(USER_FILE):
-    #         return False
-    #     with open(USER_FILE, 'r') as file:
-    #         for line in file:
-    #             stored_Email, stored_password = line.strip().split(':')
-    #             if stored_Email == Email and stored_password == hash_password(password):
-    #                 return True
-    #     return False
-
-    # def log_in():
-    #     """Log in an existing user."""
-    #     Email = input("Enter your username: ")
-    #     password = input("Enter your password: ")
-    #     if verify_login(Email, password):
-    #         print("Login successful!")
-    #     else:
-    #         print("Invalid username or password.")
-
     def openSignupPage(self):
         self.signup_page = SignupPage.signup_page()
         self.signup_page.show()
         self.close()
 
-    def openMainPage(self):
-        self.main_page = Mainpage.MainPage()
-        self.main_page.show()
-        self.close()
+    def handle_login_click(self):
+        username_or_email = self.email_textbox.text()
+        password = self.password_textbox.text()
+        auth = db.firebase.auth()
+        user = auth.sign_in_with_email_and_password(username_or_email, password)
+        if user:
+            print(user)
+        else:
+            print("Error")
