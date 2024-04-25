@@ -1,3 +1,4 @@
+import hashlib
 import os
 
 import pyrebase
@@ -77,6 +78,9 @@ class login_page(QWidget):
 
         self.show()
 
+    def hash_password(self, password):
+        return hashlib.sha3_512(password.encode()).hexdigest()
+
     def openSignupPage(self):
         self.signup_page = SignupPage.signup_page()
         self.signup_page.show()
@@ -84,11 +88,11 @@ class login_page(QWidget):
 
     def handle_login_click(self):
         username_or_email = self.email_textbox.text()
-        password = self.password_textbox.text()
+        password = self.hash_password(self.password_textbox.text())
         auth = db.firebase.auth()
         user = auth.sign_in_with_email_and_password(username_or_email, password)
         if user:
-            token = user[token]
+            token = user["idToken"]
             self.main_page = Mainpage.MainPage()
             self.main_page.show()
             self.close()

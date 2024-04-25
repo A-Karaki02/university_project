@@ -1,6 +1,5 @@
 import pyrebase
 
-
 Config = {
     "apiKey": "AIzaSyDq18MssqgcK8FFiGABLBoxh439mEADbn4",
     "authDomain": "buildsmart-9c980.firebaseapp.com",
@@ -18,6 +17,3 @@ auth = firebase.auth()
 
 
 db = firebase.database()
-dat = {"name ": "john", "id ": "1"}
-db.push(dat)
-db.child("Data").set(dat)

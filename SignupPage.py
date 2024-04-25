@@ -103,7 +103,7 @@ class signup_page(QWidget):
         self.back_button = QPushButton("Back", self)
         self.back_button.setGeometry(450, 550, 125, 30)
         self.back_button.setStyleSheet("background-color: rgb(255, 255, 255);")  # White
-        self.back_button.clicked.connect(self.openLoginPage)
+        self.back_button.clicked.connect(self.backButtonFunciton)
 
         # the label for the contact
         self.contact_label = QLabel(
@@ -118,14 +118,18 @@ class signup_page(QWidget):
 
         self.show()
 
+    # a function to hash the password **********************************************************
+    def hash_password(self, password):
+        return hashlib.sha3_512(password.encode()).hexdigest()
+
     def handle_signup_info(self):
         # Get user input from text boxes
-        self.__first_name = self.first_name_textbox.text()
-        self.__last_name = self.last_name_textbox.text()
-        self.__password = self.password_textbox.text()
-        self.__phone_number = self.phone_number_textbox.text()
-        self.__username = self.username_textbox.text()
-        self.__email = self.email_textbox.text()
+        self.__first_name = self.first_name_textbox.text().strip()
+        self.__last_name = self.last_name_textbox.text().strip()
+        self.__password = self.hash_password(self.password_textbox.text().strip())
+        self.__phone_number = self.phone_number_textbox.text().strip()
+        self.__username = self.username_textbox.text().strip()
+        self.__email = self.email_textbox.text().strip()
 
     def push_data_to_database(self):
         self.handle_signup_info()
@@ -137,6 +141,7 @@ class signup_page(QWidget):
             "email": self.__email,
             "password": self.__password,
         }
+
         user = self.auth.create_user_with_email_and_password(
             self.__email, self.__password
         )
@@ -152,25 +157,10 @@ class signup_page(QWidget):
         self.loginPage.show()
         self.close()
 
+    def backButtonFunciton(self):
+        self.loginPage = LoginPage.login_page()
+        self.loginPage.show()
+        self.close()
+
 
 # checking with isort
-
-# a function to hash the password **********************************************************
-# def hash_password(password):
-#     # """Hash the password ."""
-#     return hashlib.sha3_512(password.encode()).hexdigest()
-
-# a function to save the inputs *******************************************************************************
-# def sign_up():
-#     # """Sign up a new user."""
-#     F_Name =
-#     L_Name =
-#     Email =
-#     phone_number =
-#     username =
-
-# The commented code below is commented because at the moment it doesnt work ********************************************************
-
-# if user_exists(username):
-#     print("Username already exists. Try a different one.")
-#     return
