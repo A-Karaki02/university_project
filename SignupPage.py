@@ -129,15 +129,20 @@ class signup_page(QWidget):
 
     def push_data_to_database(self):
         self.handle_signup_info()
-        # user_info = {
-        #     "userName": self.__username,
-        #     "firstName": self.__first_name,
-        #     "lastName": self.__last_name,
-        #     "phoneNumber": self.__phone_number,
-        #     "email": self.__email,
-        #     "password": self.__password,
-        # }
-        self.auth.create_user_with_email_and_password(self.__email, self.__password)
+        user_info = {
+            "userName": self.__username,
+            "firstName": self.__first_name,
+            "lastName": self.__last_name,
+            "phoneNumber": self.__phone_number,
+            "email": self.__email,
+            "password": self.__password,
+        }
+        user = self.auth.create_user_with_email_and_password(
+            self.__email, self.__password
+        )
+        user_id = user["localId"]
+        self.dtbs.child("users").child(user_id).set(user_info)
+
         # self.dtbs.child("users").push(user_info)
 
     def openLoginPage(self):

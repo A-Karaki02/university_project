@@ -88,6 +88,9 @@ class login_page(QWidget):
         auth = db.firebase.auth()
         user = auth.sign_in_with_email_and_password(username_or_email, password)
         if user:
-            print(user)
+            token = user[token]
+            self.main_page = Mainpage.MainPage()
+            self.main_page.show()
+            self.close()
         else:
-            print("Error")
+            print("Error, cant find user credintials")
