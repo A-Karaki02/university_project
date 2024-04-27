@@ -139,7 +139,6 @@ class signup_page(QWidget):
             "lastName": self.__last_name,
             "phoneNumber": self.__phone_number,
             "email": self.__email,
-            "password": self.__password,
         }
 
         user = self.auth.create_user_with_email_and_password(
