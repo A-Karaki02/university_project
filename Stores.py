@@ -1,11 +1,14 @@
 import sys
-from PySide6.QtCore import Qt,QSize
-from PySide6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout,QComboBox,QGridLayout
 
-import LoginPage
-import SignupPage
-import Mainpage
+from PySide6.QtCore import QSize, Qt
+from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,
+                               QLineEdit, QPushButton, QVBoxLayout, QWidget)
+
+import AddStore
 import EditProfile
+import LoginPage
+import Mainpage
+
 
 class stores(QWidget):
     def __init__(self):
@@ -18,28 +21,31 @@ class stores(QWidget):
 
         self.setWindowTitle("GRADUATION PROJECT")
         self.setGeometry(100, 100, 1200, 600)
-    
+
         layout.addSpacing(20)
         self.add_logo_label("BuildSmart", layout)
         layout.addStretch(2)
 
         grid_layout = QGridLayout()
         layout.addLayout(grid_layout)
-        self.add_button("Add",0,5,grid_layout,self.openAddStorePage)
-        
-        self.add_button("Back",100,0,grid_layout,self.openMain_Page)
-        self.add_button("Done",100,5,grid_layout,self.openMain_Page)
+        self.add_button("Add", 0, 5, grid_layout, self.openAddStorePage)
+
+        self.add_button("Back", 100, 0, grid_layout, self.openMain_Page)
+        self.add_button("Done", 100, 5, grid_layout, self.openMain_Page)
 
         self.setStyleSheet("background-color: rgb(0, 0, 0);font-weight: bold;")  # Black
         self.show()
 
-
     def add_logo_label(self, text, layout):
         v_layout = QVBoxLayout()
-       
+
         dropdown = QComboBox(self)
-        dropdown.addItems(["User Name","Edit Profile", "Sign Out"])  # Add your options here
-        dropdown.setStyleSheet("background-color: rgb(140, 140, 140); color: rgb(0, 0, 0);")
+        dropdown.addItems(
+            ["User Name", "Edit Profile", "Sign Out"]
+        )  # Add your options here
+        dropdown.setStyleSheet(
+            "background-color: rgb(140, 140, 140); color: rgb(0, 0, 0);"
+        )
         dropdown.setFixedHeight(30)
         dropdown.setFixedWidth(120)
         v_layout.addWidget(dropdown)
@@ -48,13 +54,15 @@ class stores(QWidget):
         layout.addLayout(v_layout)
 
         label = QLabel(text, self)
-        label.setStyleSheet("font-size: 32px;color: rgb(0, 0, 0); background-color: rgb(140, 140, 140);font-style: italic;font-weight: bold;")
+        label.setStyleSheet(
+            "font-size: 32px;color: rgb(0, 0, 0); background-color: rgb(140, 140, 140);font-style: italic;font-weight: bold;"
+        )
         label.setAlignment(Qt.AlignCenter)
         label.setFixedHeight(100)
         v_layout.addWidget(label)
 
         dropdown.currentIndexChanged.connect(self.dropdown_changed)
-        
+
     def add_button(self, button_text, row, col, layout, click_handler):
         button = QPushButton(button_text, self)
         button.clicked.connect(click_handler)
@@ -67,15 +75,15 @@ class stores(QWidget):
         self.main = Mainpage.MainPage()
         self.main.show()
         self.close()
-    
+
     def dropdown_changed(self, index):
         if index == 1:  # Edit Profile
             self.openEditProfile_Page()
         elif index == 2:  # Sign Out
             self.openLoginPage_Page()
-    
+
     def openEditProfile_Page(self):
-        self.Edit= EditProfile.Editprofile()
+        self.Edit = EditProfile.Editprofile()
         self.Edit.show()
         self.close()
 
@@ -85,39 +93,9 @@ class stores(QWidget):
         self.close()
 
     def openAddStorePage(self):
-        self.add_store_page = Add_store()
+        self.add_store_page = AddStore.add_store()
         self.add_store_page.show()
 
-class Add_store(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Add a new Store")
-        self.setFixedSize(400, 150)
-
-        layout = QVBoxLayout(self)
-
-        store_name_label = QLabel("Store Name:")
-        self.store_name_edit = QLineEdit()
-        layout.addWidget(store_name_label)
-        layout.addWidget(self.store_name_edit)
-
-        store_type_label = QLabel("Store Type:")
-        self.store_type_combo = QComboBox()
-        self.store_type_combo.addItems(["Iron and Cement", "Electricals"])
-        layout.addWidget(store_type_label)
-        layout.addWidget(self.store_type_combo)
-
-        add_button = QPushButton("Add Store")
-        add_button.clicked.connect(self.add_store)
-        layout.addWidget(add_button)
-
-        self.show()
-
-    def add_store(self):
-        store_name = self.store_name_edit.text()
-        store_type = self.store_type_combo.currentText()
-        self.store_added.emit(store_name, store_type)
-        self.close()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
