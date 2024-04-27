@@ -19,6 +19,7 @@ class MainPage(QWidget):
         layout = QVBoxLayout(self)
 
         self.setGeometry(100, 100, 1200, 600)
+        self.initial_geometry = self.geometry()
         self.setWindowTitle("GRADUATION PROJECT")
 
         layout.addSpacing(20)
