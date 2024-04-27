@@ -3,8 +3,8 @@ import os
 
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QColor
-from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QPushButton,QCheckBox,
-                               QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QLabel, QLineEdit,
+                               QPushButton, QWidget)
 
 import db
 import LoginPage
@@ -19,6 +19,7 @@ class signup_page(QWidget):
         self.__email = ""
         self.__password = ""
         self.__phone_number = ""
+        self.supplier_checkbox_state = False
         self.dtbs = db.firebase.database()
         self.auth = db.firebase.auth()
         self.initUI()
@@ -58,18 +59,19 @@ class signup_page(QWidget):
         self.username_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
         )  # White
-        
+
         self.supplier_checkbox = QCheckBox("Supplier", self)
         self.supplier_checkbox.setGeometry(625, 500, 125, 30)
         self.supplier_checkbox.setStyleSheet("QCheckBox { color: rgb(255, 255, 255); }")
-        self.supplier_checkbox.stateChanged.connect(self.checkbox_changed)
+        self.supplier_checkbox.toggled.connect(self.checkbox_changed)
 
-        self.store_name_textbox=QLineEdit(self)
-        self.store_name_textbox.setGeometry(450,500,125,30)
+        self.store_name_textbox = QLineEdit(self)
+        self.store_name_textbox.setGeometry(450, 500, 125, 30)
         self.store_name_textbox.setPlaceholderText("Store Name")
         self.store_name_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
         )  # White
+        self.store_name_textbox.setEnabled(False)
 
         # the textbox for Email
         self.email_textbox = QLineEdit(self)
@@ -129,11 +131,15 @@ class signup_page(QWidget):
         self.setStyleSheet("background-color: rgb(0, 0, 0);font-weight: bold;")  # Black
 
         self.show()
-    def checkbox_changed(self, state):
-        if state == Qt.Checked:
+
+    def checkbox_changed(self):
+        if not self.supplier_checkbox_state:
             self.store_name_textbox.setEnabled(True)
+            print("textBox enabled")
+            self.supplier_checkbox_state = True
         else:
             self.store_name_textbox.setEnabled(False)
+            self.supplier_checkbox_state = False
 
     # a function to hash the password **********************************************************
     def hash_password(self, password):

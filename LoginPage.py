@@ -40,6 +40,9 @@ class login_page(QWidget):
         self.password_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
         )  # White
+        self.password_textbox.setEchoMode(
+            QLineEdit.Password
+        )  # Mask with asterisks by default
 
         # the button for login
         self.login_button = QPushButton("Login", self)
@@ -93,9 +96,9 @@ class login_page(QWidget):
         user = auth.sign_in_with_email_and_password(username_or_email, password)
         if user:
             print(user)
-            token = user["idToken"]
             self.main_page = Mainpage.MainPage()
             self.main_page.show()
             self.close()
+            print("Signed in successfully!")
         else:
-            print("Error, cant find user credintials")
+            print("Error, cant find user credintials.")
