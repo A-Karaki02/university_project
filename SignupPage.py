@@ -131,12 +131,6 @@ class signup_page(QWidget):
         self.__username = self.username_textbox.text().strip()
         self.__email = self.email_textbox.text().strip()
 
-    def validate_user_info(self):
-        # Check if all the inputs are inserted 
-            if not all([self.__first_name, self.__last_name, self.__password, self.__phone_number, self.__username, self.__email]):
-                return False
-            return True
-    
     def push_data_to_database(self):
         self.handle_signup_info()
         user_info = {
@@ -156,9 +150,7 @@ class signup_page(QWidget):
         # self.dtbs.child("users").push(user_info)
 
     def openLoginPage(self):
-        if self.validate_user_info():
-            self.push_data_to_database()
-
+        self.push_data_to_database()
         self.loginPage = LoginPage.login_page()
         self.loginPage.show()
         self.close()
