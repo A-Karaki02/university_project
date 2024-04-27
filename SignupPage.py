@@ -3,7 +3,7 @@ import os
 
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QColor
-from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QPushButton,
+from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QPushButton,QCheckBox,
                                QWidget)
 
 import db
@@ -37,7 +37,7 @@ class signup_page(QWidget):
 
         # the textbox for First Name
         self.first_name_textbox = QLineEdit(self)
-        self.first_name_textbox.setGeometry(450, 250, 125, 30)
+        self.first_name_textbox.setGeometry(450, 200, 125, 30)
         self.first_name_textbox.setPlaceholderText("First Name")
         self.first_name_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
@@ -45,7 +45,7 @@ class signup_page(QWidget):
 
         # the textbox for last Name
         self.last_name_textbox = QLineEdit(self)
-        self.last_name_textbox.setGeometry(625, 250, 125, 30)
+        self.last_name_textbox.setGeometry(625, 200, 125, 30)
         self.last_name_textbox.setPlaceholderText("Last Name")
         self.last_name_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
@@ -53,15 +53,27 @@ class signup_page(QWidget):
 
         # the textbox for User Name
         self.username_textbox = QLineEdit(self)
-        self.username_textbox.setGeometry(450, 300, 300, 30)
+        self.username_textbox.setGeometry(450, 400, 300, 30)
         self.username_textbox.setPlaceholderText("User Name")
         self.username_textbox.setStyleSheet(
+            "background-color: rgb(255, 255, 255);"
+        )  # White
+        
+        self.supplier_checkbox = QCheckBox("Supplier", self)
+        self.supplier_checkbox.setGeometry(625, 500, 125, 30)
+        self.supplier_checkbox.setStyleSheet("QCheckBox { color: rgb(255, 255, 255); }")
+        self.supplier_checkbox.stateChanged.connect(self.checkbox_changed)
+
+        self.store_name_textbox=QLineEdit(self)
+        self.store_name_textbox.setGeometry(450,500,125,30)
+        self.store_name_textbox.setPlaceholderText("Store Name")
+        self.store_name_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
         )  # White
 
         # the textbox for Email
         self.email_textbox = QLineEdit(self)
-        self.email_textbox.setGeometry(450, 350, 300, 30)
+        self.email_textbox.setGeometry(450, 250, 300, 30)
         self.email_textbox.setPlaceholderText("Email")
         self.email_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
@@ -69,7 +81,7 @@ class signup_page(QWidget):
 
         # the textbox for Phone Number
         self.phone_number_textbox = QLineEdit(self)
-        self.phone_number_textbox.setGeometry(450, 400, 300, 30)
+        self.phone_number_textbox.setGeometry(450, 450, 300, 30)
         self.phone_number_textbox.setPlaceholderText("Phone Number")
         self.phone_number_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
@@ -77,7 +89,7 @@ class signup_page(QWidget):
 
         # the textbox for Password
         self.password_textbox = QLineEdit(self)
-        self.password_textbox.setGeometry(450, 450, 300, 30)
+        self.password_textbox.setGeometry(450, 300, 300, 30)
         self.password_textbox.setPlaceholderText("Password")
         self.password_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
@@ -85,7 +97,7 @@ class signup_page(QWidget):
 
         # the textbox for Confirm Password
         self.confirm_password_textbox = QLineEdit(self)
-        self.confirm_password_textbox.setGeometry(450, 500, 300, 30)
+        self.confirm_password_textbox.setGeometry(450, 350, 300, 30)
         self.confirm_password_textbox.setPlaceholderText("Confirm Password")
         self.confirm_password_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
@@ -117,6 +129,11 @@ class signup_page(QWidget):
         self.setStyleSheet("background-color: rgb(0, 0, 0);font-weight: bold;")  # Black
 
         self.show()
+    def checkbox_changed(self, state):
+        if state == Qt.Checked:
+            self.store_name_textbox.setEnabled(True)
+        else:
+            self.store_name_textbox.setEnabled(False)
 
     # a function to hash the password **********************************************************
     def hash_password(self, password):
