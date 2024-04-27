@@ -12,13 +12,16 @@ import Mainpage
 import SignupPage
 
 
+class PasswordLineEdit(QLineEdit):
+    def text(self):
+        return '*' * len(super().text())
+
 class login_page(QWidget):
     def __init__(self):
         super().__init__()
 
         self.email = ""
         self.password = ""
-
         self.initUI()
 
     def initUI(self):
@@ -34,15 +37,19 @@ class login_page(QWidget):
         )  # White
 
         # the textbox for password
-        self.password_textbox = QLineEdit(self)
+        self.password_textbox = PasswordLineEdit(self)
         self.password_textbox.setGeometry(450, 300, 300, 30)
         self.password_textbox.setPlaceholderText("Password")
         self.password_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
         )  # White
+<<<<<<< HEAD
         self.password_textbox.setEchoMode(
             QLineEdit.Password
         )  # Mask with asterisks by default
+=======
+        self.password_textbox.setEchoMode(QLineEdit.Password)
+>>>>>>> 49b3a7e6871af7bb5a12e0f2df90efd471bf9209
 
         # the button for login
         self.login_button = QPushButton("Login", self)
