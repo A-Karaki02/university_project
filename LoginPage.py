@@ -9,8 +9,7 @@ from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QPushButton,
 
 import Mainpage
 import SignupPage
-from DataBase import DataBase as db
-from UserManager import user_manager
+from UserManager import user
 
 
 class LoginPage(QWidget):
@@ -88,12 +87,9 @@ class LoginPage(QWidget):
         self.close()
 
     def handle_login_click(self):
-        username_or_email = self.email_textbox.text()
+        email = self.email_textbox.text()
         password = self.hash_password(self.password_textbox.text())
-        auth = db.firebase.auth()
-        user = auth.sign_in_with_email_and_password(username_or_email, password)
-        if user:
-            print(user)
+        if user.set_user(email, password):
             self.main_page = Mainpage.MainPage()
             self.main_page.show()
             self.close()
