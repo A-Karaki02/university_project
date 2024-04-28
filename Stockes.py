@@ -28,6 +28,8 @@ class stockes(QWidget):
         self.add_button("Back",5,0,grid_layout,self.openMain_Page)
         self.add_button("Done",5,2,grid_layout,self.openMain_Page)
 
+        self.add_button("test",0,0,grid_layout,self.test)
+
         self.setStyleSheet("background-color: rgb(0, 0, 0);font-weight: bold;")  # Black
         self.show()
 
@@ -81,3 +83,6 @@ class stockes(QWidget):
         self.SignOut = LoginPage.login_page()
         self.SignOut.show()
         self.close()
+
+    def test(self):
+        pass

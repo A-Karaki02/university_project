@@ -8,6 +8,7 @@ import Stockes
 import Stores
 import EditProfile
 import LoginPage
+import Earning
 
 class MainPage(QWidget):
     def __init__(self):
@@ -28,11 +29,12 @@ class MainPage(QWidget):
 
 
         grid_layout = QGridLayout()
-        grid_layout.setSpacing(100)
+        grid_layout.setSpacing(50)
         self.add_button("Equipment Prices", 0, 0, grid_layout, self.openequipment_Page)
         self.add_button("Stocks", 0, 1, grid_layout, self.openstockes_Page)
         self.add_button("Store", 1, 0, grid_layout, self.openStore_Page)
         self.add_button("Basket", 1, 1, grid_layout, self.openBasket_Page)
+        self.add_button("Earning",2,0,grid_layout,self.open_earning_page)
 
         layout.addLayout(grid_layout)
         layout.addStretch(2)
@@ -105,4 +107,8 @@ class MainPage(QWidget):
         self.SignOut.show()
         self.close()
 
+    def open_earning_page(self):
+        self.earningpage=Earning.Earning_page()
+        self.earningpage.show()
+        self.close()
 
