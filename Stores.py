@@ -10,7 +10,7 @@ import LoginPage
 import Mainpage
 
 
-class stores(QWidget):
+class Stores(QWidget):
     def __init__(self):
         super().__init__()
 
@@ -33,7 +33,7 @@ class stores(QWidget):
         self.add_button("Back", 100, 0, grid_layout, self.openMain_Page)
         self.add_button("Done", 100, 5, grid_layout, self.openMain_Page)
 
-        self.add_button("test",0,0,grid_layout,self.test)
+        self.add_button("test", 0, 0, grid_layout, self.test)
 
         self.setStyleSheet("background-color: rgb(0, 0, 0);font-weight: bold;")  # Black
         self.show()
@@ -85,12 +85,12 @@ class stores(QWidget):
             self.openLoginPage_Page()
 
     def openEditProfile_Page(self):
-        self.Edit = EditProfile.Editprofile()
+        self.Edit = EditProfile.EditProfile()
         self.Edit.show()
         self.close()
 
     def openLoginPage_Page(self):
-        self.SignOut = LoginPage.login_page()
+        self.SignOut = LoginPage.LoginPage()
         self.SignOut.show()
         self.close()
 
@@ -101,8 +101,8 @@ class stores(QWidget):
     def test(self):
         pass
 
-    
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    ex = stores()
+    ex = Stores()
     sys.exit(app.exec())

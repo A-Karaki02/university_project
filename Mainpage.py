@@ -1,14 +1,18 @@
 import sys
+
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QVBoxLayout, QHBoxLayout,QGridLayout,QComboBox
+from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout,
+                               QHBoxLayout, QLabel, QPushButton, QVBoxLayout,
+                               QWidget)
 
 import Basket
+import Earning
+import EditProfile
 import Equipment
+import LoginPage
 import Stockes
 import Stores
-import EditProfile
-import LoginPage
-import Earning
+
 
 class MainPage(QWidget):
     def __init__(self):
@@ -27,14 +31,13 @@ class MainPage(QWidget):
         self.add_dynamic_label("BuildSmart", layout)
         layout.addStretch(2)
 
-
         grid_layout = QGridLayout()
         grid_layout.setSpacing(50)
         self.add_button("Equipment Prices", 0, 0, grid_layout, self.openequipment_Page)
         self.add_button("Stocks", 0, 1, grid_layout, self.openstockes_Page)
         self.add_button("Store", 1, 0, grid_layout, self.openStore_Page)
         self.add_button("Basket", 1, 1, grid_layout, self.openBasket_Page)
-        self.add_button("Earning",2,0,grid_layout,self.open_earning_page)
+        self.add_button("Earning", 2, 0, grid_layout, self.open_earning_page)
 
         layout.addLayout(grid_layout)
         layout.addStretch(2)
@@ -52,10 +55,14 @@ class MainPage(QWidget):
 
     def add_dynamic_label(self, text, layout):
         v_layout = QVBoxLayout()
-       
+
         dropdown = QComboBox(self)
-        dropdown.addItems(["User Name","Edit Profile", "Sign Out"])  # Add your options here
-        dropdown.setStyleSheet("background-color: rgb(140, 140, 140); color: rgb(0, 0, 0);")
+        dropdown.addItems(
+            ["User Name", "Edit Profile", "Sign Out"]
+        )  # Add your options here
+        dropdown.setStyleSheet(
+            "background-color: rgb(140, 140, 140); color: rgb(0, 0, 0);"
+        )
         dropdown.setFixedHeight(30)
         dropdown.setFixedWidth(120)
         v_layout.addWidget(dropdown)
@@ -64,7 +71,9 @@ class MainPage(QWidget):
         layout.addLayout(v_layout)
 
         label = QLabel(text, self)
-        label.setStyleSheet("font-size: 32px;color: rgb(0, 0, 0); background-color: rgb(140, 140, 140);font-style: italic;font-weight: bold;")
+        label.setStyleSheet(
+            "font-size: 32px;color: rgb(0, 0, 0); background-color: rgb(140, 140, 140);font-style: italic;font-weight: bold;"
+        )
         label.setAlignment(Qt.AlignCenter)
         label.setFixedHeight(100)
         v_layout.addWidget(label)
@@ -78,37 +87,36 @@ class MainPage(QWidget):
             self.openLoginPage_Page()
 
     def openBasket_Page(self):
-        self.Basket = Basket.basket()
+        self.Basket = Basket.Basket()
         self.Basket.show()
         self.close()
 
     def openStore_Page(self):
-        self.Store = Stores.stores()
+        self.Store = Stores.Stores()
         self.Store.show()
         self.close()
 
     def openequipment_Page(self):
-        self.Equipment = Equipment.Equipment_Prices()
+        self.Equipment = Equipment.EquipmentPrices()
         self.Equipment.show()
         self.close()
 
     def openstockes_Page(self):
-        self.Stockes = Stockes.stockes()
+        self.Stockes = Stockes.Stocks()
         self.Stockes.show()
         self.close()
-    
+
     def openEditProfile_Page(self):
-        self.Edit= EditProfile.Editprofile()
+        self.Edit = EditProfile.EditProfile()
         self.Edit.show()
         self.close()
 
     def openLoginPage_Page(self):
-        self.SignOut = LoginPage.login_page()
+        self.SignOut = LoginPage.LoginPage()
         self.SignOut.show()
         self.close()
 
     def open_earning_page(self):
-        self.earningpage=Earning.Earning_page()
+        self.earningpage = Earning.Earning_page()
         self.earningpage.show()
         self.close()
-

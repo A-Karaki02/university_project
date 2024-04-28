@@ -1,11 +1,13 @@
 import sys
 import time
+
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QFont, QPalette
 from PySide6.QtWidgets import QApplication, QLabel, QMainWindow
 
-import SignupPage
 import Mainpage
+import SignupPage
+
 
 class DynamicLabelWindow(QMainWindow):
     def __init__(self):
@@ -44,7 +46,7 @@ class DynamicLabelWindow(QMainWindow):
         self.label.adjustSize()
 
         # Set the label size to 90 pixels
-        #self.label.setFixedSize(90, 90)
+        # self.label.setFixedSize(90, 90)
 
     def adjust_label_position(self):
         window_width = self.width()
@@ -57,14 +59,16 @@ class DynamicLabelWindow(QMainWindow):
             (window_width - label_width) // 2,
             (window_height - label_height) // 2,
             label_width,
-            label_height
+            label_height,
         )
+
     def openSignupPage(self):
-        self.signup_page = SignupPage.signup_page()
-        self.signup_page = SignupPage.signup_page()
+        self.signup_page = SignupPage.SignUpPage()
+        self.signup_page = SignupPage.SignUpPage()
         self.signup_page.show()
         self.close()
-    
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = DynamicLabelWindow()

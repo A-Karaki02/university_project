@@ -7,12 +7,13 @@ from PySide6.QtGui import QColor
 from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QPushButton,
                                QWidget)
 
-import db
 import Mainpage
 import SignupPage
+from DataBase import DataBase as db
+from UserManager import user_manager
 
 
-class login_page(QWidget):
+class LoginPage(QWidget):
     def __init__(self):
         super().__init__()
 
@@ -77,11 +78,12 @@ class login_page(QWidget):
 
         self.show()
 
+    # ***************************************Back End Functions**************************************************************
     def hash_password(self, password):
         return hashlib.sha3_512(password.encode()).hexdigest()
 
     def openSignupPage(self):
-        self.signup_page = SignupPage.signup_page()
+        self.signup_page = SignupPage.SignUpPage()
         self.signup_page.show()
         self.close()
 

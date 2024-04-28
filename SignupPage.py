@@ -6,11 +6,11 @@ from PySide6.QtGui import QColor
 from PySide6.QtWidgets import (QApplication, QCheckBox, QLabel, QLineEdit,
                                QPushButton, QWidget)
 
-import db
 import LoginPage
+from DataBase import DataBase as db
 
 
-class signup_page(QWidget):
+class SignUpPage(QWidget):
     def __init__(self):
         super().__init__()
         self.__first_name = ""
@@ -52,40 +52,11 @@ class signup_page(QWidget):
             "background-color: rgb(255, 255, 255);"
         )  # White
 
-        # the textbox for User Name
-        self.username_textbox = QLineEdit(self)
-        self.username_textbox.setGeometry(450, 400, 300, 30)
-        self.username_textbox.setPlaceholderText("User Name")
-        self.username_textbox.setStyleSheet(
-            "background-color: rgb(255, 255, 255);"
-        )  # White
-
-        self.supplier_checkbox = QCheckBox("Supplier", self)
-        self.supplier_checkbox.setGeometry(625, 500, 125, 30)
-        self.supplier_checkbox.setStyleSheet("QCheckBox { color: rgb(255, 255, 255); }")
-        self.supplier_checkbox.toggled.connect(self.checkbox_changed)
-
-        self.store_name_textbox = QLineEdit(self)
-        self.store_name_textbox.setGeometry(450, 500, 125, 30)
-        self.store_name_textbox.setPlaceholderText("Store Name")
-        self.store_name_textbox.setStyleSheet(
-            "background-color: rgb(255, 255, 255);"
-        )  # White
-        self.store_name_textbox.setEnabled(False)
-
         # the textbox for Email
         self.email_textbox = QLineEdit(self)
         self.email_textbox.setGeometry(450, 250, 300, 30)
         self.email_textbox.setPlaceholderText("Email")
         self.email_textbox.setStyleSheet(
-            "background-color: rgb(255, 255, 255);"
-        )  # White
-
-        # the textbox for Phone Number
-        self.phone_number_textbox = QLineEdit(self)
-        self.phone_number_textbox.setGeometry(450, 450, 300, 30)
-        self.phone_number_textbox.setPlaceholderText("Phone Number")
-        self.phone_number_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
         )  # White
 
@@ -104,6 +75,35 @@ class signup_page(QWidget):
         self.confirm_password_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
         )  # White
+
+        # the textbox for User Name
+        self.username_textbox = QLineEdit(self)
+        self.username_textbox.setGeometry(450, 400, 300, 30)
+        self.username_textbox.setPlaceholderText("User Name")
+        self.username_textbox.setStyleSheet(
+            "background-color: rgb(255, 255, 255);"
+        )  # White
+
+        # the textbox for Phone Number
+        self.phone_number_textbox = QLineEdit(self)
+        self.phone_number_textbox.setGeometry(450, 450, 300, 30)
+        self.phone_number_textbox.setPlaceholderText("Phone Number")
+        self.phone_number_textbox.setStyleSheet(
+            "background-color: rgb(255, 255, 255);"
+        )  # White
+
+        self.supplier_checkbox = QCheckBox("Supplier", self)
+        self.supplier_checkbox.setGeometry(625, 500, 125, 30)
+        self.supplier_checkbox.setStyleSheet("QCheckBox { color: rgb(255, 255, 255); }")
+        self.supplier_checkbox.toggled.connect(self.checkbox_changed)
+
+        self.store_name_textbox = QLineEdit(self)
+        self.store_name_textbox.setGeometry(450, 500, 125, 30)
+        self.store_name_textbox.setPlaceholderText("Store Name")
+        self.store_name_textbox.setStyleSheet(
+            "background-color: rgb(255, 255, 255);"
+        )  # White
+        self.store_name_textbox.setEnabled(False)
 
         # the button for Sign Up
         self.signup_button = QPushButton("Sign Up", self)
@@ -174,12 +174,12 @@ class signup_page(QWidget):
 
     def openLoginPage(self):
         self.push_data_to_database()
-        self.loginPage = LoginPage.login_page()
+        self.loginPage = LoginPage.LoginPage()
         self.loginPage.show()
         self.close()
 
     def backButtonFunciton(self):
-        self.loginPage = LoginPage.login_page()
+        self.loginPage = LoginPage.LoginPage()
         self.loginPage.show()
         self.close()
 
