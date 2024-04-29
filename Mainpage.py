@@ -23,7 +23,7 @@ class MainPage(QWidget):
     def initUI(self):
         layout = QVBoxLayout(self)
 
-        self.setGeometry(100, 100, 1200, 600)
+        self.resize(1200, 600)
         self.initial_geometry = self.geometry()
         self.setWindowTitle("GRADUATION PROJECT")
 
@@ -87,27 +87,27 @@ class MainPage(QWidget):
             self.openLoginPage_Page()
 
     def openBasket_Page(self):
-        self.Basket = Basket.Basket()
+        self.Basket = Basket.Basket(self.size())
         self.Basket.show()
         self.close()
 
     def openStore_Page(self):
-        self.Store = Stores.Stores()
+        self.Store = Stores.Stores(self.size())
         self.Store.show()
         self.close()
 
     def openequipment_Page(self):
-        self.Equipment = Equipment.EquipmentPrices()
+        self.Equipment = Equipment.EquipmentPrices(self.size())
         self.Equipment.show()
         self.close()
 
     def openstockes_Page(self):
-        self.Stockes = Stockes.Stocks()
+        self.Stockes = Stockes.Stocks(self.size())
         self.Stockes.show()
         self.close()
 
     def openEditProfile_Page(self):
-        self.Edit = EditProfile.EditProfile()
+        self.Edit = EditProfile.EditProfile(self.size())
         self.Edit.show()
         self.close()
 
@@ -117,6 +117,15 @@ class MainPage(QWidget):
         self.close()
 
     def open_earning_page(self):
-        self.earningpage = Earning.Earning_page()
-        self.earningpage.show()
-        self.close()
+        self.hide() 
+        earning_page = Earning.Earning_page(self.size())  # Create an instance of the Earning_page
+        self.earning_page.show()  # Show the Earning_page
+        earning_page.resizeEvent = self.on_second_window_resize
+
+    def on_second_window_resize(self, event):
+        self.resize(event.size())
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    ex = MainPage()
+    sys.exit(app.exec())

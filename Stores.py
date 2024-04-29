@@ -11,16 +11,16 @@ import Mainpage
 
 
 class Stores(QWidget):
-    def __init__(self):
+    def __init__(self,initial_size):
         super().__init__()
-
+        self.resize(initial_size)
         self.initUI()
 
     def initUI(self):
         layout = QVBoxLayout(self)
 
         self.setWindowTitle("GRADUATION PROJECT")
-        self.setGeometry(100, 100, 1200, 600)
+        #self.setGeometry(100, 100, 1200, 600)
 
         layout.addSpacing(20)
         self.add_logo_label("BuildSmart", layout)
