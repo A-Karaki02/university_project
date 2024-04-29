@@ -4,8 +4,7 @@ import os
 import pyrebase
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QColor
-from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QPushButton,
-                               QWidget)
+from PySide6.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget
 
 import Mainpage
 import SignupPage
@@ -39,6 +38,7 @@ class LoginPage(QWidget):
         self.password_textbox.setStyleSheet(
             "background-color: rgb(255, 255, 255);"
         )  # White
+        self.password_textbox.setEchoMode(QLineEdit.Password)
 
         # the button for login
         self.login_button = QPushButton("Login", self)
