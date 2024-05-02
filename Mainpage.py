@@ -2,7 +2,7 @@ import sys
 
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout,
-                               QHBoxLayout, QLabel, QPushButton, QVBoxLayout,
+                               QHBoxLayout, QLabel, QPushButton, QVBoxLayout,QStackedWidget,
                                QWidget)
 
 import Basket
@@ -27,6 +27,13 @@ class MainPage(QWidget):
         self.initial_geometry = self.geometry()
         self.setWindowTitle("GRADUATION PROJECT")
 
+        self.stacked_widget = QStackedWidget(self)
+
+        self.open_earning_page_button = QPushButton("Go to First Page", self)
+        self.open_earning_page_button.clicked.connect(self.open_first_page)
+        self.open_earning_page_button.setStyleSheet("background-color: white;")
+        self.stacked_widget.addWidget(self.open_earning_page_button)
+
         layout.addSpacing(20)
         self.add_dynamic_label("BuildSmart", layout)
         layout.addStretch(2)
@@ -37,7 +44,9 @@ class MainPage(QWidget):
         self.add_button("Stocks", 0, 1, grid_layout, self.openstockes_Page)
         self.add_button("Store", 1, 0, grid_layout, self.openStore_Page)
         self.add_button("Basket", 1, 1, grid_layout, self.openBasket_Page)
-        self.add_button("Earning", 2, 0, grid_layout, self.open_earning_page)
+        #self.add_button("Earning", 2, 0, grid_layout, self.open_earning_page)
+
+        
 
         layout.addLayout(grid_layout)
         layout.addStretch(2)
@@ -87,31 +96,37 @@ class MainPage(QWidget):
             self.openLoginPage_Page()
 
     def openBasket_Page(self):
+        self.hide()
         self.Basket = Basket.Basket(self.size())
         self.Basket.show()
         self.close()
 
     def openStore_Page(self):
+        self.hide()
         self.Store = Stores.Stores(self.size())
         self.Store.show()
         self.close()
 
     def openequipment_Page(self):
+        self.hide()
         self.Equipment = Equipment.EquipmentPrices(self.size())
         self.Equipment.show()
         self.close()
 
     def openstockes_Page(self):
+        self.hide()
         self.Stockes = Stockes.Stocks(self.size())
         self.Stockes.show()
         self.close()
 
     def openEditProfile_Page(self):
+        self.hide()
         self.Edit = EditProfile.EditProfile(self.size())
         self.Edit.show()
         self.close()
 
     def openLoginPage_Page(self):
+        self.hide()
         self.SignOut = LoginPage.LoginPage()
         self.SignOut.show()
         self.close()
@@ -124,6 +139,9 @@ class MainPage(QWidget):
 
     def on_second_window_resize(self, event):
         self.resize(event.size())
+
+    def open_first_page(self):
+        self.stacked_widget.setCurrentIndex(0)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
