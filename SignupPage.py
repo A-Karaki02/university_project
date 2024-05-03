@@ -7,6 +7,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QLabel, QLineEdit,
                                QPushButton, QWidget)
 
 import LoginPage
+import PasswordChecker
 from DataBase import DataBase as db
 
 
@@ -135,7 +136,6 @@ class SignUpPage(QWidget):
     def checkbox_changed(self):
         if not self.supplier_checkbox_state:
             self.store_name_textbox.setEnabled(True)
-            print("textBox enabled")
             self.supplier_checkbox_state = True
         else:
             self.store_name_textbox.setEnabled(False)
@@ -143,6 +143,7 @@ class SignUpPage(QWidget):
 
     # a function to hash the password **********************************************************
     def hash_password(self, password):
+        PasswordChecker.password_check(password)
         return hashlib.sha3_512(password.encode()).hexdigest()
 
     def handle_signup_info(self):
@@ -162,7 +163,12 @@ class SignUpPage(QWidget):
             "lastName": self.__last_name,
             "phoneNumber": self.__phone_number,
             "email": self.__email,
+            "password": self.__password,
         }
+        for key in user_info:
+            if user_info[key] == "":
+                print(f"Error, {key} is empty")
+                return False
 
         user = self.auth.create_user_with_email_and_password(
             self.__email, self.__password
@@ -170,13 +176,11 @@ class SignUpPage(QWidget):
         user_id = user["localId"]
         self.dtbs.child("users").child(user_id).set(user_info)
 
-        # self.dtbs.child("users").push(user_info)
-
     def openLoginPage(self):
-        self.push_data_to_database()
-        self.loginPage = LoginPage.LoginPage()
-        self.loginPage.show()
-        self.close()
+        if self.push_data_to_database():
+            self.loginPage = LoginPage.LoginPage()
+            self.loginPage.show()
+            self.close()
 
     def backButtonFunciton(self):
         self.loginPage = LoginPage.LoginPage()
