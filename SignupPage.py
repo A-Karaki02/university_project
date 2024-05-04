@@ -8,7 +8,6 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QLabel, QLineEdit,
                                QPushButton, QWidget)
 
 import LoginPage
-import PasswordChecker
 from DataBase import DataBase as db
 
 
@@ -161,8 +160,10 @@ class SignUpPage(QWidget):
 
     # a function to hash the password **********************************************************
     def hash_password(self, password):
-        self.password_check(password)
-        return hashlib.sha3_512(password.encode()).hexdigest()
+        if self.password_check(password):
+            return hashlib.sha3_512(password.encode()).hexdigest()
+        else:
+            return False
 
     def handle_signup_info(self):
         # Get user input from text boxes
