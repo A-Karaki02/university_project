@@ -20,6 +20,7 @@ class SignUpPage(QWidget):
         self.__email = ""
         self.__password = ""
         self.__phone_number = ""
+        self.__storename = ""
         self.supplier_checkbox_state = False
         self.dtbs = db.firebase.database()
         self.auth = db.firebase.auth()
@@ -93,10 +94,12 @@ class SignUpPage(QWidget):
             "background-color: rgb(255, 255, 255);"
         )  # White
 
-        self.supplier_checkbox = QCheckBox("Supplier", self)
-        self.supplier_checkbox.setGeometry(625, 500, 125, 30)
-        self.supplier_checkbox.setStyleSheet("QCheckBox { color: rgb(255, 255, 255); }")
-        self.supplier_checkbox.toggled.connect(self.checkbox_changed)
+        self.__supplier_checkbox = QCheckBox("Supplier", self)
+        self.__supplier_checkbox.setGeometry(625, 500, 125, 30)
+        self.__supplier_checkbox.setStyleSheet(
+            "QCheckBox { color: rgb(255, 255, 255); }"
+        )
+        self.__supplier_checkbox.toggled.connect(self.checkbox_changed)
 
         self.store_name_textbox = QLineEdit(self)
         self.store_name_textbox.setGeometry(450, 500, 125, 30)
@@ -173,6 +176,8 @@ class SignUpPage(QWidget):
         self.__password = self.hash_password(self.password_textbox.text().strip())
         self.__username = self.username_textbox.text().strip()
         self.__phone_number = self.phone_number_textbox.text().strip()
+        self.__supplier_checkbox = self.supplier_checkbox_state
+        self.__storename = self.store_name_textbox.text().strip()
 
     def push_data_to_database(self):
         self.handle_signup_info()
@@ -183,17 +188,19 @@ class SignUpPage(QWidget):
             "phoneNumber": self.__phone_number,
             "email": self.__email,
             "password": self.__password,
+            "isSupplier": self.__supplier_checkbox,
+            "supplierName": self.__storename,
         }
-        for key in user_info:
-            if user_info[key] == "":
-                print(f"Error, {key} is empty")
-                return False
 
         user = self.auth.create_user_with_email_and_password(
             self.__email, self.__password
         )
-        user_id = user["localId"]
-        self.dtbs.child("users").child(user_id).set(user_info)
+        if user:
+            user_id = user["localId"]
+            self.dtbs.child("users").child(user_id).set(user_info)
+            return True
+        else:
+            return False
 
     def openLoginPage(self):
         if self.push_data_to_database():

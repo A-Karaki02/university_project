@@ -12,6 +12,7 @@ import Equipment
 import LoginPage
 import Stockes
 import Stores
+from UserManager import user
 
 
 class MainPage(QWidget):
@@ -58,7 +59,7 @@ class MainPage(QWidget):
 
         dropdown = QComboBox(self)
         dropdown.addItems(
-            ["User Name", "Edit Profile", "Sign Out"]
+            [user.get_username(), "Edit Profile", "Sign Out"]
         )  # Add your options here
         dropdown.setStyleSheet(
             "background-color: rgb(140, 140, 140); color: rgb(0, 0, 0);"
@@ -117,13 +118,16 @@ class MainPage(QWidget):
         self.close()
 
     def open_earning_page(self):
-        self.hide() 
-        earning_page = Earning.Earning_page(self.size())  # Create an instance of the Earning_page
+        self.hide()
+        earning_page = Earning.Earning_page(
+            self.size()
+        )  # Create an instance of the Earning_page
         self.earning_page.show()  # Show the Earning_page
         earning_page.resizeEvent = self.on_second_window_resize
 
     def on_second_window_resize(self, event):
         self.resize(event.size())
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
