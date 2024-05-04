@@ -1,5 +1,6 @@
 import hashlib
 import os
+import re
 
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QColor
@@ -141,19 +142,36 @@ class SignUpPage(QWidget):
             self.store_name_textbox.setEnabled(False)
             self.supplier_checkbox_state = False
 
+    def password_check(self, password):
+        pattern = re.compile(
+            r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*!-+=()])(?=\S+$).{8,}$"
+        )
+        if re.match(pattern, password):
+            print("Valid password")
+            return True
+        else:
+            print("Invalid password. Please ensure it meets the following criteria:")
+            print("- At least 8 characters long")
+            print("- Contains at least one digit (0-9)")
+            print("- Contains at least one lowercase letter (a-z)")
+            print("- Contains at least one uppercase letter (A-Z)")
+            print("- Contains at least one special character (@#$%^&*!-+=())")
+            print("- No whitespace characters allowed")
+            return False
+
     # a function to hash the password **********************************************************
     def hash_password(self, password):
-        PasswordChecker.password_check(password)
+        self.password_check(password)
         return hashlib.sha3_512(password.encode()).hexdigest()
 
     def handle_signup_info(self):
         # Get user input from text boxes
         self.__first_name = self.first_name_textbox.text().strip()
         self.__last_name = self.last_name_textbox.text().strip()
-        self.__password = self.hash_password(self.password_textbox.text().strip())
-        self.__phone_number = self.phone_number_textbox.text().strip()
-        self.__username = self.username_textbox.text().strip()
         self.__email = self.email_textbox.text().strip()
+        self.__password = self.hash_password(self.password_textbox.text().strip())
+        self.__username = self.username_textbox.text().strip()
+        self.__phone_number = self.phone_number_textbox.text().strip()
 
     def push_data_to_database(self):
         self.handle_signup_info()
