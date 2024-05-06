@@ -14,6 +14,9 @@ class UserManager:
         self.__first_name = ""
         self.__last_name = ""
         self.__phonenumber = ""
+        self.__is_supplier = False
+        self.__store_name = ""
+        self.dtbs = db.firebase.database()
 
     def get_user(self):
         return self.__user
@@ -39,6 +42,8 @@ class UserManager:
         self.__first_name = users["firstName"]
         self.__last_name = users["lastName"]
         self.__phonenumber = users["phoneNumber"]
+        self.__is_supplier = users["isSupplier"]
+        self.__store_name = users["supplierName"]
         # print(self._email)
         # print(self._username)
         # print(self._first_name)
@@ -58,6 +63,15 @@ class UserManager:
         self.__first_name = ""
         self.__last_name = ""
         self.__phonenumber = ""
+
+    def add_item(self, item):
+        self.dtbs.child("items").child(self.__UID).set(item)
+
+    def is_supplier(self):
+        return self.__is_supplier
+
+    def get_store_name(self):
+        return self.__store_name
 
     def token_expiry(self):
         pass
