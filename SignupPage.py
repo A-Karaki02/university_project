@@ -190,6 +190,7 @@ class SignUpPage(QWidget):
             "password": self.__password,
             "isSupplier": self.__supplier_checkbox,
             "supplierName": self.__storename,
+            "itemsNumber": -1
         }
 
         user = self.auth.create_user_with_email_and_password(

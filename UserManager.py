@@ -44,6 +44,8 @@ class UserManager:
         self.__phonenumber = users["phoneNumber"]
         self.__is_supplier = users["isSupplier"]
         self.__store_name = users["supplierName"]
+        self.__items_number = users["itemsNumber"]
+
         # print(self._email)
         # print(self._username)
         # print(self._first_name)
@@ -63,9 +65,16 @@ class UserManager:
         self.__first_name = ""
         self.__last_name = ""
         self.__phonenumber = ""
+        self.__items_number = -1
+
 
     def add_item(self, item):
-        self.dtbs.child("items").child(self.__UID).set(item)
+        new_number = self.__items_number + 1
+        if self.dtbs.child("items").child(self.__UID).child(new_number).set(item):
+            self.dtbs.child("users").child(self.__UID).update({"itemsNumber": new_number})
+            return True
+        else:
+            return False
 
     def is_supplier(self):
         return self.__is_supplier
