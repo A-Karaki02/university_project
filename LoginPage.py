@@ -58,11 +58,11 @@ class LoginPage(QWidget):
 
         # the label for the contact
         self.contact_label1 = QLabel(
-            "Contact Us\nEmail: jom.proj@gmail.com\nTelephone: 0798727686\nFax: 06111111;font-weight: bold;",
+            "Contact Us\nEmail: jom.proj@gmail.com\nTelephone: 0798727686\nFax: 06111111",
             self,
         )
         self.contact_label1.setGeometry(50, 500, 200, 100)
-        self.contact_label1.setStyleSheet("color: rgb(140, 140, 140);")  # gray
+        self.contact_label1.setStyleSheet("color: rgb(140, 140, 140);font-weight: bold;")  # gray
 
         # the label for the Title
         self.label_build_smart = QLabel("BuildSmart", self)

@@ -1,14 +1,14 @@
 import sys
 
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,
+from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,QHBoxLayout,QSpacerItem,QSizePolicy,
                                QLineEdit, QPushButton, QVBoxLayout, QWidget)
 
 import EditProfile
 import LoginPage
 import Mainpage
 import SignupPage
-
+from UserManager import user
 
 class Basket(QWidget):
     def __init__(self,initial_size):
@@ -25,7 +25,7 @@ class Basket(QWidget):
         
 
         layout.addSpacing(20)
-        self.add_logo_label("BuildSmart", layout)
+        self.add_dynamic_label("BuildSmart", layout)
         layout.addStretch(2)
 
         grid_layout = QGridLayout()
@@ -35,33 +35,40 @@ class Basket(QWidget):
 
         self.add_button("test", 0, 0, grid_layout, self.test)
 
-        self.setStyleSheet("background-color: rgb(0, 0, 0);font-weight: bold;")  # Black
+        self.setStyleSheet("background-color: rgb(255, 255, 255);font-weight: bold;")  # Black
         self.show()
 
-    def add_logo_label(self, text, layout):
-        v_layout = QVBoxLayout()
+    def add_dynamic_label(self, text, layout):
+        layout_widget = QWidget(self)  # Create a widget to hold the layout
+        layout_widget.setStyleSheet("background-color: rgb(131, 170, 229);")  # Set background color for the layout widget
 
-        dropdown = QComboBox(self)
-        dropdown.addItems(
-            ["User Name", "Edit Profile", "Sign Out"]
-        )  # Add your options here
-        dropdown.setStyleSheet(
-            "background-color: rgb(140, 140, 140); color: rgb(0, 0, 0);"
-        )
-        dropdown.setFixedHeight(30)
-        dropdown.setFixedWidth(120)
-        v_layout.addWidget(dropdown)
-        v_layout.setAlignment(dropdown, Qt.AlignRight)  # Align dropdown to the right
-        v_layout.addStretch(1)
-        layout.addLayout(v_layout)
+        v_layout = QVBoxLayout(layout_widget)  # Use the layout widget as the parent for QVBoxLayout
 
         label = QLabel(text, self)
         label.setStyleSheet(
-            "font-size: 32px;color: rgb(0, 0, 0); background-color: rgb(140, 140, 140);font-style: italic;font-weight: bold;"
+        "font-size: 32px;color: rgb(0, 0, 0);font-style: italic;font-weight: bold; background-color: rgb(131, 170, 229);"
         )
         label.setAlignment(Qt.AlignCenter)
-        label.setFixedHeight(100)
+        label.setFixedHeight(60)
         v_layout.addWidget(label)
+
+        h_layout = QHBoxLayout()
+        spacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        h_layout.addItem(spacer)  # Add spacer to push the dropdown to the right
+
+        dropdown = QComboBox(self)
+        dropdown.addItems(
+        [user.get_username(), "Edit Profile", "Sign Out"]
+        )
+        dropdown.setStyleSheet(
+        "background-color: rgb(131, 170, 229); color: rgb(0, 0, 0);border: 2px solid black;"
+        )
+        dropdown.setFixedHeight(30)
+        dropdown.setFixedWidth(120)
+        h_layout.addWidget(dropdown)
+        v_layout.addLayout(h_layout)
+
+        layout.addWidget(layout_widget)  # Add the layout widget to the main layout
 
         dropdown.currentIndexChanged.connect(self.dropdown_changed)
 

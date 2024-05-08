@@ -125,11 +125,11 @@ class SignUpPage(QWidget):
 
         # the label for the contact
         self.contact_label = QLabel(
-            "Contact Us\nEmail: jom.proj@gmail.com\nTelephone: 0798727686\nFax: 06111111;font-weight: bold;",
+            "Contact Us\nEmail: jom.proj@gmail.com\nTelephone: 0798727686\nFax: 06111111",
             self,
         )
         self.contact_label.setGeometry(50, 500, 200, 100)
-        self.contact_label.setStyleSheet("color: rgb(140, 140, 140);font-weight: bold;")  # gray
+        self.contact_label.setStyleSheet("color: rgb(140, 140, 140);font-weight: bold;font-weight: bold;")  # gray
 
         # Set background color using RGB for the window
         self.setStyleSheet("background-color: rgb(255, 255, 255)")  # Black
