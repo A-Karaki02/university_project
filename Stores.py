@@ -1,8 +1,22 @@
 import sys
 
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,QScrollArea,QHBoxLayout,QHeaderView,QTableWidgetItem,QTableWidget,
-                               QLineEdit, QPushButton, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (
+    QApplication,
+    QComboBox,
+    QGridLayout,
+    QLabel,
+    QScrollArea,
+    QHBoxLayout,
+    QHeaderView,
+    QTableWidgetItem,
+    QTableWidget,
+    QSizePolicy,
+    QLineEdit,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+)
 
 import AddStore
 import EditProfile
@@ -27,16 +41,126 @@ class Stores(QWidget):
 
         layout.addSpacing(20)
         self.add_logo_label("BuildSmart", layout)
-        layout.addSpacing(10)
+        layout.addSpacing(20)
+
+        table_layout = QVBoxLayout()
+        layout.addLayout(table_layout)
+
         labels_layout = QHBoxLayout()
-        layout.addLayout(labels_layout)
-        
-        
-        self.add_top_down_list([{"itemName": "iron", "storeName": "Jameed02", "price": 200, "quantity": 30, "itemType": "iron and cement"},
-                                {"itemName": "iron", "storeName": "Jameed02", "price": 200, "quantity": 30, "itemType": "iron and cement"},
-                                {"itemName": "iron", "storeName": "Jameed02", "price": 200, "quantity": 30, "itemType": "iron and cement"}], self.table_widget, layout)
+        table_layout.addLayout(labels_layout)
+
+        self.add_top_down_list(
+            [
+                {
+                    "itemName": "iron",
+                    "storeName": "Jameed02",
+                    "price": 200,
+                    "quantity": 30,
+                    "itemType": "iron and cement",
+                },
+                {
+                    "itemName": "iron",
+                    "storeName": "Jameed02",
+                    "price": 200,
+                    "quantity": 30,
+                    "itemType": "iron and cement",
+                },
+                {
+                    "itemName": "iron",
+                    "storeName": "Jameed02",
+                    "price": 200,
+                    "quantity": 30,
+                    "itemType": "iron and cement",
+                },
+                {
+                    "itemName": "iron",
+                    "storeName": "Jameed02",
+                    "price": 200,
+                    "quantity": 30,
+                    "itemType": "iron and cement",
+                },
+                {
+                    "itemName": "iron",
+                    "storeName": "Jameed02",
+                    "price": 200,
+                    "quantity": 30,
+                    "itemType": "iron and cement",
+                },
+                {
+                    "itemName": "iron",
+                    "storeName": "Jameed02",
+                    "price": 200,
+                    "quantity": 30,
+                    "itemType": "iron and cement",
+                },
+                {
+                    "itemName": "iron",
+                    "storeName": "Jameed02",
+                    "price": 200,
+                    "quantity": 30,
+                    "itemType": "iron and cement",
+                },
+                {
+                    "itemName": "iron",
+                    "storeName": "Jameed02",
+                    "price": 200,
+                    "quantity": 30,
+                    "itemType": "iron and cement",
+                },
+                {
+                    "itemName": "iron",
+                    "storeName": "Jameed02",
+                    "price": 200,
+                    "quantity": 30,
+                    "itemType": "iron and cement",
+                },
+                {
+                    "itemName": "iron",
+                    "storeName": "Jameed02",
+                    "price": 200,
+                    "quantity": 30,
+                    "itemType": "iron and cement",
+                },
+                {
+                    "itemName": "iron",
+                    "storeName": "Jameed02",
+                    "price": 200,
+                    "quantity": 30,
+                    "itemType": "iron and cement",
+                },
+                {
+                    "itemName": "iron",
+                    "storeName": "Jameed02",
+                    "price": 200,
+                    "quantity": 30,
+                    "itemType": "iron and cement",
+                },
+                {
+                    "itemName": "iron",
+                    "storeName": "Jameed02",
+                    "price": 200,
+                    "quantity": 30,
+                    "itemType": "iron and cement",
+                },
+                {
+                    "itemName": "iron",
+                    "storeName": "Jameed02",
+                    "price": 200,
+                    "quantity": 30,
+                    "itemType": "iron and cement",
+                },
+                {
+                    "itemName": "iron",
+                    "storeName": "Jameed02",
+                    "price": 200,
+                    "quantity": 30,
+                    "itemType": "iron and cement",
+                },
+            ],
+            self.table_widget,
+            table_layout,
+        )
         layout.addSpacing(10)
-        layout.addStretch(2)
 
         grid_layout = QGridLayout()
         layout.addLayout(grid_layout)
@@ -46,9 +170,7 @@ class Stores(QWidget):
         self.add_button("Back", 100, 0, grid_layout, self.openMain_Page)
         self.add_button("Done", 100, 5, grid_layout, self.openMain_Page)
 
-        self.add_button("test", 0, 0, grid_layout, self.test)
-
-        
+        self.add_button("test", 0, 0, grid_layout, self.search_page)
 
         self.setStyleSheet("background-color: rgb(0, 0, 0);font-weight: bold;")  # Black
         self.show()
@@ -67,7 +189,7 @@ class Stores(QWidget):
         dropdown.setFixedWidth(120)
         v_layout.addWidget(dropdown)
         v_layout.setAlignment(dropdown, Qt.AlignRight)  # Align dropdown to the right
-        v_layout.addStretch(1)
+        # v_layout.addStretch(1)
         layout.addLayout(v_layout)
 
         label = QLabel(text, self)
@@ -89,7 +211,14 @@ class Stores(QWidget):
         layout.addWidget(button, row, col)
 
     def add_top_down_list(self, items, table_widget, layout):
-        headers = ["Store Name", "Item Name", "Item Type", "Price", "Quantity", "Add To Basket"]
+        headers = [
+            "Store Name",
+            "Item Name",
+            "Item Type",
+            "Price",
+            "Quantity",
+            "Add To Basket",
+        ]
         table_widget.setColumnCount(len(headers))
         table_widget.setHorizontalHeaderLabels(headers)
         header = table_widget.horizontalHeader()
@@ -97,32 +226,43 @@ class Stores(QWidget):
         for item in items:
             row_count = table_widget.rowCount()
             table_widget.insertRow(row_count)
-    
-    # Add "Store Name", "Item Name", and "Item Type" explicitly
-            table_widget.setItem(row_count, 0, QTableWidgetItem(item.get("storeName", "")))
-            table_widget.setItem(row_count, 1, QTableWidgetItem(item.get("itemName", "")))
-            table_widget.setItem(row_count, 2, QTableWidgetItem(item.get("itemType", "")))
+
+            # Add "Store Name", "Item Name", and "Item Type" explicitly
+            table_widget.setItem(
+                row_count, 0, QTableWidgetItem(item.get("storeName", ""))
+            )
+            table_widget.setItem(
+                row_count, 1, QTableWidgetItem(item.get("itemName", ""))
+            )
+            table_widget.setItem(
+                row_count, 2, QTableWidgetItem(item.get("itemType", ""))
+            )
 
             for col, header in enumerate(headers[3:], start=3):
                 item_value = item.get(header.lower(), "")
                 table_item = QTableWidgetItem(str(item_value))
-                table_item.setFlags(table_item.flags() ^ Qt.ItemIsEditable)  # Make cell non-editable
+                table_item.setFlags(
+                    table_item.flags() ^ Qt.ItemIsEditable
+                )  # Make cell non-editable
                 table_widget.setItem(row_count, col, table_item)
-        
+
             button = QPushButton("Add")
-            button.setStyleSheet("color: gray;")
+            button.setStyleSheet(
+                "background-color: rgb(140, 140, 140); color: rgb(0, 0, 0);"
+            )
             button.clicked.connect(self.openAddBasketPage)
-            table_widget.setCellWidget(row_count, len(headers)-1, button)  # Add button to the second last column
-    
-    # Set the background color of the row to white
+            table_widget.setCellWidget(
+                row_count, len(headers) - 1, button
+            )  # Add button to the second last column
+
+            # Set the background color of the row to white
             for col in range(len(headers)):
                 table_widget.item(row_count, col).setBackground(Qt.white)
-    
-        if table_widget.parent() != layout:
-            scroll_area = QScrollArea()
-            scroll_area.setWidgetResizable(True)
-            scroll_area.setWidget(table_widget)
-            layout.addWidget(scroll_area)
+
+        # table_widget.setMaximumHeight(600)
+
+        # Add the table to the layout
+        layout.addWidget(table_widget)
 
     def openMain_Page(self):
         self.main = Mainpage.MainPage()
@@ -152,9 +292,6 @@ class Stores(QWidget):
     def openAddBasketPage(self):
         self.main = openAddBasketPage.add_basket()
         self.main.show()
-        
-    def test(self):
+
+    def search_page(self):
         pass
-
-
-

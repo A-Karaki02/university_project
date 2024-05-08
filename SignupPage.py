@@ -34,7 +34,7 @@ class SignUpPage(QWidget):
         self.label_build_smart = QLabel("BuildSmart", self)
         self.label_build_smart.setGeometry(0, 50, 1200, 100)
         self.label_build_smart.setStyleSheet(
-            "font-size: 32px;color: rgb(0, 0, 0); background-color: rgb(140, 140, 140);font-style: italic;font-weight: bold;"
+            "font-size: 32px;color: rgb(0, 0, 0); background-color: rgb(131, 170,229);font-style: italic;font-weight: bold;"
         )  # Gray text on gray background
         self.label_build_smart.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
 
@@ -43,7 +43,7 @@ class SignUpPage(QWidget):
         self.first_name_textbox.setGeometry(450, 200, 125, 30)
         self.first_name_textbox.setPlaceholderText("First Name")
         self.first_name_textbox.setStyleSheet(
-            "background-color: rgb(255, 255, 255);"
+            "background-color: rgb(237, 237, 237);border: 2px solid gray;"
         )  # White
 
         # the textbox for last Name
@@ -51,7 +51,7 @@ class SignUpPage(QWidget):
         self.last_name_textbox.setGeometry(625, 200, 125, 30)
         self.last_name_textbox.setPlaceholderText("Last Name")
         self.last_name_textbox.setStyleSheet(
-            "background-color: rgb(255, 255, 255);"
+            "background-color: rgb(237, 237, 237);border: 2px solid gray;"
         )  # White
 
         # the textbox for Email
@@ -59,7 +59,7 @@ class SignUpPage(QWidget):
         self.email_textbox.setGeometry(450, 250, 300, 30)
         self.email_textbox.setPlaceholderText("Email")
         self.email_textbox.setStyleSheet(
-            "background-color: rgb(255, 255, 255);"
+            "background-color: rgb(237, 237, 237);border: 2px solid gray;"
         )  # White
 
         # the textbox for Password
@@ -67,7 +67,7 @@ class SignUpPage(QWidget):
         self.password_textbox.setGeometry(450, 300, 300, 30)
         self.password_textbox.setPlaceholderText("Password")
         self.password_textbox.setStyleSheet(
-            "background-color: rgb(255, 255, 255);"
+            "background-color: rgb(237, 237, 237);border: 2px solid gray;"
         )  # White
 
         # the textbox for Confirm Password
@@ -75,7 +75,7 @@ class SignUpPage(QWidget):
         self.confirm_password_textbox.setGeometry(450, 350, 300, 30)
         self.confirm_password_textbox.setPlaceholderText("Confirm Password")
         self.confirm_password_textbox.setStyleSheet(
-            "background-color: rgb(255, 255, 255);"
+            "background-color: rgb(237, 237, 237);border: 2px solid gray;"
         )  # White
 
         # the textbox for User Name
@@ -83,7 +83,7 @@ class SignUpPage(QWidget):
         self.username_textbox.setGeometry(450, 400, 300, 30)
         self.username_textbox.setPlaceholderText("User Name")
         self.username_textbox.setStyleSheet(
-            "background-color: rgb(255, 255, 255);"
+            "background-color: rgb(237, 237, 237);border: 2px solid gray;"
         )  # White
 
         # the textbox for Phone Number
@@ -91,13 +91,13 @@ class SignUpPage(QWidget):
         self.phone_number_textbox.setGeometry(450, 450, 300, 30)
         self.phone_number_textbox.setPlaceholderText("Phone Number")
         self.phone_number_textbox.setStyleSheet(
-            "background-color: rgb(255, 255, 255);"
+            "background-color: rgb(237, 237, 237);border: 2px solid gray;"
         )  # White
 
         self.__supplier_checkbox = QCheckBox("Supplier", self)
         self.__supplier_checkbox.setGeometry(625, 500, 125, 30)
         self.__supplier_checkbox.setStyleSheet(
-            "QCheckBox { color: rgb(255, 255, 255); }"
+            "QCheckBox { color: rgb(0,0,0); font-weight: bold;}"
         )
         self.__supplier_checkbox.toggled.connect(self.checkbox_changed)
 
@@ -105,7 +105,7 @@ class SignUpPage(QWidget):
         self.store_name_textbox.setGeometry(450, 500, 125, 30)
         self.store_name_textbox.setPlaceholderText("Store Name")
         self.store_name_textbox.setStyleSheet(
-            "background-color: rgb(255, 255, 255);"
+            "background-color: rgb(237, 237, 237);border: 2px solid gray;"
         )  # White
         self.store_name_textbox.setEnabled(False)
 
@@ -113,26 +113,26 @@ class SignUpPage(QWidget):
         self.signup_button = QPushButton("Sign Up", self)
         self.signup_button.setGeometry(625, 550, 125, 30)
         self.signup_button.setStyleSheet(
-            "background-color: rgb(255, 255, 255);"
+            "background-color: rgb(131, 170,229);font-weight: bold;"
         )  # White
         self.signup_button.clicked.connect(self.openLoginPage)
 
         # back button
         self.back_button = QPushButton("Back", self)
         self.back_button.setGeometry(450, 550, 125, 30)
-        self.back_button.setStyleSheet("background-color: rgb(255, 255, 255);")  # White
+        self.back_button.setStyleSheet("background-color: rgb(237, 237, 237);font-weight: bold;border: 2px solid gray")  # White
         self.back_button.clicked.connect(self.backButtonFunciton)
 
         # the label for the contact
         self.contact_label = QLabel(
-            "Contact Us\nEmail: jom.proj@gmail.com\nTelephone: 0798727686\nFax: 06111111",
+            "Contact Us\nEmail: jom.proj@gmail.com\nTelephone: 0798727686\nFax: 06111111;font-weight: bold;",
             self,
         )
         self.contact_label.setGeometry(50, 500, 200, 100)
-        self.contact_label.setStyleSheet("color: rgb(140, 140, 140);")  # gray
+        self.contact_label.setStyleSheet("color: rgb(140, 140, 140);font-weight: bold;")  # gray
 
         # Set background color using RGB for the window
-        self.setStyleSheet("background-color: rgb(0, 0, 0);font-weight: bold;")  # Black
+        self.setStyleSheet("background-color: rgb(255, 255, 255)")  # Black
 
         self.show()
 

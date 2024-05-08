@@ -43,13 +43,13 @@ class MainPage(QWidget):
         layout.addLayout(grid_layout)
         layout.addStretch(2)
 
-        self.setStyleSheet("background-color: rgb(0, 0, 0);font-weight: bold;")  # Black
+        self.setStyleSheet("background-color: rgb(255, 255, 255);font-weight: bold;")  # Black
         self.show()
 
     def add_button(self, button_text, row, col, layout, click_handler):
         button = QPushButton(button_text, self)
         button.clicked.connect(click_handler)
-        button.setStyleSheet("background-color: rgb(255, 255, 255);")  # White
+        button.setStyleSheet("background-color: rgb(131, 170,229);font-weight: bold;")  # White
         button.setFixedWidth(400)
         button.setFixedHeight(70)
         layout.addWidget(button, row, col)
@@ -68,12 +68,11 @@ class MainPage(QWidget):
         dropdown.setFixedWidth(120)
         v_layout.addWidget(dropdown)
         v_layout.setAlignment(dropdown, Qt.AlignRight)  # Align dropdown to the right
-        v_layout.addStretch(1)
         layout.addLayout(v_layout)
 
         label = QLabel(text, self)
         label.setStyleSheet(
-            "font-size: 32px;color: rgb(0, 0, 0); background-color: rgb(140, 140, 140);font-style: italic;font-weight: bold;"
+            "font-size: 32px;color: rgb(0, 0, 0); background-color: rgb(131, 170,229);font-style: italic;font-weight: bold;"
         )
         label.setAlignment(Qt.AlignCenter)
         label.setFixedHeight(100)

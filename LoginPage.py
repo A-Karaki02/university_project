@@ -28,7 +28,7 @@ class LoginPage(QWidget):
         self.email_textbox.setGeometry(450, 250, 300, 30)
         self.email_textbox.setPlaceholderText("Email")
         self.email_textbox.setStyleSheet(
-            "background-color: rgb(255, 255, 255);"
+            "background-color: rgb(237, 237, 237);border: 2px solid gray;"
         )  # White
 
         # the textbox for password
@@ -36,7 +36,7 @@ class LoginPage(QWidget):
         self.password_textbox.setGeometry(450, 300, 300, 30)
         self.password_textbox.setPlaceholderText("Password")
         self.password_textbox.setStyleSheet(
-            "background-color: rgb(255, 255, 255);"
+            "background-color: rgb(237, 237, 237);border: 2px solid gray;;"
         )  # White
         self.password_textbox.setEchoMode(QLineEdit.Password)
 
@@ -45,7 +45,7 @@ class LoginPage(QWidget):
         self.login_button.setGeometry(500, 350, 200, 30)
         self.login_button.clicked.connect(self.handle_login_click)
         self.login_button.setStyleSheet(
-            "background-color: rgb(255, 255, 255);"
+            "background-color: rgb(237, 237, 237);font-weight: bold;border: 2px solid gray"
         )  # White
 
         # the button for Sign Up
@@ -53,12 +53,12 @@ class LoginPage(QWidget):
         self.signup_button.setGeometry(525, 400, 150, 30)
         self.signup_button.clicked.connect(self.openSignupPage)
         self.signup_button.setStyleSheet(
-            "background-color: rgb(255, 255, 255);"
+            "background-color: rgb(131, 170,229);font-weight: bold;"
         )  # White
 
         # the label for the contact
         self.contact_label1 = QLabel(
-            "Contact Us\nEmail: jom.proj@gmail.com\nTelephone: 0798727686\nFax: 06111111",
+            "Contact Us\nEmail: jom.proj@gmail.com\nTelephone: 0798727686\nFax: 06111111;font-weight: bold;",
             self,
         )
         self.contact_label1.setGeometry(50, 500, 200, 100)
@@ -68,12 +68,12 @@ class LoginPage(QWidget):
         self.label_build_smart = QLabel("BuildSmart", self)
         self.label_build_smart.setGeometry(0, 50, 1200, 100)
         self.label_build_smart.setStyleSheet(
-            "font-size: 32px;color: rgb(0, 0, 0); background-color: rgb(140, 140, 140);font-style: italic;font-weight: bold;"
+            "font-size: 32px;color: rgb(0, 0, 0); background-color: rgb(131, 170,229);font-style: italic;font-weight: bold;"
         )  # Gray text on gray background
         self.label_build_smart.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
 
         # Set background color using RGB for the window
-        self.setStyleSheet("background-color: rgb(0, 0, 0);font-weight: bold;")  # Black
+        self.setStyleSheet("background-color: rgb(255, 255, 255);")  # Black
 
         self.show()
 

@@ -15,7 +15,7 @@ class add_basket(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle("Add a new Store")
+        self.setWindowTitle("Add To Basket")
         self.setFixedSize(400, 250)
 
         layout = QVBoxLayout(self)
@@ -34,7 +34,12 @@ class add_basket(QWidget):
         self.Price_label = QLabel("Price:")
         self.Price_edit = QLineEdit()  
         layout.addWidget(self.Price_label)
-        layout.addWidget(self.Price_edit)   
+        layout.addWidget(self.Price_edit)
+
+        self.Quantity_label = QLabel("Quantity:")
+        self.Quantity_edit = QLineEdit()  
+        layout.addWidget(self.Quantity_label)
+        layout.addWidget(self.Quantity_edit)   
 
         add_button = QPushButton("Add Item")
         add_button.clicked.connect(self.handle_add_item)
