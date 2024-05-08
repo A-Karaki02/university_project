@@ -1,7 +1,7 @@
 import sys
 
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,
+from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,QScrollArea,QHBoxLayout,QHeaderView,QTableWidgetItem,QTableWidget,
                                QLineEdit, QPushButton, QVBoxLayout, QWidget)
 
 import AddStore
@@ -9,6 +9,7 @@ import EditProfile
 import LoginPage
 import Mainpage
 import UserManager
+import openAddBasketPage
 
 
 class Stores(QWidget):
@@ -16,25 +17,38 @@ class Stores(QWidget):
         super().__init__()
         self.resize(initial_size)
         self.initUI()
+        self.table_widget = QTableWidget()
 
     def initUI(self):
         layout = QVBoxLayout(self)
-
+        self.table_widget = QTableWidget()
         self.setWindowTitle("GRADUATION PROJECT")
         # self.setGeometry(100, 100, 1200, 600)
 
         layout.addSpacing(20)
         self.add_logo_label("BuildSmart", layout)
+        layout.addSpacing(10)
+        labels_layout = QHBoxLayout()
+        layout.addLayout(labels_layout)
+        
+        
+        self.add_top_down_list([{"itemName": "iron", "storeName": "Jameed02", "price": 200, "quantity": 30, "itemType": "iron and cement"},
+                                {"itemName": "iron", "storeName": "Jameed02", "price": 200, "quantity": 30, "itemType": "iron and cement"},
+                                {"itemName": "iron", "storeName": "Jameed02", "price": 200, "quantity": 30, "itemType": "iron and cement"}], self.table_widget, layout)
+        layout.addSpacing(10)
         layout.addStretch(2)
 
         grid_layout = QGridLayout()
         layout.addLayout(grid_layout)
+
         self.add_button("Add", 0, 5, grid_layout, self.openAddStorePage)
 
         self.add_button("Back", 100, 0, grid_layout, self.openMain_Page)
         self.add_button("Done", 100, 5, grid_layout, self.openMain_Page)
 
         self.add_button("test", 0, 0, grid_layout, self.test)
+
+        
 
         self.setStyleSheet("background-color: rgb(0, 0, 0);font-weight: bold;")  # Black
         self.show()
@@ -74,6 +88,42 @@ class Stores(QWidget):
         button.setFixedHeight(35)
         layout.addWidget(button, row, col)
 
+    def add_top_down_list(self, items, table_widget, layout):
+        headers = ["Store Name", "Item Name", "Item Type", "Price", "Quantity", "Add To Basket"]
+        table_widget.setColumnCount(len(headers))
+        table_widget.setHorizontalHeaderLabels(headers)
+        header = table_widget.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.Stretch)
+        for item in items:
+            row_count = table_widget.rowCount()
+            table_widget.insertRow(row_count)
+    
+    # Add "Store Name", "Item Name", and "Item Type" explicitly
+            table_widget.setItem(row_count, 0, QTableWidgetItem(item.get("storeName", "")))
+            table_widget.setItem(row_count, 1, QTableWidgetItem(item.get("itemName", "")))
+            table_widget.setItem(row_count, 2, QTableWidgetItem(item.get("itemType", "")))
+
+            for col, header in enumerate(headers[3:], start=3):
+                item_value = item.get(header.lower(), "")
+                table_item = QTableWidgetItem(str(item_value))
+                table_item.setFlags(table_item.flags() ^ Qt.ItemIsEditable)  # Make cell non-editable
+                table_widget.setItem(row_count, col, table_item)
+        
+            button = QPushButton("Add")
+            button.setStyleSheet("color: gray;")
+            button.clicked.connect(self.openAddBasketPage)
+            table_widget.setCellWidget(row_count, len(headers)-1, button)  # Add button to the second last column
+    
+    # Set the background color of the row to white
+            for col in range(len(headers)):
+                table_widget.item(row_count, col).setBackground(Qt.white)
+    
+        if table_widget.parent() != layout:
+            scroll_area = QScrollArea()
+            scroll_area.setWidgetResizable(True)
+            scroll_area.setWidget(table_widget)
+            layout.addWidget(scroll_area)
+
     def openMain_Page(self):
         self.main = Mainpage.MainPage()
         self.main.show()
@@ -99,11 +149,12 @@ class Stores(QWidget):
         self.add_store_page = AddStore.add_store()
         self.add_store_page.show()
 
+    def openAddBasketPage(self):
+        self.main = openAddBasketPage.add_basket()
+        self.main.show()
+        
     def test(self):
         pass
 
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    ex = Stores()
-    sys.exit(app.exec())
+
