@@ -24,7 +24,7 @@ class MainPage(QWidget):
     def initUI(self):
         layout = QVBoxLayout(self)
 
-        self.resize(1200, 600)
+        self.setGeometry(100,100,1200,600)
         self.initial_geometry = self.geometry()
         self.setWindowTitle("GRADUATION PROJECT")
 
@@ -95,27 +95,27 @@ class MainPage(QWidget):
             self.openLoginPage_Page()
 
     def openBasket_Page(self):
-        self.Basket = Basket.Basket(self.size())
+        self.Basket = Basket.Basket_page()
         self.Basket.show()
         self.close()
 
     def openStore_Page(self):
-        self.Store = Stores.Stores(self.size())
+        self.Store = Stores.Stores()
         self.Store.show()
         self.close()
 
     def openequipment_Page(self):
-        self.Equipment = Equipment.EquipmentPrices(self.size())
+        self.Equipment = Equipment.EquipmentPrices()
         self.Equipment.show()
         self.close()
 
     def openstockes_Page(self):
-        self.Stockes = Stockes.Stocks(self.size())
+        self.Stockes = Stockes.Stocks()
         self.Stockes.show()
         self.close()
 
     def openEditProfile_Page(self):
-        self.Edit = EditProfile.EditProfile(self.size())
+        self.Edit = EditProfile.EditProfile()
         self.Edit.show()
         self.close()
 
@@ -129,8 +129,7 @@ class MainPage(QWidget):
         self.SignOut.show()
         self.close()
 
-    def on_second_window_resize(self, event):
-        self.resize(event.size())
+    
 
 
 if __name__ == "__main__":

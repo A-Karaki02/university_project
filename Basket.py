@@ -1,19 +1,21 @@
 import sys
-
+from PySide6.QtGui import QColor
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,QHBoxLayout,QSpacerItem,QSizePolicy,
+from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,QHBoxLayout,QSizePolicy,QSpacerItem,QHeaderView,QTableWidgetItem,
                                QLineEdit, QPushButton, QVBoxLayout, QWidget)
 
 import EditProfile
 import LoginPage
 import Mainpage
 import SignupPage
+import checkout
 from UserManager import user
 
-class Basket(QWidget):
-    def __init__(self,initial_size):
+
+class Basket_page(QWidget):
+    def __init__(self):
         super().__init__()
-        self.resize(initial_size)
+        
 
         self.initUI()
 
@@ -21,7 +23,7 @@ class Basket(QWidget):
         layout = QVBoxLayout(self)
 
         self.setWindowTitle("GRADUATION PROJECT")
-        #self.setGeometry(100, 100, 1200, 600)
+        self.setGeometry(100, 100, 1200, 600)
         
 
         layout.addSpacing(20)
@@ -30,12 +32,12 @@ class Basket(QWidget):
 
         grid_layout = QGridLayout()
         layout.addLayout(grid_layout)
-        self.add_button("Back", 5, 0, grid_layout, self.openMain_Page)
-        self.add_button("Done", 5, 2, grid_layout, self.openMain_Page)
+        self.add_button("Back", 0, 0, grid_layout, self.openMain_Page)
+        self.add_button("Checkout", 0, 2, grid_layout, self.openCheckout_Page)
 
-        self.add_button("test", 0, 0, grid_layout, self.test)
+        
 
-        self.setStyleSheet("background-color: rgb(255, 255, 255);font-weight: bold;")  # Black
+        self.setStyleSheet("background-color: rgb(255,255,255);font-weight: bold;")  # Black
         self.show()
 
     def add_dynamic_label(self, text, layout):
@@ -75,10 +77,71 @@ class Basket(QWidget):
     def add_button(self, button_text, row, col, layout, click_handler):
         button = QPushButton(button_text, self)
         button.clicked.connect(click_handler)
-        button.setStyleSheet("background-color: rgb(255, 255, 255);")  # White
+        button.setStyleSheet("background-color: rgb(131, 170, 229);")  # White
         button.setFixedWidth(300)
         button.setFixedHeight(35)
         layout.addWidget(button, row, col)
+
+    def add_top_down_list(self, items, table_widget, layout):
+        headers = [
+        "Store Name",
+        "Item Name",
+        "Item Type",
+        "Price",
+        "Quantity",
+        "Total",
+        "Remove",
+        ]
+        table_widget.setColumnCount(len(headers))
+        table_widget.setHorizontalHeaderLabels(headers)
+        header = table_widget.horizontalHeader()
+        header.setStyleSheet("background-color: rgb(131, 170, 229);")
+        header.setSectionResizeMode(QHeaderView.Stretch)
+        table_widget.verticalHeader().setVisible(False)  # Hide vertical header
+
+        for item in items:
+        # Add data rows
+            table_widget.insertRow(table_widget.rowCount())
+
+        # Add "Store Name", "Item Name", and "Item Type" explicitly
+            table_widget.setItem(
+            table_widget.rowCount() - 1, 0, QTableWidgetItem(item.get("storeName", ""))
+            )
+            table_widget.setItem(
+            table_widget.rowCount() - 1, 1, QTableWidgetItem(item.get("itemName", ""))
+            )
+            table_widget.setItem(
+            table_widget.rowCount() - 1, 2, QTableWidgetItem(item.get("itemType", ""))
+            )
+
+            for col, header_text in enumerate(headers[3:], start=3):
+                item_value = item.get(header_text.lower(), "")
+                table_item = QTableWidgetItem(str(item_value))
+                table_item.setFlags(
+                table_item.flags() ^ Qt.ItemIsEditable
+                )  # Make cell non-editable
+                table_widget.setItem(table_widget.rowCount() - 1, col, table_item)
+                table_item.setForeground(Qt.black)  # Set text color to black for all columns
+
+            button = QPushButton("Add")
+            button.setStyleSheet(
+            "background-color: rgb(131, 170,229);font-weight: bold;;"
+            )
+            button.clicked.connect(self.openAddBasketPage)
+            table_widget.setCellWidget(
+            table_widget.rowCount() - 1, len(headers) - 1, button
+            )  # Add button to the second last column
+
+        # Set the background color of the row to white
+            for col in range(len(headers)):
+                if table_widget.item(table_widget.rowCount() - 1, col) is not None:
+                    table_widget.item(table_widget.rowCount() - 1, col).setBackground(QColor(235, 235, 235))
+
+    # Add borders between all rows and columns
+        table_widget.setStyleSheet("border: 2px solid black;")
+
+    # Add the table to the layout
+        layout.addWidget(table_widget)
 
     def openMain_Page(self):
         self.main = Mainpage.MainPage()
@@ -101,5 +164,7 @@ class Basket(QWidget):
         self.SignOut.show()
         self.close()
 
-    def test(self):
-        pass
+    def openCheckout_Page(self):
+        self.Checkout = checkout.Checkout_page()
+        self.main.show()
+        self.close()

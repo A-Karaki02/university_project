@@ -1,6 +1,7 @@
 import sys
 
 from PySide6.QtCore import QSize, Qt
+from PySide6.QtGui import QColor
 from PySide6.QtWidgets import (
     QApplication,
     QComboBox,
@@ -16,30 +17,34 @@ from PySide6.QtWidgets import (
     QPushButton,
     QVBoxLayout,
     QWidget,
-    QSpacerItem
+    QSpacerItem,
+
+    
 )
 
 import AddStore
+import Basket
 import EditProfile
 import LoginPage
 import Mainpage
 import UserManager
 import openAddBasketPage
+import search
 from UserManager import user
 
 
 class Stores(QWidget):
-    def __init__(self, initial_size):
+    def __init__(self):
         super().__init__()
-        self.resize(initial_size)
+        
         self.initUI()
-        self.table_widget = QTableWidget()
+        
 
     def initUI(self):
         layout = QVBoxLayout(self)
         self.table_widget = QTableWidget()
         self.setWindowTitle("GRADUATION PROJECT")
-        # self.setGeometry(100, 100, 1200, 600)
+        self.setGeometry(100, 100, 1200, 600)
 
         layout.addSpacing(20)
         self.add_dynamic_label("BuildSmart", layout)
@@ -167,12 +172,11 @@ class Stores(QWidget):
         grid_layout = QGridLayout()
         layout.addLayout(grid_layout)
 
-        self.add_button("Add", 0, 5, grid_layout, self.openAddStorePage)
+        self.add_button("Add", 1, 1, grid_layout, self.openAddStorePage)
+        self.add_button("Go To Basket", 0, 1, grid_layout, self.openBasket_Page)
+        self.add_button("Back", 1, 0, grid_layout, self.openMain_Page)
 
-        self.add_button("Back", 100, 0, grid_layout, self.openMain_Page)
-        self.add_button("Done", 100, 5, grid_layout, self.openMain_Page)
-
-        self.add_button("test", 0, 0, grid_layout, self.search_page)
+        self.add_button("Search", 0, 0, grid_layout, self.search_page)
 
         self.setStyleSheet("background-color: rgb(255, 255, 255);font-weight: bold;")  # Black
         self.show()
@@ -214,64 +218,81 @@ class Stores(QWidget):
     def add_button(self, button_text, row, col, layout, click_handler):
         button = QPushButton(button_text, self)
         button.clicked.connect(click_handler)
-        button.setStyleSheet("background-color: rgb(255, 255, 255);")  # White
+        button.setStyleSheet("background-color: rgb(131, 170, 229);")  # White
         button.setFixedWidth(300)
         button.setFixedHeight(35)
         layout.addWidget(button, row, col)
 
+    from PySide6.QtWidgets import QHeaderView, QTableWidgetItem, QPushButton
+
     def add_top_down_list(self, items, table_widget, layout):
         headers = [
-            "Store Name",
-            "Item Name",
-            "Item Type",
-            "Price",
-            "Quantity",
-            "Add To Basket",
+        "Store Name",
+        "Item Name",
+        "Item Type",
+        "Price",
+        "Quantity",
+        "Add To Basket",
         ]
         table_widget.setColumnCount(len(headers))
         table_widget.setHorizontalHeaderLabels(headers)
         header = table_widget.horizontalHeader()
+        header.setStyleSheet("background-color: rgb(131, 170, 229);")
         header.setSectionResizeMode(QHeaderView.Stretch)
+        table_widget.verticalHeader().setVisible(False)  # Hide vertical header
+        table_widget.verticalHeader().setDefaultSectionSize(30)
+        
         for item in items:
-            row_count = table_widget.rowCount()
-            table_widget.insertRow(row_count)
+        # Add data rows
+            table_widget.insertRow(table_widget.rowCount())
 
-            # Add "Store Name", "Item Name", and "Item Type" explicitly
+        # Add "Store Name", "Item Name", and "Item Type" explicitly
             table_widget.setItem(
-                row_count, 0, QTableWidgetItem(item.get("storeName", ""))
+            table_widget.rowCount() - 1, 0, QTableWidgetItem(item.get("storeName", ""))
             )
             table_widget.setItem(
-                row_count, 1, QTableWidgetItem(item.get("itemName", ""))
+            table_widget.rowCount() - 1, 1, QTableWidgetItem(item.get("itemName", ""))
             )
             table_widget.setItem(
-                row_count, 2, QTableWidgetItem(item.get("itemType", ""))
+            table_widget.rowCount() - 1, 2, QTableWidgetItem(item.get("itemType", ""))
             )
 
-            for col, header in enumerate(headers[3:], start=3):
-                item_value = item.get(header.lower(), "")
+            for col, header_text in enumerate(headers[3:], start=3):
+                item_value = item.get(header_text.lower(), "")
                 table_item = QTableWidgetItem(str(item_value))
                 table_item.setFlags(
-                    table_item.flags() ^ Qt.ItemIsEditable
+                table_item.flags() ^ Qt.ItemIsEditable
                 )  # Make cell non-editable
-                table_widget.setItem(row_count, col, table_item)
+                table_widget.setItem(table_widget.rowCount() - 1, col, table_item)
+                table_item.setForeground(Qt.black)  # Set text color to black for all columns
 
             button = QPushButton("Add")
             button.setStyleSheet(
-                "background-color: rgb(131, 170,229);font-weight: bold;;"
+            "background-color: rgb(131, 170,229);font-weight: bold;;"
             )
             button.clicked.connect(self.openAddBasketPage)
             table_widget.setCellWidget(
-                row_count, len(headers) - 1, button
+            table_widget.rowCount() - 1, len(headers) - 1, button
             )  # Add button to the second last column
 
-            # Set the background color of the row to white
+        # Set the background color of the row to white
             for col in range(len(headers)):
-                table_widget.item(row_count, col).setBackground(Qt.white)
+                if table_widget.item(table_widget.rowCount() - 1, col) is not None:
+                    table_widget.item(table_widget.rowCount() - 1, col).setBackground(QColor(235, 235, 235))
+        
+    # Add borders between all rows and columns
+        table_widget.setStyleSheet("""
+        QTableView QTableCornerButton::section,
+        QTableView::section {
+            border: 1px solid black;
+            border-right: none;  /* Remove right border to avoid double border with neighboring cell */
+            border-bottom: none; /* Remove bottom border to avoid double border with neighboring cell */
+        }
+    """)
 
-        # table_widget.setMaximumHeight(600)
-
-        # Add the table to the layout
+    # Add the table to the layout
         layout.addWidget(table_widget)
+
 
     def openMain_Page(self):
         self.main = Mainpage.MainPage()
@@ -302,5 +323,12 @@ class Stores(QWidget):
         self.main = openAddBasketPage.add_basket()
         self.main.show()
 
+    def openBasket_Page(self):
+        self.Basket = Basket.Basket_page()
+        self.Basket.show()
+        self.close()
+
     def search_page(self):
-        pass
+        self.Search = search.serach_page()
+        self.Basket.show()
+        self.close()
