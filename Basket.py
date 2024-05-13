@@ -91,7 +91,7 @@ class Basket_page(QWidget):
         "Quantity",
         "Total",
         "Remove",
-        ]
+    ]
         table_widget.setColumnCount(len(headers))
         table_widget.setHorizontalHeaderLabels(headers)
         header = table_widget.horizontalHeader()
@@ -106,13 +106,13 @@ class Basket_page(QWidget):
         # Add "Store Name", "Item Name", and "Item Type" explicitly
             table_widget.setItem(
             table_widget.rowCount() - 1, 0, QTableWidgetItem(item.get("storeName", ""))
-            )
+        )
             table_widget.setItem(
             table_widget.rowCount() - 1, 1, QTableWidgetItem(item.get("itemName", ""))
-            )
+        )
             table_widget.setItem(
             table_widget.rowCount() - 1, 2, QTableWidgetItem(item.get("itemType", ""))
-            )
+        )
 
             for col, header_text in enumerate(headers[3:], start=3):
                 item_value = item.get(header_text.lower(), "")
@@ -123,14 +123,14 @@ class Basket_page(QWidget):
                 table_widget.setItem(table_widget.rowCount() - 1, col, table_item)
                 table_item.setForeground(Qt.black)  # Set text color to black for all columns
 
-            button = QPushButton("Add")
+            button = QPushButton("Click")
             button.setStyleSheet(
             "background-color: rgb(131, 170,229);font-weight: bold;;"
-            )
+        )
             button.clicked.connect(self.openAddBasketPage)
             table_widget.setCellWidget(
-            table_widget.rowCount() - 1, len(headers) - 1, button
-            )  # Add button to the second last column
+                table_widget.rowCount() - 1, len(headers) - 1, button
+        )  # Add button to the second last column
 
         # Set the background color of the row to white
             for col in range(len(headers)):
@@ -142,6 +142,9 @@ class Basket_page(QWidget):
 
     # Add the table to the layout
         layout.addWidget(table_widget)
+
+    # Connect signal for calculating total
+        table_widget.itemChanged.connect(self.calculate_total)
 
     def openMain_Page(self):
         self.main = Mainpage.MainPage()

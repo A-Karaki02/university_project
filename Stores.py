@@ -240,7 +240,7 @@ class Stores(QWidget):
         header.setStyleSheet("background-color: rgb(131, 170, 229);")
         header.setSectionResizeMode(QHeaderView.Stretch)
         table_widget.verticalHeader().setVisible(False)  # Hide vertical header
-        table_widget.verticalHeader().setDefaultSectionSize(30)
+
         
         for item in items:
         # Add data rows
@@ -281,14 +281,7 @@ class Stores(QWidget):
                     table_widget.item(table_widget.rowCount() - 1, col).setBackground(QColor(235, 235, 235))
         
     # Add borders between all rows and columns
-        table_widget.setStyleSheet("""
-        QTableView QTableCornerButton::section,
-        QTableView::section {
-            border: 1px solid black;
-            border-right: none;  /* Remove right border to avoid double border with neighboring cell */
-            border-bottom: none; /* Remove bottom border to avoid double border with neighboring cell */
-        }
-    """)
+        table_widget.setStyleSheet("border: 2px solid black;")
 
     # Add the table to the layout
         layout.addWidget(table_widget)
