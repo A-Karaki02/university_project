@@ -1,7 +1,7 @@
 import sys
 from PySide6.QtGui import QColor
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,QHBoxLayout,QSizePolicy,QSpacerItem,QHeaderView,QTableWidgetItem,
+from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,QHBoxLayout,QSizePolicy,QSpacerItem,QHeaderView,QTableWidgetItem,QTableWidget,
                                QLineEdit, QPushButton, QVBoxLayout, QWidget)
 
 import EditProfile
@@ -28,7 +28,20 @@ class Basket_page(QWidget):
 
         layout.addSpacing(20)
         self.add_dynamic_label("BuildSmart", layout)
-        layout.addStretch(2)
+        table_widget = QTableWidget()
+
+        # Sample data
+        items = [
+            {"storeName": "Store A", "itemName": "Item 1", "itemType": "Type X", "price": 10, "quantity": 2},
+            {"storeName": "Store B", "itemName": "Item 2", "itemType": "Type Y", "price": 20, "quantity": 3},
+            {"storeName": "Store C", "itemName": "Item 3", "itemType": "Type Z", "price": 30, "quantity": 1}
+        ]
+
+        # Add the table to the layout
+        self.add_top_down_list(items, table_widget, layout)
+
+        # Set the layout
+        self.setLayout(layout)
 
         grid_layout = QGridLayout()
         layout.addLayout(grid_layout)
@@ -77,21 +90,21 @@ class Basket_page(QWidget):
     def add_button(self, button_text, row, col, layout, click_handler):
         button = QPushButton(button_text, self)
         button.clicked.connect(click_handler)
-        button.setStyleSheet("background-color: rgb(131, 170, 229);")  # White
+        button.setStyleSheet("background-color: rgb(131, 170,229);font-weight: bold;border: 2px solid black;border-radius: 10px;box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);")  # White
         button.setFixedWidth(300)
         button.setFixedHeight(35)
         layout.addWidget(button, row, col)
 
     def add_top_down_list(self, items, table_widget, layout):
         headers = [
-        "Store Name",
-        "Item Name",
-        "Item Type",
-        "Price",
-        "Quantity",
-        "Total",
-        "Remove",
-    ]
+            "Store Name",
+            "Item Name",
+            "Item Type",
+            "Price",
+            "Quantity",
+            "Total",
+            "Remove",
+        ]
         table_widget.setColumnCount(len(headers))
         table_widget.setHorizontalHeaderLabels(headers)
         header = table_widget.horizontalHeader()
@@ -100,51 +113,46 @@ class Basket_page(QWidget):
         table_widget.verticalHeader().setVisible(False)  # Hide vertical header
 
         for item in items:
-        # Add data rows
+            # Add data rows
             table_widget.insertRow(table_widget.rowCount())
 
-        # Add "Store Name", "Item Name", and "Item Type" explicitly
-            table_widget.setItem(
-            table_widget.rowCount() - 1, 0, QTableWidgetItem(item.get("storeName", ""))
-        )
-            table_widget.setItem(
-            table_widget.rowCount() - 1, 1, QTableWidgetItem(item.get("itemName", ""))
-        )
-            table_widget.setItem(
-            table_widget.rowCount() - 1, 2, QTableWidgetItem(item.get("itemType", ""))
-        )
+            table_widget.setItem(table_widget.rowCount() - 1, 0, QTableWidgetItem(item.get("storeName", "")))
+            table_widget.setItem(table_widget.rowCount() - 1, 1, QTableWidgetItem(item.get("itemName", "")))
+            table_widget.setItem(table_widget.rowCount() - 1, 2, QTableWidgetItem(item.get("itemType", "")))
 
-            for col, header_text in enumerate(headers[3:], start=3):
+            # Add columns with item data
+            for col, header_text in enumerate(headers[3:]):
                 item_value = item.get(header_text.lower(), "")
                 table_item = QTableWidgetItem(str(item_value))
-                table_item.setFlags(
-                table_item.flags() ^ Qt.ItemIsEditable
-                )  # Make cell non-editable
-                table_widget.setItem(table_widget.rowCount() - 1, col, table_item)
-                table_item.setForeground(Qt.black)  # Set text color to black for all columns
+                table_item.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)  # Make cells non-editable
+                table_item.setForeground(Qt.black)  # Set text color to black
+                table_widget.setItem(table_widget.rowCount() - 1, col + 3, table_item)
+                
+            # Calculate total price dynamically and add it to the "Total" column
+            price = float(item.get("price", 0))
+            quantity = int(item.get("quantity", 0))
+            total = price * quantity
+            table_widget.setItem(table_widget.rowCount() - 1, 5, QTableWidgetItem(str(total)))
 
-            button = QPushButton("Click")
-            button.setStyleSheet(
-            "background-color: rgb(131, 170,229);font-weight: bold;;"
-        )
-            button.clicked.connect(self.openAddBasketPage)
-            table_widget.setCellWidget(
-                table_widget.rowCount() - 1, len(headers) - 1, button
-        )  # Add button to the second last column
+            # Add remove button to the "Remove" column
+            button = QPushButton("Remove")
+            button.setStyleSheet("background-color: rgb(255,0,0); font-weight: bold;")
+            button.clicked.connect(lambda _, row=table_widget.rowCount() - 1: self.remove_item(row, table_widget))
+            table_widget.setCellWidget(table_widget.rowCount() - 1, 6, button)
 
-        # Set the background color of the row to white
+            # Set the background color of the row to white
             for col in range(len(headers)):
                 if table_widget.item(table_widget.rowCount() - 1, col) is not None:
                     table_widget.item(table_widget.rowCount() - 1, col).setBackground(QColor(235, 235, 235))
 
-    # Add borders between all rows and columns
-        table_widget.setStyleSheet("border: 2px solid black;")
+        # Add borders between all rows and columns
+        table_widget.setStyleSheet("border: 2px solid black; font-size: 16px;")
 
-    # Add the table to the layout
+        # Add the table to the layout
         layout.addWidget(table_widget)
 
-    # Connect signal for calculating total
-        table_widget.itemChanged.connect(self.calculate_total)
+    def remove_item(self, row, table_widget):
+        table_widget.removeRow(row)
 
     def openMain_Page(self):
         self.main = Mainpage.MainPage()
@@ -169,5 +177,5 @@ class Basket_page(QWidget):
 
     def openCheckout_Page(self):
         self.Checkout = checkout.Checkout_page()
-        self.main.show()
+        self.Checkout.show()
         self.close()

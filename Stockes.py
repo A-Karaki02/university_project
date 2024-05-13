@@ -73,7 +73,7 @@ class Stocks(QWidget):
     def add_button(self, button_text, row, col, layout, click_handler):
         button = QPushButton(button_text, self)
         button.clicked.connect(click_handler)
-        button.setStyleSheet("background-color: rgb(255, 255, 255);")  # White
+        button.setStyleSheet("background-color: rgb(131, 170,229);font-weight: bold;border: 2px solid black;border-radius: 10px;box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);")  # White
         button.setFixedWidth(300)
         button.setFixedHeight(35)
         layout.addWidget(button, row, col)

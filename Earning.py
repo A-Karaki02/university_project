@@ -1,3 +1,4 @@
+'''
 import sys
 
 from PySide6.QtCore import QSize, Qt
@@ -101,3 +102,4 @@ class Earning_page(QWidget):
 
     def test(self):
         pass
+'''

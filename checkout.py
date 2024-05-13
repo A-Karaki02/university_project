@@ -16,13 +16,19 @@ class Checkout_page(QWidget):
 
     def initUI(self):
         self.setWindowTitle("Checkout")
-        self.setFixedSize(400, 250)
+        self.setFixedSize(450, 300)
 
         layout = QVBoxLayout(self)
 
         Item_type_label = QLabel("Payment Method:")
         self.Item_type_combo = QComboBox()
         self.Item_type_combo.addItems(["Visa", "MasterCard","Cash"])
+        layout.addWidget(Item_type_label)
+        layout.addWidget(self.Item_type_combo)
+
+        Item_type_label = QLabel("My Cards (Saved Cards):")
+        self.Item_type_combo = QComboBox()
+        self.Item_type_combo.addItems(["**** **** **** 1432", "**** **** **** 3729","**** **** **** 9284"])
         layout.addWidget(Item_type_label)
         layout.addWidget(self.Item_type_combo)
 

@@ -218,7 +218,7 @@ class Stores(QWidget):
     def add_button(self, button_text, row, col, layout, click_handler):
         button = QPushButton(button_text, self)
         button.clicked.connect(click_handler)
-        button.setStyleSheet("background-color: rgb(131, 170, 229);")  # White
+        button.setStyleSheet("background-color: rgb(131, 170,229);font-weight: bold;border: 2px solid black;border-radius: 10px;box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);")  # White
         button.setFixedWidth(300)
         button.setFixedHeight(35)
         layout.addWidget(button, row, col)
@@ -281,7 +281,7 @@ class Stores(QWidget):
                     table_widget.item(table_widget.rowCount() - 1, col).setBackground(QColor(235, 235, 235))
         
     # Add borders between all rows and columns
-        table_widget.setStyleSheet("border: 2px solid black;")
+        table_widget.setStyleSheet("border: 2px solid black;font-size: 16px;")
 
     # Add the table to the layout
         layout.addWidget(table_widget)

@@ -30,18 +30,18 @@ class MainPage(QWidget):
 
         layout.addSpacing(20)
         self.add_dynamic_label("BuildSmart", layout)
-        layout.addStretch(2)
+        layout.addStretch(1)
 
         grid_layout = QGridLayout()
         grid_layout.setSpacing(50)
-        self.add_button("Equipment Prices", 0, 0, grid_layout, self.openequipment_Page)
+        self.add_button("Earning", 0, 0, grid_layout, self.openequipment_Page)
         self.add_button("Stocks", 0, 1, grid_layout, self.openstockes_Page)
         self.add_button("Store", 1, 0, grid_layout, self.openStore_Page)
         self.add_button("Basket", 1, 1, grid_layout, self.openBasket_Page)
-        self.add_button("Earning", 2, 0, grid_layout, self.open_earning_page)
+        #self.add_button("Earning", 2, 0, grid_layout, self.open_earning_page)
 
         layout.addLayout(grid_layout)
-        layout.addStretch(2)
+        layout.addStretch(1)
 
         self.setStyleSheet("background-color: rgb(255, 255, 255);font-weight: bold;")  # Black
         self.show()
@@ -49,7 +49,7 @@ class MainPage(QWidget):
     def add_button(self, button_text, row, col, layout, click_handler):
         button = QPushButton(button_text, self)
         button.clicked.connect(click_handler)
-        button.setStyleSheet("background-color: rgb(131, 170,229);font-weight: bold;")  # White
+        button.setStyleSheet("background-color: rgb(131, 170,229);font-weight: bold;border: 2px solid black;border-radius: 10px;box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);")  # White
         button.setFixedWidth(400)
         button.setFixedHeight(70)
         layout.addWidget(button, row, col)
