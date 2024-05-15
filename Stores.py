@@ -1,184 +1,56 @@
 import sys
 
-from PySide6.QtCore import QSize, Qt
+from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor
-from PySide6.QtWidgets import (
-    QApplication,
-    QComboBox,
-    QGridLayout,
-    QLabel,
-    QScrollArea,
-    QHBoxLayout,
-    QHeaderView,
-    QTableWidgetItem,
-    QTableWidget,
-    QSizePolicy,
-    QLineEdit,
-    QPushButton,
-    QVBoxLayout,
-    QWidget,
-    QSpacerItem,
-
-    
-)
+from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout,
+                               QHBoxLayout, QHeaderView, QLabel, QPushButton,
+                               QSizePolicy, QSpacerItem, QTableWidget,
+                               QTableWidgetItem, QVBoxLayout, QWidget)
 
 import AddStore
 import Basket
 import EditProfile
 import LoginPage
 import Mainpage
-import UserManager
-import openAddBasketPage
 import search
+from DataBase import DataBase
 from UserManager import user
 
+# Firebase setup
+db = DataBase.firebase.database()
 
 class Stores(QWidget):
     def __init__(self):
         super().__init__()
-        
         self.initUI()
-        
+        self.load_items()
 
     def initUI(self):
-        layout = QVBoxLayout(self)
-        self.table_widget = QTableWidget()
+        self.layout = QVBoxLayout(self)
+        self.setLayout(self.layout)  # Set the main layout of the widget
         self.setWindowTitle("GRADUATION PROJECT")
         self.setGeometry(100, 100, 1200, 600)
 
-        layout.addSpacing(20)
-        self.add_dynamic_label("BuildSmart", layout)
-        layout.addSpacing(20)
+        self.layout.addSpacing(20)
+        self.add_dynamic_label("BuildSmart", self.layout)
+        self.layout.addSpacing(20)
 
-        table_layout = QVBoxLayout()
-        layout.addLayout(table_layout)
+        self.table_widget = QTableWidget()
+        self.add_top_down_list([], self.table_widget)  # Initialize with empty data
+        self.layout.addWidget(self.table_widget)  # Add the table widget to the main layout
 
-        labels_layout = QHBoxLayout()
-        table_layout.addLayout(labels_layout)
+        self.layout.addSpacing(10)
 
-        self.add_top_down_list(
-            [
-                {
-                    "itemName": "iron",
-                    "storeName": "Jameed02",
-                    "price": 200,
-                    "quantity": 30,
-                    "itemType": "iron and cement",
-                },
-                {
-                    "itemName": "iron",
-                    "storeName": "Jameed02",
-                    "price": 200,
-                    "quantity": 30,
-                    "itemType": "iron and cement",
-                },
-                {
-                    "itemName": "iron",
-                    "storeName": "Jameed02",
-                    "price": 200,
-                    "quantity": 30,
-                    "itemType": "iron and cement",
-                },
-                {
-                    "itemName": "iron",
-                    "storeName": "Jameed02",
-                    "price": 200,
-                    "quantity": 30,
-                    "itemType": "iron and cement",
-                },
-                {
-                    "itemName": "iron",
-                    "storeName": "Jameed02",
-                    "price": 200,
-                    "quantity": 30,
-                    "itemType": "iron and cement",
-                },
-                {
-                    "itemName": "iron",
-                    "storeName": "Jameed02",
-                    "price": 200,
-                    "quantity": 30,
-                    "itemType": "iron and cement",
-                },
-                {
-                    "itemName": "iron",
-                    "storeName": "Jameed02",
-                    "price": 200,
-                    "quantity": 30,
-                    "itemType": "iron and cement",
-                },
-                {
-                    "itemName": "iron",
-                    "storeName": "Jameed02",
-                    "price": 200,
-                    "quantity": 30,
-                    "itemType": "iron and cement",
-                },
-                {
-                    "itemName": "iron",
-                    "storeName": "Jameed02",
-                    "price": 200,
-                    "quantity": 30,
-                    "itemType": "iron and cement",
-                },
-                {
-                    "itemName": "iron",
-                    "storeName": "Jameed02",
-                    "price": 200,
-                    "quantity": 30,
-                    "itemType": "iron and cement",
-                },
-                {
-                    "itemName": "iron",
-                    "storeName": "Jameed02",
-                    "price": 200,
-                    "quantity": 30,
-                    "itemType": "iron and cement",
-                },
-                {
-                    "itemName": "iron",
-                    "storeName": "Jameed02",
-                    "price": 200,
-                    "quantity": 30,
-                    "itemType": "iron and cement",
-                },
-                {
-                    "itemName": "iron",
-                    "storeName": "Jameed02",
-                    "price": 200,
-                    "quantity": 30,
-                    "itemType": "iron and cement",
-                },
-                {
-                    "itemName": "iron",
-                    "storeName": "Jameed02",
-                    "price": 200,
-                    "quantity": 30,
-                    "itemType": "iron and cement",
-                },
-                {
-                    "itemName": "iron",
-                    "storeName": "Jameed02",
-                    "price": 200,
-                    "quantity": 30,
-                    "itemType": "iron and cement",
-                },
-            ],
-            self.table_widget,
-            table_layout,
-        )
-        layout.addSpacing(10)
-
+        # Create a new layout for the buttons
         grid_layout = QGridLayout()
-        layout.addLayout(grid_layout)
+        self.layout.addLayout(grid_layout)
 
         self.add_button("Add", 1, 1, grid_layout, self.openAddStorePage)
         self.add_button("Go To Basket", 0, 1, grid_layout, self.openBasket_Page)
         self.add_button("Back", 1, 0, grid_layout, self.openMain_Page)
-
         self.add_button("Search", 0, 0, grid_layout, self.search_page)
 
-        self.setStyleSheet("background-color: rgb(255, 255, 255);font-weight: bold;")  # Black
+        self.setStyleSheet("background-color: rgb(255, 255, 255);font-weight: bold;")  # White background
         self.show()
 
     def add_dynamic_label(self, text, layout):
@@ -189,7 +61,7 @@ class Stores(QWidget):
 
         label = QLabel(text, self)
         label.setStyleSheet(
-        "font-size: 32px;color: rgb(0, 0, 0);font-style: italic;font-weight: bold; background-color: rgb(131, 170, 229);"
+            "font-size: 32px;color: rgb(0, 0, 0);font-style: italic;font-weight: bold; background-color: rgb(131, 170, 229);"
         )
         label.setAlignment(Qt.AlignCenter)
         label.setFixedHeight(60)
@@ -200,11 +72,9 @@ class Stores(QWidget):
         h_layout.addItem(spacer)  # Add spacer to push the dropdown to the right
 
         dropdown = QComboBox(self)
-        dropdown.addItems(
-        [user.get_username(), "Edit Profile", "Sign Out"]
-        )
+        dropdown.addItems([user.get_username(), "Edit Profile", "Sign Out"])
         dropdown.setStyleSheet(
-        "background-color: rgb(131, 170, 229); color: rgb(0, 0, 0);border: 2px solid black;"
+            "background-color: rgb(131, 170, 229); color: rgb(0, 0, 0);border: 2px solid black;"
         )
         dropdown.setFixedHeight(30)
         dropdown.setFixedWidth(120)
@@ -218,21 +88,19 @@ class Stores(QWidget):
     def add_button(self, button_text, row, col, layout, click_handler):
         button = QPushButton(button_text, self)
         button.clicked.connect(click_handler)
-        button.setStyleSheet("background-color: rgb(131, 170,229);font-weight: bold;border: 2px solid black;border-radius: 10px;box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);")  # White
+        button.setStyleSheet("background-color: rgb(131, 170,229);font-weight: bold;border: 2px solid black;border-radius: 10px;box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);")  # Button style
         button.setFixedWidth(300)
         button.setFixedHeight(35)
         layout.addWidget(button, row, col)
 
-    from PySide6.QtWidgets import QHeaderView, QTableWidgetItem, QPushButton
-
-    def add_top_down_list(self, items, table_widget, layout):
+    def add_top_down_list(self, items, table_widget):
         headers = [
-        "Store Name",
-        "Item Name",
-        "Item Type",
-        "Price",
-        "Quantity",
-        "Add To Basket",
+            "Store Name",
+            "Item Name",
+            "Item Type",
+            "Price",
+            "Quantity",
+            "Add To Basket",
         ]
         table_widget.setColumnCount(len(headers))
         table_widget.setHorizontalHeaderLabels(headers)
@@ -241,51 +109,50 @@ class Stores(QWidget):
         header.setSectionResizeMode(QHeaderView.Stretch)
         table_widget.verticalHeader().setVisible(False)  # Hide vertical header
 
-        
         for item in items:
-        # Add data rows
-            table_widget.insertRow(table_widget.rowCount())
+            # Add data rows
+            row_count = table_widget.rowCount()
+            table_widget.insertRow(row_count)
 
-        # Add "Store Name", "Item Name", and "Item Type" explicitly
-            table_widget.setItem(
-            table_widget.rowCount() - 1, 0, QTableWidgetItem(item.get("storeName", ""))
-            )
-            table_widget.setItem(
-            table_widget.rowCount() - 1, 1, QTableWidgetItem(item.get("itemName", ""))
-            )
-            table_widget.setItem(
-            table_widget.rowCount() - 1, 2, QTableWidgetItem(item.get("itemType", ""))
-            )
+            # Add "Store Name", "Item Name", and "Item Type" explicitly
+            table_widget.setItem(row_count, 0, QTableWidgetItem(item.get("storeName", "")))
+            table_widget.setItem(row_count, 1, QTableWidgetItem(item.get("itemName", "")))
+            table_widget.setItem(row_count, 2, QTableWidgetItem(item.get("itemType", "")))
 
             for col, header_text in enumerate(headers[3:], start=3):
                 item_value = item.get(header_text.lower(), "")
                 table_item = QTableWidgetItem(str(item_value))
-                table_item.setFlags(
-                table_item.flags() ^ Qt.ItemIsEditable
-                )  # Make cell non-editable
-                table_widget.setItem(table_widget.rowCount() - 1, col, table_item)
+                table_item.setFlags(table_item.flags() ^ Qt.ItemIsEditable)  # Make cell non-editable
+                table_widget.setItem(row_count, col, table_item)
                 table_item.setForeground(Qt.black)  # Set text color to black for all columns
 
             button = QPushButton("Add")
-            button.setStyleSheet(
-            "background-color: rgb(131, 170,229);font-weight: bold;;"
-            )
-            button.clicked.connect(self.openAddBasketPage)
-            table_widget.setCellWidget(
-            table_widget.rowCount() - 1, len(headers) - 1, button
-            )  # Add button to the second last column
+            button.setStyleSheet("background-color: rgb(131, 170,229);font-weight: bold;")
+            # button.clicked.connect(lambda _, p_key=item["personKey"], i_key=item["itemNumber"]: self.openAddBasketPage(p_key, i_key))
+            button.clicked.connect(lambda checked = None, p_key=item["personKey"], i_key=item["itemNumber"]: self.openAddBasketPage(p_key, i_key))
+            table_widget.setCellWidget(row_count, len(headers) - 1, button)  # Add button to the last column
 
-        # Set the background color of the row to white
+            # Set the background color of the row to white
             for col in range(len(headers)):
-                if table_widget.item(table_widget.rowCount() - 1, col) is not None:
-                    table_widget.item(table_widget.rowCount() - 1, col).setBackground(QColor(235, 235, 235))
-        
-    # Add borders between all rows and columns
+                if table_widget.item(row_count, col) is not None:
+                    table_widget.item(row_count, col).setBackground(QColor(235, 235, 235))
+
+        # Add borders between all rows and columns
         table_widget.setStyleSheet("border: 2px solid black;font-size: 16px;")
 
-    # Add the table to the layout
-        layout.addWidget(table_widget)
+    def load_items(self):
+        items = self.fetch_data_from_firebase()
+        self.add_top_down_list(items, self.table_widget)
 
+    def fetch_data_from_firebase(self):
+        data = db.child("items").get().val()
+        items = []
+        for person_key, person_items in data.items():
+            for item_number, item_data in person_items.items():
+                item_data["personKey"] = person_key
+                item_data["itemNumber"] = item_number
+                items.append(item_data)
+        return items
 
     def openMain_Page(self):
         self.main = Mainpage.MainPage()
@@ -312,9 +179,10 @@ class Stores(QWidget):
         self.add_store_page = AddStore.add_store()
         self.add_store_page.show()
 
-    def openAddBasketPage(self):
-        self.main = openAddBasketPage.add_basket()
-        self.main.show()
+    def openAddBasketPage(self, person_key, item_key):
+        print(f"Add button clicked for item with person key: {person_key} and item key: {item_key}")
+
+        # Implement the logic to add the item to the basket
 
     def openBasket_Page(self):
         self.Basket = Basket.Basket_page()
@@ -322,6 +190,12 @@ class Stores(QWidget):
         self.close()
 
     def search_page(self):
-        self.Search = search.serach_page()
-        self.Basket.show()
+        self.Search = search.search_page()
+        self.Search.show()
         self.close()
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    mainWin = Stores()
+    mainWin.show()
+    sys.exit(app.exec())

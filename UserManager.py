@@ -17,6 +17,7 @@ class UserManager:
         self.__is_supplier = False
         self.__store_name = ""
         self.dtbs = db.firebase.database()
+        self.basket = {}
 
     def get_user(self):
         return self.__user
@@ -76,11 +77,19 @@ class UserManager:
         else:
             return False
 
+
     def is_supplier(self):
         return self.__is_supplier
 
     def get_store_name(self):
         return self.__store_name
+
+    def add_to_basket(self, key, itemNum):
+        self.basket[key] = itemNum
+        print(self.basket)
+
+    def get_basket_items(self):
+        return self.basket
 
     def token_expiry(self):
         pass
