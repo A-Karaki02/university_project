@@ -1,21 +1,25 @@
 import sys
-from PySide6.QtGui import QColor
-from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,QHBoxLayout,QSizePolicy,QSpacerItem,QHeaderView,QTableWidgetItem,QTableWidget,
-                               QLineEdit, QPushButton, QVBoxLayout, QWidget)
 
+from PySide6.QtCore import QSize, Qt
+from PySide6.QtGui import QColor
+from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout,
+                               QHBoxLayout, QHeaderView, QLabel, QLineEdit,
+                               QPushButton, QSizePolicy, QSpacerItem,
+                               QTableWidget, QTableWidgetItem, QVBoxLayout,
+                               QWidget)
+
+import checkout
 import EditProfile
 import LoginPage
 import Mainpage
 import SignupPage
-import checkout
 from UserManager import user
 
 
 class Basket_page(QWidget):
     def __init__(self):
         super().__init__()
-        
+
 
         self.initUI()
 
@@ -24,7 +28,7 @@ class Basket_page(QWidget):
 
         self.setWindowTitle("GRADUATION PROJECT")
         self.setGeometry(100, 100, 1200, 600)
-        
+
 
         layout.addSpacing(20)
         self.add_dynamic_label("BuildSmart", layout)
@@ -48,7 +52,7 @@ class Basket_page(QWidget):
         self.add_button("Back", 0, 0, grid_layout, self.openMain_Page)
         self.add_button("Checkout", 0, 2, grid_layout, self.openCheckout_Page)
 
-        
+
 
         self.setStyleSheet("background-color: rgb(255,255,255);font-weight: bold;")  # Black
         self.show()
@@ -127,7 +131,7 @@ class Basket_page(QWidget):
                 table_item.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)  # Make cells non-editable
                 table_item.setForeground(Qt.black)  # Set text color to black
                 table_widget.setItem(table_widget.rowCount() - 1, col + 3, table_item)
-                
+
             # Calculate total price dynamically and add it to the "Total" column
             price = float(item.get("price", 0))
             quantity = int(item.get("quantity", 0))
@@ -178,4 +182,3 @@ class Basket_page(QWidget):
     def openCheckout_Page(self):
         self.Checkout = checkout.Checkout_page()
         self.Checkout.show()
-        self.close()
