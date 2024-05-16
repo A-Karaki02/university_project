@@ -2,8 +2,9 @@ import sys
 
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor
-from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout,
-                               QHBoxLayout, QHeaderView, QLabel, QPushButton,QGraphicsDropShadowEffect,
+from PySide6.QtWidgets import (QApplication, QComboBox,
+                               QGraphicsDropShadowEffect, QGridLayout,
+                               QHBoxLayout, QHeaderView, QLabel, QPushButton,
                                QSizePolicy, QSpacerItem, QTableWidget,
                                QTableWidgetItem, QVBoxLayout, QWidget)
 
@@ -18,6 +19,7 @@ from UserManager import user
 
 # Firebase setup
 db = DataBase.firebase.database()
+
 
 class Stores(QWidget):
     def __init__(self):
@@ -37,7 +39,9 @@ class Stores(QWidget):
 
         self.table_widget = QTableWidget()
         self.add_top_down_list([], self.table_widget)  # Initialize with empty data
-        self.layout.addWidget(self.table_widget)  # Add the table widget to the main layout
+        self.layout.addWidget(
+            self.table_widget
+        )  # Add the table widget to the main layout
 
         self.layout.addSpacing(10)
 
@@ -50,14 +54,20 @@ class Stores(QWidget):
         self.add_button("Back", 1, 0, grid_layout, self.openMain_Page)
         self.add_button("Search", 0, 0, grid_layout, self.search_page)
 
-        self.setStyleSheet("background-color: rgb(255, 255, 255);font-weight: bold;")  # White background
+        self.setStyleSheet(
+            "background-color: rgb(255, 255, 255);font-weight: bold;"
+        )  # White background
         self.show()
 
     def add_dynamic_label(self, text, layout):
         layout_widget = QWidget(self)  # Create a widget to hold the layout
-        layout_widget.setStyleSheet("background-color: rgb(131, 170, 229);")  # Set background color for the layout widget
+        layout_widget.setStyleSheet(
+            "background-color: rgb(131, 170, 229);"
+        )  # Set background color for the layout widget
 
-        v_layout = QVBoxLayout(layout_widget)  # Use the layout widget as the parent for QVBoxLayout
+        v_layout = QVBoxLayout(
+            layout_widget
+        )  # Use the layout widget as the parent for QVBoxLayout
 
         label = QLabel(text, self)
         label.setStyleSheet(
@@ -88,7 +98,8 @@ class Stores(QWidget):
     def add_button(self, button_text, row, col, layout, click_handler):
         button = QPushButton(button_text, self)
         button.clicked.connect(click_handler)
-        button.setStyleSheet("""
+        button.setStyleSheet(
+            """
                             QPushButton {
                             background-color: rgb(131, 170, 229);
                             font-weight: bold;
@@ -100,11 +111,11 @@ class Stores(QWidget):
                             background-color: rgb(0,0,205);
                             }
                             """
-                            )  # White
+        )  # White
         shadow = QGraphicsDropShadowEffect()
         shadow.setBlurRadius(30)
-        shadow.setColor(QColor(135,206,250))
-        shadow.setOffset(5,5)
+        shadow.setColor(QColor(135, 206, 250))
+        shadow.setOffset(5, 5)
         button.setFixedWidth(300)
         button.setFixedHeight(35)
         layout.addWidget(button, row, col)
@@ -131,19 +142,30 @@ class Stores(QWidget):
             table_widget.insertRow(row_count)
 
             # Add "Store Name", "Item Name", and "Item Type" explicitly
-            table_widget.setItem(row_count, 0, QTableWidgetItem(item.get("storeName", "")))
-            table_widget.setItem(row_count, 1, QTableWidgetItem(item.get("itemName", "")))
-            table_widget.setItem(row_count, 2, QTableWidgetItem(item.get("itemType", "")))
+            table_widget.setItem(
+                row_count, 0, QTableWidgetItem(item.get("storeName", ""))
+            )
+            table_widget.setItem(
+                row_count, 1, QTableWidgetItem(item.get("itemName", ""))
+            )
+            table_widget.setItem(
+                row_count, 2, QTableWidgetItem(item.get("itemType", ""))
+            )
 
             for col, header_text in enumerate(headers[3:], start=3):
                 item_value = item.get(header_text.lower(), "")
                 table_item = QTableWidgetItem(str(item_value))
-                table_item.setFlags(table_item.flags() ^ Qt.ItemIsEditable)  # Make cell non-editable
+                table_item.setFlags(
+                    table_item.flags() ^ Qt.ItemIsEditable
+                )  # Make cell non-editable
                 table_widget.setItem(row_count, col, table_item)
-                table_item.setForeground(Qt.black)  # Set text color to black for all columns
+                table_item.setForeground(
+                    Qt.black
+                )  # Set text color to black for all columns
 
             button = QPushButton("Add")
-            button.setStyleSheet("""
+            button.setStyleSheet(
+                """
                 QPushButton {
                     background-color: rgb(131, 170, 229);
                     font-weight: bold;
@@ -151,15 +173,34 @@ class Stores(QWidget):
                 QPushButton:hover {
                     background-color: rgb(0,0,205);
                 }
-                """)
+                """
+            )
             # button.clicked.connect(lambda _, p_key=item["personKey"], i_key=item["itemNumber"]: self.openAddBasketPage(p_key, i_key))
-            button.clicked.connect(lambda checked = None, p_key=item["personKey"], i_key=item["itemNumber"]: self.openAddBasketPage(p_key, i_key))
-            table_widget.setCellWidget(row_count, len(headers) - 1, button)  # Add button to the last column
+            button.clicked.connect(
+                lambda checked=None, p_key=item["personKey"], i_key=item[
+                    "itemNumber"
+                ], s_name=item.get("storeName", ""), i_name=item.get(
+                    "itemName", ""
+                ), i_type=item.get(
+                    "itemType", ""
+                ), price=item.get(
+                    "price", ""
+                ), quantity=item.get(
+                    "quantity", ""
+                ): self.openAddBasketPage(
+                    p_key, i_key, s_name, i_name, i_type, price, quantity
+                )
+            )
+            table_widget.setCellWidget(
+                row_count, len(headers) - 1, button
+            )  # Add button to the last column
 
             # Set the background color of the row to white
             for col in range(len(headers)):
                 if table_widget.item(row_count, col) is not None:
-                    table_widget.item(row_count, col).setBackground(QColor(235, 235, 235))
+                    table_widget.item(row_count, col).setBackground(
+                        QColor(235, 235, 235)
+                    )
 
         # Add borders between all rows and columns
         table_widget.setStyleSheet("border: 2px solid black;font-size: 16px;")
@@ -203,8 +244,14 @@ class Stores(QWidget):
         self.add_store_page = AddStore.add_store()
         self.add_store_page.show()
 
-    def openAddBasketPage(self, person_key, item_key):
-        print(f"Add button clicked for item with person key: {person_key} and item key: {item_key}")
+    def openAddBasketPage(
+        self, person_key, item_key, storeName, itemName, itemType, price, quantity
+    ):
+        print(
+            f"Add button clicked for item with person key: {person_key} and item key: {item_key}"
+        )
+        user.add_to_basket(storeName, itemName, itemType, price, quantity)
+        user.add_to_db_basket(person_key, item_key)
 
         # Implement the logic to add the item to the basket
 
@@ -217,6 +264,7 @@ class Stores(QWidget):
         self.Search = search.search_page()
         self.Search.show()
         self.close()
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

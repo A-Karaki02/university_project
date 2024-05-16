@@ -17,7 +17,8 @@ class UserManager:
         self.__is_supplier = False
         self.__store_name = ""
         self.dtbs = db.firebase.database()
-        self.basket = {}
+        self.basket = []
+        self.db_basket = []
 
     def get_user(self):
         return self.__user
@@ -68,15 +69,15 @@ class UserManager:
         self.__phonenumber = ""
         self.__items_number = -1
 
-
     def add_item(self, item):
         new_number = self.__items_number + 1
         if self.dtbs.child("items").child(self.__UID).child(new_number).set(item):
-            self.dtbs.child("users").child(self.__UID).update({"itemsNumber": new_number})
+            self.dtbs.child("users").child(self.__UID).update(
+                {"itemsNumber": new_number}
+            )
             return True
         else:
             return False
-
 
     def is_supplier(self):
         return self.__is_supplier
@@ -84,9 +85,24 @@ class UserManager:
     def get_store_name(self):
         return self.__store_name
 
-    def add_to_basket(self, key, itemNum):
-        self.basket[key] = itemNum
+    def add_to_basket(self, storeName, itemName, itemType, price, quantity):
+        self.basket.append(
+            {
+                "storeName": storeName,
+                "itemName": itemName,
+                "itemType": itemType,
+                "price": price,
+                "quantity": quantity,
+            }
+        )
         print(self.basket)
+
+    def add_to_db_basket(self, key, itemNum):
+        self.db_basket.append([key, itemNum])
+        print(self.db_basket)
+
+    def get_basket(self):
+        return self.basket
 
     def get_basket_items(self):
         return self.basket

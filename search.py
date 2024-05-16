@@ -1,15 +1,16 @@
 import sys
 
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,QSpinBox,
-                               QLineEdit, QPushButton, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,
+                               QLineEdit, QPushButton, QSpinBox, QVBoxLayout,
+                               QWidget)
 
 import Stores
 from DataBase import DataBase as db
 from UserManager import user
 
 
-class serach_page(QWidget):
+class search_page(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
@@ -42,12 +43,12 @@ class serach_page(QWidget):
         self.To_textbox.setPlaceholderText("To :")
         layout.addWidget(self.To_textbox)
         # Add validator to allow only integer input
-        
+
 
         self.Quantity_label = QLabel("Quantity:")
-        self.Quantity_edit = QLineEdit()  
+        self.Quantity_edit = QLineEdit()
         layout.addWidget(self.Quantity_label)
-        layout.addWidget(self.Quantity_edit)   
+        layout.addWidget(self.Quantity_edit)
 
         add_button = QPushButton("Add Item")
         add_button.clicked.connect(self.handle_add_item)

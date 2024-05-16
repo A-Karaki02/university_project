@@ -2,10 +2,11 @@ import sys
 
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QColor
-from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout,
+from PySide6.QtWidgets import (QApplication, QComboBox,
+                               QGraphicsDropShadowEffect, QGridLayout,
                                QHBoxLayout, QHeaderView, QLabel, QLineEdit,
                                QPushButton, QSizePolicy, QSpacerItem,
-                               QTableWidget, QTableWidgetItem, QVBoxLayout,QGraphicsDropShadowEffect,
+                               QTableWidget, QTableWidgetItem, QVBoxLayout,
                                QWidget)
 
 import checkout
@@ -35,11 +36,7 @@ class Basket_page(QWidget):
         table_widget = QTableWidget()
 
         # Sample data
-        items = [
-            {"storeName": "Store A", "itemName": "Item 1", "itemType": "Type X", "price": 10, "quantity": 2},
-            {"storeName": "Store B", "itemName": "Item 2", "itemType": "Type Y", "price": 20, "quantity": 3},
-            {"storeName": "Store C", "itemName": "Item 3", "itemType": "Type Z", "price": 30, "quantity": 1}
-        ]
+        items = user.get_basket()
 
         # Add the table to the layout
         self.add_top_down_list(items, table_widget, layout)
