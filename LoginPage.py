@@ -4,8 +4,8 @@ import os
 import pyrebase
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QColor
-from PySide6.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget
-
+from PySide6.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget,QGraphicsDropShadowEffect
+from PySide6.QtGui import QColor
 import Mainpage
 import SignupPage
 from UserManager import user
@@ -44,17 +44,45 @@ class LoginPage(QWidget):
         self.login_button = QPushButton("Login", self)
         self.login_button.setGeometry(500, 350, 200, 30)
         self.login_button.clicked.connect(self.handle_login_click)
-        self.login_button.setStyleSheet(
-            "background-color: rgb(237, 237, 237);font-weight: bold;border: 2px solid gray"
-        )  # White
+        self.login_button.setStyleSheet("""
+                            QPushButton {
+                            background-color: rgb(237, 237, 237);
+                            font-weight: bold;
+                            font-size: 16px;
+                            border: 2px solid black;
+                            border-radius: 30px;
+                            }
+                            QPushButton:hover {
+                            background-color: rgb(169,169,169);
+                            }
+                            """
+                            )  # White
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(30)
+        shadow.setColor(QColor(135,206,250))
+        shadow.setOffset(5,5)
 
         # the button for Sign Up
         self.signup_button = QPushButton("Sign Up", self)
         self.signup_button.setGeometry(525, 400, 150, 30)
         self.signup_button.clicked.connect(self.openSignupPage)
-        self.signup_button.setStyleSheet(
-            "background-color: rgb(131, 170,229);font-weight: bold;"
-        )  # White
+        self.signup_button.setStyleSheet("""
+                            QPushButton {
+                            background-color: rgb(131, 170,229);
+                            font-weight: bold;
+                            font-size: 16px;
+                            border: 2px solid black;
+                            border-radius: 30px;
+                            }
+                            QPushButton:hover {
+                            background-color: rgb(0,0,205);
+                            }
+                            """
+                            )  # White
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(30)
+        shadow.setColor(QColor(135,206,250))
+        shadow.setOffset(5,5)
 
         # the label for the contact
         self.contact_label1 = QLabel(

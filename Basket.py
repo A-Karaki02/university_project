@@ -5,7 +5,7 @@ from PySide6.QtGui import QColor
 from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout,
                                QHBoxLayout, QHeaderView, QLabel, QLineEdit,
                                QPushButton, QSizePolicy, QSpacerItem,
-                               QTableWidget, QTableWidgetItem, QVBoxLayout,
+                               QTableWidget, QTableWidgetItem, QVBoxLayout,QGraphicsDropShadowEffect,
                                QWidget)
 
 import checkout
@@ -94,7 +94,23 @@ class Basket_page(QWidget):
     def add_button(self, button_text, row, col, layout, click_handler):
         button = QPushButton(button_text, self)
         button.clicked.connect(click_handler)
-        button.setStyleSheet("background-color: rgb(131, 170,229);font-weight: bold;border: 2px solid black;border-radius: 10px;box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);")  # White
+        button.setStyleSheet("""
+                            QPushButton {
+                            background-color: rgb(131, 170, 229);
+                            font-weight: bold;
+                            font-size: 16px;
+                            border: 2px solid black;
+                            border-radius: 30px;
+                            }
+                            QPushButton:hover {
+                            background-color: rgb(0,0,205);
+                            }
+                            """
+                            )  # White
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(30)
+        shadow.setColor(QColor(135,206,250))
+        shadow.setOffset(5,5)
         button.setFixedWidth(300)
         button.setFixedHeight(35)
         layout.addWidget(button, row, col)
@@ -140,7 +156,15 @@ class Basket_page(QWidget):
 
             # Add remove button to the "Remove" column
             button = QPushButton("Remove")
-            button.setStyleSheet("background-color: rgb(255,0,0); font-weight: bold;")
+            button.setStyleSheet("""
+                QPushButton {
+                    background-color: rgb(255,0,0);
+                    font-weight: bold;
+                }
+                QPushButton:hover {
+                    background-color: rgb(220,20,60);
+                }
+                """)
             button.clicked.connect(lambda _, row=table_widget.rowCount() - 1: self.remove_item(row, table_widget))
             table_widget.setCellWidget(table_widget.rowCount() - 1, 6, button)
 

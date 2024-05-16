@@ -1,9 +1,9 @@
 import sys
 
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,QHBoxLayout,QSpacerItem,QSizePolicy,
+from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,QHBoxLayout,QSpacerItem,QSizePolicy,QGraphicsDropShadowEffect,
                                QLineEdit, QPushButton, QVBoxLayout, QWidget)
-
+from PySide6.QtGui import QColor
 import EditProfile
 import LoginPage
 import Mainpage
@@ -73,7 +73,25 @@ class Stocks(QWidget):
     def add_button(self, button_text, row, col, layout, click_handler):
         button = QPushButton(button_text, self)
         button.clicked.connect(click_handler)
-        button.setStyleSheet("background-color: rgb(131, 170,229);font-weight: bold;border: 2px solid black;border-radius: 10px;box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);")  # White
+        button.setStyleSheet("""
+                            QPushButton {
+                            background-color: rgb(131, 170, 229);
+                            font-weight: bold;
+                            font-size: 16px;
+                            border: 2px solid black;
+                            border-radius: 30px;
+                            }
+                            QPushButton:hover {
+                            background-color: rgb(0,0,205);
+                            }
+                            """
+                            )  # White
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(30)
+        shadow.setColor(QColor(135,206,250))
+        shadow.setOffset(5,5)
+        button.setFixedWidth(300)
+        button.setFixedHeight(35)
         button.setFixedWidth(300)
         button.setFixedHeight(35)
         layout.addWidget(button, row, col)

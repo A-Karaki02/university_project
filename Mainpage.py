@@ -1,10 +1,10 @@
 import sys
 
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout,QSpacerItem,QSizePolicy,
+from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout,QSpacerItem,QSizePolicy,QGraphicsDropShadowEffect,
                                QHBoxLayout, QLabel, QPushButton, QVBoxLayout,
                                QWidget)
-
+from PySide6.QtGui import QColor
 import Basket
 import Earning
 import EditProfile
@@ -49,8 +49,28 @@ class MainPage(QWidget):
     def add_button(self, button_text, row, col, layout, click_handler):
         button = QPushButton(button_text, self)
         button.clicked.connect(click_handler)
-        button.setStyleSheet("background-color: rgb(131, 170,229);font-weight: bold;border: 2px solid black;border-radius: 10px;box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);")  # White
-        button.setFixedWidth(400)
+        button.setStyleSheet("""
+                            QPushButton {
+                            background-color: rgb(131, 170, 229);
+                            font-weight: bold;
+                            font-size: 16px;
+                            border: 2px solid black;
+                            border-radius: 30px;
+                            }
+                            QPushButton:hover {
+                            background-color: rgb(0,0,205);
+                            }
+                            """
+                            )  # White
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(30)
+        shadow.setColor(QColor(135,206,250))
+        shadow.setOffset(5,5)
+    
+        # Apply shadow to button
+        button.setGraphicsEffect(shadow)
+        
+        button.setFixedWidth(450)
         button.setFixedHeight(70)
         layout.addWidget(button, row, col)
 
@@ -95,7 +115,7 @@ class MainPage(QWidget):
             self.openLoginPage_Page()
 
     def openBasket_Page(self):
-        self.Basket = Basket.Basket_page()
+        self.Basket = Basket.Basket_page()  
         self.Basket.show()
         self.close()
 
