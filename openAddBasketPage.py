@@ -1,8 +1,9 @@
 import sys
 
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,QSpinBox,
-                               QLineEdit, QPushButton, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,
+                               QLineEdit, QPushButton, QSpinBox, QVBoxLayout,
+                               QWidget)
 
 import Stores
 from DataBase import DataBase as db
@@ -10,8 +11,15 @@ from UserManager import user
 
 
 class add_basket(QWidget):
-    def __init__(self):
+    def __init__(self, Pk, Ik, Sn, In, It, p, q):
         super().__init__()
+        self.person_key = Pk
+        self.item_key = Ik
+        self.storeName = Sn
+        self.itemName = In
+        self.itemType = It
+        self.pricee = p
+        self.quantity = q
         self.initUI()
 
     def initUI(self):
@@ -21,25 +29,27 @@ class add_basket(QWidget):
         layout = QVBoxLayout(self)
 
         Item_name_label = QLabel("Item Name:")
-        self.Item_name_edit = QLineEdit()
+        self.Item_name_edit = QLineEdit(self.itemName)
         layout.addWidget(Item_name_label)
         layout.addWidget(self.Item_name_edit)
+        self.Item_name_edit.setReadOnly(True)
 
         Item_type_label = QLabel("Item Type:")
-        self.Item_type_combo = QComboBox()
-        self.Item_type_combo.addItems(["Iron and Cement", "Electricals"])
+        self.Item_type_edit = QLineEdit(self.itemType)
         layout.addWidget(Item_type_label)
-        layout.addWidget(self.Item_type_combo)
+        layout.addWidget(self.Item_type_edit)
+        self.Item_type_edit.setReadOnly(True)
 
         self.Price_label = QLabel("Price:")
-        self.Price_edit = QLineEdit()  
+        self.Price_edit = QLineEdit(self.pricee)
         layout.addWidget(self.Price_label)
         layout.addWidget(self.Price_edit)
+        self.Price_edit.setReadOnly(True)
 
         self.Quantity_label = QLabel("Quantity:")
-        self.Quantity_edit = QLineEdit()  
+        self.Quantity_edit = QLineEdit()
         layout.addWidget(self.Quantity_label)
-        layout.addWidget(self.Quantity_edit)   
+        layout.addWidget(self.Quantity_edit)
 
         add_button = QPushButton("Add Item")
         add_button.clicked.connect(self.handle_add_item)
@@ -48,20 +58,20 @@ class add_basket(QWidget):
         self.show()
 
     def add_store(self):
-        if user.is_supplier():
-            store_name = user.get_store_name()
-        else:
-            store_name = user.get_username()
-        item_name = self.Item_name_edit.text()
-        item_type = self.Item_type_combo.currentText()
-        price = self.Price_edit.text()
-        self.items = {"storeName": store_name, "itemName": item_name,"itemType": item_type, "price": price}
+        store_name = self.storeName
+        item_name = self.itemName
+        item_type = self.itemType
+        price = self.pricee
+        quantity = self.Quantity_edit.text()
+        user.add_to_basket(store_name, item_name, item_type, price, quantity)
+        user.add_to_db_basket(self.person_key, self.item_key)
+        Stores.numInBasket += 1
 
     def handle_add_item(self):
         self.add_store()
-
-        user.add_item(self.items)
         self.close()
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     ex = add_basket()

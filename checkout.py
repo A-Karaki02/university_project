@@ -1,8 +1,9 @@
 import sys
 
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,QSpinBox,
-                               QLineEdit, QPushButton, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,
+                               QLineEdit, QPushButton, QSpinBox, QVBoxLayout,
+                               QWidget)
 
 import Stores
 from DataBase import DataBase as db
@@ -22,13 +23,15 @@ class Checkout_page(QWidget):
 
         Item_type_label = QLabel("Payment Method:")
         self.Item_type_combo = QComboBox()
-        self.Item_type_combo.addItems(["Visa", "MasterCard","Cash"])
+        self.Item_type_combo.addItems(["Choose", "Visa", "MasterCard", "Cash"])
         layout.addWidget(Item_type_label)
         layout.addWidget(self.Item_type_combo)
 
         Item_type_label = QLabel("My Cards (Saved Cards):")
         self.Item_type_combo = QComboBox()
-        self.Item_type_combo.addItems(["**** **** **** 1432", "**** **** **** 3729","**** **** **** 9284"])
+        self.Item_type_combo.addItems(
+            ["**** **** **** 1432", "**** **** **** 3729", "**** **** **** 9284"]
+        )
         layout.addWidget(Item_type_label)
         layout.addWidget(self.Item_type_combo)
 
@@ -57,7 +60,9 @@ class Checkout_page(QWidget):
         add_button.clicked.connect(self.handle_add_item)
         layout.addWidget(add_button)
 
-        self.Item_type_combo.currentTextChanged.connect(self.handle_payment_method_change)
+        self.Item_type_combo.currentTextChanged.connect(
+            self.handle_payment_method_change
+        )
         self.show()
 
     def handle_payment_method_change(self, text):
@@ -80,11 +85,15 @@ class Checkout_page(QWidget):
         item_name = self.Item_name_edit.text()
         item_type = self.Item_type_combo.currentText()
         price = self.Price_edit.text()
-        self.items = {"storeName": store_name, "itemName": item_name,"itemType": item_type, "price": price}
+        self.items = {
+            "storeName": store_name,
+            "itemName": item_name,
+            "itemType": item_type,
+            "price": price,
+        }
 
     def handle_add_item(self):
         self.add_store()
 
         user.add_item(self.items)
         self.close()
-    

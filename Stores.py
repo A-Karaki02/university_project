@@ -13,12 +13,14 @@ import Basket
 import EditProfile
 import LoginPage
 import Mainpage
+import openAddBasketPage
 import search
 from DataBase import DataBase
 from UserManager import user
 
 # Firebase setup
 db = DataBase.firebase.database()
+numInBasket = 0
 
 
 class Stores(QWidget):
@@ -50,7 +52,16 @@ class Stores(QWidget):
         self.layout.addLayout(grid_layout)
 
         self.add_button("Add", 1, 1, grid_layout, self.openAddStorePage)
-        self.add_button("Go To Basket", 0, 1, grid_layout, self.openBasket_Page)
+        if numInBasket == 0:
+            self.add_button("Go To Basket", 0, 1, grid_layout, self.openBasket_Page)
+        else:
+            self.add_button(
+                f"Go To Basket ({numInBasket})",
+                0,
+                1,
+                grid_layout,
+                self.openBasket_Page,
+            )
         self.add_button("Back", 1, 0, grid_layout, self.openMain_Page)
         self.add_button("Search", 0, 0, grid_layout, self.search_page)
 
@@ -100,18 +111,18 @@ class Stores(QWidget):
         button.clicked.connect(click_handler)
         button.setStyleSheet(
             """
-                            QPushButton {
-                            background-color: rgb(131, 170, 229);
-                            font-weight: bold;
-                            font-size: 16px;
-                            border: 2px solid black;
-                            border-radius: 30px;
-                            }
-                            QPushButton:hover {
-                            background-color: rgb(0,0,205);
-                            }
-                            """
-        )  # White
+            QPushButton {
+                background-color: rgb(131, 170, 229);
+                font-weight: bold;
+                font-size: 16px;
+                border: 2px solid black;
+                border-radius: 30px;
+            }
+            QPushButton:hover {
+                background-color: rgb(0,0,205);
+            }
+            """
+        )
         shadow = QGraphicsDropShadowEffect()
         shadow.setBlurRadius(30)
         shadow.setColor(QColor(135, 206, 250))
@@ -141,7 +152,6 @@ class Stores(QWidget):
             row_count = table_widget.rowCount()
             table_widget.insertRow(row_count)
 
-            # Add "Store Name", "Item Name", and "Item Type" explicitly
             table_widget.setItem(
                 row_count, 0, QTableWidgetItem(item.get("storeName", ""))
             )
@@ -151,17 +161,10 @@ class Stores(QWidget):
             table_widget.setItem(
                 row_count, 2, QTableWidgetItem(item.get("itemType", ""))
             )
-
-            for col, header_text in enumerate(headers[3:], start=3):
-                item_value = item.get(header_text.lower(), "")
-                table_item = QTableWidgetItem(str(item_value))
-                table_item.setFlags(
-                    table_item.flags() ^ Qt.ItemIsEditable
-                )  # Make cell non-editable
-                table_widget.setItem(row_count, col, table_item)
-                table_item.setForeground(
-                    Qt.black
-                )  # Set text color to black for all columns
+            table_widget.setItem(row_count, 3, QTableWidgetItem(item.get("price", "")))
+            table_widget.setItem(
+                row_count, 4, QTableWidgetItem(item.get("quantity", ""))
+            )
 
             button = QPushButton("Add")
             button.setStyleSheet(
@@ -175,7 +178,6 @@ class Stores(QWidget):
                 }
                 """
             )
-            # button.clicked.connect(lambda _, p_key=item["personKey"], i_key=item["itemNumber"]: self.openAddBasketPage(p_key, i_key))
             button.clicked.connect(
                 lambda checked=None, p_key=item["personKey"], i_key=item[
                     "itemNumber"
@@ -207,17 +209,74 @@ class Stores(QWidget):
 
     def load_items(self):
         items = self.fetch_data_from_firebase()
-        self.add_top_down_list(items, self.table_widget)
+        if items:  # Check if items are fetched successfully
+            self.add_top_down_list(items, self.table_widget)
+        else:
+            print("No items to display.")
+
+    # def fetch_data_from_firebase(self):
+    #     try:
+    #         data = db.child("items").get().val()
+    #         if data is None:
+    #             print("No data found in the Firebase database.")
+    #             return []
+    #         items = []
+    #         for person_key, person_items in data.items():
+    #             for item_number, item_data in person_items.items():
+    #                 item_data["personKey"] = person_key
+    #                 item_data["itemNumber"] = item_number
+    #                 items.append(item_data)
+    #         return items
+    #     except Exception as e:
+    #         print(f"Error fetching data from Firebase: {e}")
+    #         return []
 
     def fetch_data_from_firebase(self):
-        data = db.child("items").get().val()
-        items = []
-        for person_key, person_items in data.items():
-            for item_number, item_data in person_items.items():
-                item_data["personKey"] = person_key
-                item_data["itemNumber"] = item_number
-                items.append(item_data)
-        return items
+        try:
+            data = db.child("items").get().val()
+            print(
+                f"Data fetched from Firebase: {data}"
+            )  # Debug print to check the data structure
+
+            if data is None:
+                print("No data found in the Firebase database.")
+                return []
+
+            items = []
+
+            # Check if the data is a list or a dictionary
+            if isinstance(data, dict):
+                for person_key, person_items in data.items():
+                    if isinstance(person_items, dict):
+                        for item_number, item_data in person_items.items():
+                            item_data["personKey"] = person_key
+                            item_data["itemNumber"] = item_number
+                            items.append(item_data)
+                    elif isinstance(person_items, list):
+                        for index, item_data in enumerate(person_items):
+                            item_data["personKey"] = person_key
+                            item_data["itemNumber"] = index
+                            items.append(item_data)
+            elif isinstance(data, list):
+                for index, person_items in enumerate(data):
+                    if isinstance(person_items, dict):
+                        for item_number, item_data in person_items.items():
+                            item_data["personKey"] = index
+                            item_data["itemNumber"] = item_number
+                            items.append(item_data)
+                    elif isinstance(person_items, list):
+                        for item_index, item_data in enumerate(person_items):
+                            item_data["personKey"] = index
+                            item_data["itemNumber"] = item_index
+                            items.append(item_data)
+            else:
+                print("Unexpected data structure from Firebase.")
+                return []
+
+            return items
+        except Exception as e:
+            print(f"Error fetching data from Firebase: {e}")
+            return []
 
     def openMain_Page(self):
         self.main = Mainpage.MainPage()
@@ -247,13 +306,14 @@ class Stores(QWidget):
     def openAddBasketPage(
         self, person_key, item_key, storeName, itemName, itemType, price, quantity
     ):
+        self.main = openAddBasketPage.add_basket(
+            person_key, item_key, storeName, itemName, itemType, price, quantity
+        )
+        self.main.show()
+
         print(
             f"Add button clicked for item with person key: {person_key} and item key: {item_key}"
         )
-        user.add_to_basket(storeName, itemName, itemType, price, quantity)
-        user.add_to_db_basket(person_key, item_key)
-
-        # Implement the logic to add the item to the basket
 
     def openBasket_Page(self):
         self.Basket = Basket.Basket_page()

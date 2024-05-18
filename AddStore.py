@@ -1,8 +1,9 @@
 import sys
 
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,QSpinBox,
-                               QLineEdit, QPushButton, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,
+                               QLineEdit, QPushButton, QSpinBox, QVBoxLayout,
+                               QWidget)
 
 import Stores
 from DataBase import DataBase as db
@@ -32,20 +33,18 @@ class add_store(QWidget):
         layout.addWidget(self.Item_type_combo)
 
         self.Price_label = QLabel("Price:")
-        self.Price_edit = QLineEdit()  
+        self.Price_edit = QLineEdit()
         layout.addWidget(self.Price_label)
-        layout.addWidget(self.Price_edit)  
+        layout.addWidget(self.Price_edit)
 
         self.Quantity_label = QLabel("Quantity:")
-        self.Quantity_edit = QLineEdit()  
+        self.Quantity_edit = QLineEdit()
         layout.addWidget(self.Quantity_label)
-        layout.addWidget(self.Quantity_edit)  
+        layout.addWidget(self.Quantity_edit)
 
         add_button = QPushButton("Add Item")
         add_button.clicked.connect(self.handle_add_item)
         layout.addWidget(add_button)
-
-
 
         self.show()
 
@@ -57,13 +56,22 @@ class add_store(QWidget):
         item_name = self.Item_name_edit.text()
         item_type = self.Item_type_combo.currentText()
         price = self.Price_edit.text()
-        self.items = {"storeName": store_name, "itemName": item_name,"itemType": item_type, "price": price}
+        quantity = self.Quantity_edit.text()
+        self.items = {
+            "storeName": store_name,
+            "itemName": item_name,
+            "itemType": item_type,
+            "price": price,
+            "quantity": quantity,
+        }
 
     def handle_add_item(self):
         self.add_store()
 
         user.add_item(self.items)
         self.close()
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     ex = add_store()
