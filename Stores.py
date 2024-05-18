@@ -214,23 +214,6 @@ class Stores(QWidget):
         else:
             print("No items to display.")
 
-    # def fetch_data_from_firebase(self):
-    #     try:
-    #         data = db.child("items").get().val()
-    #         if data is None:
-    #             print("No data found in the Firebase database.")
-    #             return []
-    #         items = []
-    #         for person_key, person_items in data.items():
-    #             for item_number, item_data in person_items.items():
-    #                 item_data["personKey"] = person_key
-    #                 item_data["itemNumber"] = item_number
-    #                 items.append(item_data)
-    #         return items
-    #     except Exception as e:
-    #         print(f"Error fetching data from Firebase: {e}")
-    #         return []
-
     def fetch_data_from_firebase(self):
         try:
             data = db.child("items").get().val()

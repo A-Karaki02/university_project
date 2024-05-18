@@ -264,7 +264,9 @@ class Basket_page(QWidget):
                 """
             )
             button.clicked.connect(
-                lambda _, row=row_count: self.remove_item(row, table_widget)
+                lambda checked=None, row=row_count, p_key=item["storeKey"], i_key=item[
+                    "itemNumber"
+                ]: self.remove_item(row, table_widget, p_key, i_key)
             )
             table_widget.setCellWidget(row_count, 6, button)
 
@@ -281,7 +283,8 @@ class Basket_page(QWidget):
         # Add the table to the layout
         layout.addWidget(table_widget)
 
-    def remove_item(self, row, table_widget):
+    def remove_item(self, row, table_widget, pK, iK):
+        user.remove_item_from_basket(pK, iK)
         table_widget.removeRow(row)
 
     def openMain_Page(self):
@@ -309,7 +312,7 @@ class Basket_page(QWidget):
         self.Checkout = checkout.Checkout_page()
         self.Checkout.show()
 
-    def fetch_data_from_firebase(self):
+    def fetch_data_from_user_basket(self):
         try:
             data = user.get_basket_items()
             print(

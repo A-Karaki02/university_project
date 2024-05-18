@@ -85,9 +85,13 @@ class UserManager:
     def get_store_name(self):
         return self.__store_name
 
-    def add_to_basket(self, storeName, itemName, itemType, price, quantity):
+    def add_to_basket(
+        self, storeKey, itemKey, storeName, itemName, itemType, price, quantity
+    ):
         self.basket.append(
             {
+                "storeKey": storeKey,
+                "itemNumber": itemKey,
                 "storeName": storeName,
                 "itemName": itemName,
                 "itemType": itemType,
@@ -106,6 +110,23 @@ class UserManager:
 
     def get_basket_items(self):
         return self.basket
+
+    def get_item_index(self, key, itemNum):
+        index = 0
+        for item in self.db_basket:
+            if key == item[0] and itemNum == item[1]:
+                return index
+            index += 1
+
+    def remove_item_from_basket(self, key, itemNum):
+        index = self.get_item_index(key, itemNum)
+        del self.db_basket[index]
+        del self.basket[index]
+        print(self.basket)
+        print(self.db_basket)
+
+    def add_to_purchased_items(self, key, itemNum):
+        pass
 
     def token_expiry(self):
         pass
