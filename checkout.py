@@ -93,7 +93,6 @@ class Checkout_page(QWidget):
         }
 
     def handle_add_item(self):
-        self.add_store()
 
-        user.add_item(self.items)
+        user.checkout_items()
         self.close()

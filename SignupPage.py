@@ -4,7 +4,8 @@ import re
 
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QColor
-from PySide6.QtWidgets import (QApplication, QCheckBox, QLabel, QLineEdit,QGraphicsDropShadowEffect,
+from PySide6.QtWidgets import (QApplication, QCheckBox,
+                               QGraphicsDropShadowEffect, QLabel, QLineEdit,
                                QPushButton, QWidget)
 
 import LoginPage
@@ -112,7 +113,8 @@ class SignUpPage(QWidget):
         # the button for Sign Up
         self.signup_button = QPushButton("Sign Up", self)
         self.signup_button.setGeometry(625, 550, 125, 30)
-        self.signup_button.setStyleSheet("""
+        self.signup_button.setStyleSheet(
+            """
                             QPushButton {
                             background-color: rgb(131, 170,229);
                             font-weight: bold;
@@ -124,17 +126,18 @@ class SignUpPage(QWidget):
                             background-color: rgb(0,0,205);
                             }
                             """
-                            )  # White
+        )  # White
         shadow = QGraphicsDropShadowEffect()
         shadow.setBlurRadius(30)
-        shadow.setColor(QColor(135,206,250))
-        shadow.setOffset(5,5)
+        shadow.setColor(QColor(135, 206, 250))
+        shadow.setOffset(5, 5)
         self.signup_button.clicked.connect(self.openLoginPage)
 
         # back button
         self.back_button = QPushButton("Back", self)
         self.back_button.setGeometry(450, 550, 125, 30)
-        self.back_button.setStyleSheet("""
+        self.back_button.setStyleSheet(
+            """
                             QPushButton {
                             background-color: rgb(237, 237, 237);
                             font-weight: bold;
@@ -146,11 +149,11 @@ class SignUpPage(QWidget):
                             background-color: rgb(169,169,169);
                             }
                             """
-                            )  # White
+        )  # White
         shadow = QGraphicsDropShadowEffect()
         shadow.setBlurRadius(30)
-        shadow.setColor(QColor(135,206,250))
-        shadow.setOffset(5,5)
+        shadow.setColor(QColor(135, 206, 250))
+        shadow.setOffset(5, 5)
         self.back_button.clicked.connect(self.backButtonFunciton)
 
         # the label for the contact
@@ -159,7 +162,9 @@ class SignUpPage(QWidget):
             self,
         )
         self.contact_label.setGeometry(50, 500, 200, 100)
-        self.contact_label.setStyleSheet("color: rgb(140, 140, 140);font-weight: bold;font-weight: bold;")  # gray
+        self.contact_label.setStyleSheet(
+            "color: rgb(140, 140, 140);font-weight: bold;font-weight: bold;"
+        )  # gray
 
         # Set background color using RGB for the window
         self.setStyleSheet("background-color: rgb(255, 255, 255)")  # Black
@@ -220,7 +225,9 @@ class SignUpPage(QWidget):
             "password": self.__password,
             "isSupplier": self.__supplier_checkbox,
             "supplierName": self.__storename,
-            "itemsNumber": -1
+            "itemsNumber": 0,
+            "itemsHistoryNumber": 0,
+            "itemsHistory": {},
         }
 
         user = self.auth.create_user_with_email_and_password(

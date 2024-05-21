@@ -214,6 +214,52 @@ class Stores(QWidget):
         else:
             print("No items to display.")
 
+    # def fetch_data_from_firebase(self):
+    #     try:
+    #         data = db.child("items").get().val()
+    #         print(
+    #             f"Data fetched from Firebase: {data}"
+    #         )  # Debug print to check the data structure
+
+    #         if data is None:
+    #             print("No data found in the Firebase database.")
+    #             return []
+
+    #         items = []
+
+    #         # Check if the data is a list or a dictionary
+    #         if isinstance(data, dict):
+    #             for person_key, person_items in data.items():
+    #                 if isinstance(person_items, dict):
+    #                     for item_number, item_data in person_items.items():
+    #                         item_data["personKey"] = person_key
+    #                         item_data["itemNumber"] = item_number
+    #                         items.append(item_data)
+    #                 elif isinstance(person_items, list):
+    #                     for index, item_data in enumerate(person_items):
+    #                         item_data["personKey"] = person_key
+    #                         item_data["itemNumber"] = index
+    #                         items.append(item_data)
+    #         elif isinstance(data, list):
+    #             for index, person_items in enumerate(data):
+    #                 if isinstance(person_items, dict):
+    #                     for item_number, item_data in person_items.items():
+    #                         item_data["personKey"] = index
+    #                         item_data["itemNumber"] = item_number
+    #                         items.append(item_data)
+    #                 elif isinstance(person_items, list):
+    #                     for item_index, item_data in enumerate(person_items):
+    #                         item_data["personKey"] = index
+    #                         item_data["itemNumber"] = item_index
+    #                         items.append(item_data)
+    #         else:
+    #             print("Unexpected data structure from Firebase.")
+    #             return []
+
+    #         return items
+    #     except Exception as e:
+    #         print(f"Error fetching data from Firebase: {e}")
+    #         return []
     def fetch_data_from_firebase(self):
         try:
             data = db.child("items").get().val()
@@ -237,9 +283,10 @@ class Stores(QWidget):
                             items.append(item_data)
                     elif isinstance(person_items, list):
                         for index, item_data in enumerate(person_items):
-                            item_data["personKey"] = person_key
-                            item_data["itemNumber"] = index
-                            items.append(item_data)
+                            if item_data is not None:  # Filter out None values
+                                item_data["personKey"] = person_key
+                                item_data["itemNumber"] = index
+                                items.append(item_data)
             elif isinstance(data, list):
                 for index, person_items in enumerate(data):
                     if isinstance(person_items, dict):
@@ -249,9 +296,10 @@ class Stores(QWidget):
                             items.append(item_data)
                     elif isinstance(person_items, list):
                         for item_index, item_data in enumerate(person_items):
-                            item_data["personKey"] = index
-                            item_data["itemNumber"] = item_index
-                            items.append(item_data)
+                            if item_data is not None:  # Filter out None values
+                                item_data["personKey"] = index
+                                item_data["itemNumber"] = item_index
+                                items.append(item_data)
             else:
                 print("Unexpected data structure from Firebase.")
                 return []
