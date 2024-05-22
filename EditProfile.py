@@ -32,17 +32,15 @@ class EditProfile(QWidget):
         grid_layout.setVerticalSpacing(20)
         grid_layout.setHorizontalSpacing(20)
 
-        self.add_dynamic_labels("Change Password :", grid_layout, 0, 0)
-        self.add_textbox("Current Password", grid_layout, 1, 0)
-        self.add_textbox("New Password", grid_layout, 2, 0)
-        self.add_textbox("Confirm Password", grid_layout, 3, 0)
-        self.add_dynamic_labels("Personal Information :", grid_layout, 4, 0)
-        self.add_textbox("First Name", grid_layout, 5, 0)
-        self.add_textbox("Last Name", grid_layout, 6, 0)
-        self.add_dynamic_labels("Add debit/credit card :", grid_layout, 0, 5)
-        self.add_textbox("Card Number", grid_layout, 1, 5)
-        self.add_textbox("Card Name", grid_layout, 2, 5)
-        self.add_textbox("CVV", grid_layout, 3, 5)
+        self.add_button("Change Password",4,5, grid_layout,self.Change_password)
+
+        self.add_dynamic_labels("Personal Information :", grid_layout, 0, 0)
+        self.add_textbox("First Name", grid_layout, 1, 0)
+        self.add_textbox("Last Name", grid_layout, 2, 0)
+        self.add_dynamic_labels("Add debit/credit card :", grid_layout, 3, 0)
+        self.add_textbox("Card Number", grid_layout, 4, 0)
+        self.add_textbox("Card Name", grid_layout, 5, 0)
+        self.add_textbox("CVV", grid_layout, 6, 0)
         self.add_button(
             "Save Changes return MainPage", 5, 5, grid_layout, self.openHome_Page
         )
@@ -160,5 +158,6 @@ class EditProfile(QWidget):
         self.SignOut.show()
         self.close()
 
-
+    def Change_password(self):
+        pass
 
