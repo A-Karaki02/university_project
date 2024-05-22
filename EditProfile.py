@@ -32,7 +32,6 @@ class EditProfile(QWidget):
         grid_layout.setVerticalSpacing(20)
         grid_layout.setHorizontalSpacing(20)
 
-        self.add_button("Change Password",4,5, grid_layout,self.Change_password)
 
         self.add_dynamic_labels("Personal Information :", grid_layout, 0, 0)
         textbox_first_name = QLineEdit(self)
@@ -47,22 +46,43 @@ class EditProfile(QWidget):
         textbox_last_name.setFixedHeight(35)
         textbox_last_name.setFixedWidth(300)
         textbox_last_name.setPlaceholderText("Last Name")
-        grid_layout.addWidget(textbox_last_name, 2, 0)
+        grid_layout.addWidget(textbox_last_name, 1, 1)
 
-        self.add_dynamic_labels("Add debit/credit card :", grid_layout, 3, 0)
+        textbox_user_name = QLineEdit(self)
+        textbox_user_name.setStyleSheet("background-color: rgb(237, 237, 237);border: 2px solid gray;")
+        textbox_user_name.setFixedHeight(35)
+        textbox_user_name.setFixedWidth(300)
+        textbox_user_name.setPlaceholderText("User Name")
+        grid_layout.addWidget(textbox_user_name, 2, 0)
+
+        textbox_Store_name = QLineEdit(self)
+        textbox_Store_name.setStyleSheet("background-color: rgb(237, 237, 237);border: 2px solid gray;")
+        textbox_Store_name.setFixedHeight(35)
+        textbox_Store_name.setFixedWidth(300)
+        textbox_Store_name.setPlaceholderText("Store Name")
+        grid_layout.addWidget(textbox_Store_name, 2, 1)
+
+        textbox_phone_number = QLineEdit(self)
+        textbox_phone_number.setStyleSheet("background-color: rgb(237, 237, 237);border: 2px solid gray;")
+        textbox_phone_number.setFixedHeight(35)
+        textbox_phone_number.setFixedWidth(300)
+        textbox_phone_number.setPlaceholderText("Phone Number")
+        grid_layout.addWidget(textbox_phone_number, 3, 0)
+
+        self.add_dynamic_labels("Add debit/credit card :", grid_layout, 4, 0)
         textbox_card_number = QLineEdit(self)
         textbox_card_number.setStyleSheet("background-color: rgb(237, 237, 237);border: 2px solid gray;")
         textbox_card_number.setFixedHeight(35)
         textbox_card_number.setFixedWidth(300)
         textbox_card_number.setPlaceholderText("Card Number")
-        grid_layout.addWidget(textbox_card_number, 4, 0)
+        grid_layout.addWidget(textbox_card_number, 5, 0)
 
         textbox_card_name = QLineEdit(self)
         textbox_card_name.setStyleSheet("background-color: rgb(237, 237, 237);border: 2px solid gray;")
         textbox_card_name.setFixedHeight(35)
         textbox_card_name.setFixedWidth(300)
         textbox_card_name.setPlaceholderText("Card Name")
-        grid_layout.addWidget(textbox_card_name, 5, 0)
+        grid_layout.addWidget(textbox_card_name, 6, 0)
 
 
         textbox_cvv = QLineEdit(self)
@@ -70,11 +90,14 @@ class EditProfile(QWidget):
         textbox_cvv.setFixedHeight(35)
         textbox_cvv.setFixedWidth(300)
         textbox_cvv.setPlaceholderText("CVV")
-        grid_layout.addWidget(textbox_cvv, 6, 0)
+        grid_layout.addWidget(textbox_cvv, 7, 0)
+        
+        self.add_button("Change Password",5,1, grid_layout,self.Change_password)
         self.add_button(
-            "Save Changes return MainPage", 5, 5, grid_layout, self.openHome_Page
+            "Save Changes return MainPage", 6, 1, grid_layout, self.openHome_Page
         )
-        self.add_button("Back", 6, 5, grid_layout, self.openHome_Page)
+        self.add_button("Back", 7, 1, grid_layout, self.openHome_Page)
+
 
         layout.addLayout(grid_layout)
         layout.addStretch(2)

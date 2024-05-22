@@ -37,7 +37,7 @@ class EquipmentPrices(QWidget):
         grid_layout = QGridLayout()
         layout.addLayout(grid_layout)
         self.add_button("Back", 0, 0, grid_layout, self.openMain_Page)
-        self.add_button("Done", 0, 2, grid_layout, self.openMain_Page)
+        #self.add_button("Done", 0, 2, grid_layout, self.openMain_Page)
         self.switch_function("Sorted By Paid", 0, 1, grid_layout)
 
         
@@ -103,6 +103,7 @@ class EquipmentPrices(QWidget):
         shadow.setColor(QColor(135,206,250))
         shadow.setOffset(5,5)
         button.setFixedHeight(35)
+        button.setFixedWidth(300)
         layout.addWidget(button, row, col)
 
     def switch_function(self, button_text, row, col, layout):

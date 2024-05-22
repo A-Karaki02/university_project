@@ -1,7 +1,7 @@
 import sys
 
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,QHBoxLayout,QSpacerItem,QSizePolicy,QGraphicsDropShadowEffect,
+from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,QHBoxLayout,QSpacerItem,QSizePolicy,QGraphicsDropShadowEffect,QTableWidgetItem,QHeaderView,QTableWidget,
                                QLineEdit, QPushButton, QVBoxLayout, QWidget)
 from PySide6.QtGui import QColor
 import EditProfile
@@ -24,14 +24,21 @@ class Stocks(QWidget):
 
         layout.addSpacing(20)
         self.add_dynamic_label("BuildSmart", layout)
-        layout.addStretch(2)
 
         grid_layout = QGridLayout()
         layout.addLayout(grid_layout)
-        self.add_button("Back", 5, 0, grid_layout, self.openMain_Page)
-        self.add_button("Done", 5, 2, grid_layout, self.openMain_Page)
 
-        self.add_button("test", 0, 0, grid_layout, self.test)
+        items = ["Item 1", "Item 2", "Item 3"]
+        table_widget = QTableWidget()
+        self.add_top_down_list_with_buttons(items, table_widget, layout)
+        
+        grid_layout = QGridLayout()
+        layout.addLayout(grid_layout)
+
+        self.add_button("Back", 5, 0, grid_layout, self.openMain_Page)
+        #self.add_button("Done", 5, 2, grid_layout, self.openMain_Page)
+
+        #self.add_button("test", 0, 0, grid_layout, self.test)
 
         self.setStyleSheet("background-color: rgb(255, 255, 255);font-weight: bold;")  # Black
         self.show()
@@ -95,6 +102,62 @@ class Stocks(QWidget):
         button.setFixedWidth(300)
         button.setFixedHeight(35)
         layout.addWidget(button, row, col)
+
+    def add_top_down_list_with_buttons(self, items, table_widget, layout):
+        headers = ["Item", "Action"]
+        table_widget.setColumnCount(len(headers))
+        table_widget.setHorizontalHeaderLabels(headers)
+        header = table_widget.horizontalHeader()
+        header.setStyleSheet("background-color: rgb(131, 170, 229);")
+        header.setSectionResizeMode(QHeaderView.Stretch)
+        table_widget.verticalHeader().setVisible(False)  # Hide vertical header
+
+        for item in items:
+            row_position = table_widget.rowCount()
+            table_widget.insertRow(row_position)
+
+            # Add item name
+            table_widget.setItem(row_position, 0, QTableWidgetItem(item))
+
+            # Add button
+            button = QPushButton("Action")
+            button.setStyleSheet(
+            """
+            QPushButton {
+                background-color: rgb(131, 170, 229);
+                font-weight: bold;
+                font-size: 16px;
+                border: 2px solid black;
+            }
+            QPushButton:hover {
+                background-color: rgb(0,0,205);
+            }
+            """
+            )
+            button.setFixedHeight(35)
+            button.setFixedWidth(600)
+        
+            # Connect button to a function if necessary
+            button.clicked.connect(lambda checked, item=item: self.button_action(item))
+
+            h_layout = QHBoxLayout()
+            h_layout.addWidget(button)
+            h_layout.setContentsMargins(0, 0, 0, 0)
+            h_layout.setAlignment(Qt.AlignCenter)
+        
+            cell_widget = QWidget()
+            cell_widget.setLayout(h_layout)
+            cell_widget.setContentsMargins(0, 0, 0, 0)
+            table_widget.setCellWidget(row_position, 1, cell_widget)
+        
+            for col in range(len(headers)):
+                if table_widget.item(row_position, col) is not None:
+                    table_widget.item(row_position, col).setBackground(QColor(235, 235, 235))
+            # Add borders between all rows and columns
+        table_widget.setStyleSheet("border: 2px solid black;font-size: 16px;")
+
+    # Add the table to the layout
+        layout.addWidget(table_widget)
 
     def openMain_Page(self):
         self.main = Mainpage.MainPage()

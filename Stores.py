@@ -51,7 +51,7 @@ class Stores(QWidget):
         grid_layout = QGridLayout()
         self.layout.addLayout(grid_layout)
 
-        self.add_button("Add", 1, 1, grid_layout, self.openAddStorePage)
+        self.add_button("Add Item", 1, 1, grid_layout, self.openAddStorePage)
         if numInBasket == 0:
             self.add_button("Go To Basket", 0, 1, grid_layout, self.openBasket_Page)
         else:
