@@ -133,57 +133,7 @@ class UserManager:
         print(self.basket)
         print(self.db_basket)
 
-    # def checkout_items(self):
-    #     now = datetime.now()
-    #     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-
-    #     itemsHistoryNumber_ref = (
-    #         self.dtbs.child("users").child(self.__UID).child("itemsHistoryNumber")
-    #     )
-    #     items_ref = self.dtbs.child("users").child(self.__UID).child("itemsHistory")
-
-    #     for item in self.basket:
-    #         print(item)
-    #         seller = item["storekey"]
-
-    #         itemsHistoryNumber_ref += 1
-
-    #         appendedItem = {
-    #             "storeKey": item["storeKey"],
-    #             "itemNumber": itemsHistoryNumber_ref,
-    #             "storeName": item["storeName"],
-    #             "itemName": item["storeName"],
-    #             "itemType": item["itemType"],
-    #             "price": item["price"],
-    #             "quantity": item["quantity"],
-    #             "time": dt_string,
-    #             "isPurchaced": True,
-    #         }
-    #         items_ref.append(appendedItem)
-
-    #         items_number_ref_seller = (
-    #             self.dtbs.child("users").child(seller).child("itemsHistoryNumber")
-    #         ) + 1
-    #         self.dtbs.child("users").child(seller).update(
-    #             {"itemsHistoryNumber": items_number_ref_seller}
-    #         )
-
-    #         seller_history = (
-    #             self.dtbs.child("users").child(seller).child("itemsHistory")
-    #         )
-    #         seller_history.append(appendedItem)
-
-    #         appendedItem["isPurchaced"] = False
-    #         appendedItem["itemNumber"] = items_number_ref_seller
-    #         self.dtbs.child("users").child(seller).update(
-    #             {"itemsHistory": seller_history}
-    #         )
-
-    #     self.dtbs.child("users").child(self.__UID).update(
-    #         {"itemsHistoryNumber": itemsHistoryNumber_ref}
-    #     )
-
-    #     self.dtbs.child("users").child(self.__UID).update({"itemsHistory": items_ref})
+    # def edit_user(self):
 
     def checkout_items(self):
         now = datetime.now()
