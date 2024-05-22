@@ -35,12 +35,42 @@ class EditProfile(QWidget):
         self.add_button("Change Password",4,5, grid_layout,self.Change_password)
 
         self.add_dynamic_labels("Personal Information :", grid_layout, 0, 0)
-        self.add_textbox("First Name", grid_layout, 1, 0)
-        self.add_textbox("Last Name", grid_layout, 2, 0)
+        textbox_first_name = QLineEdit(self)
+        textbox_first_name.setStyleSheet("background-color: rgb(237, 237, 237);border: 2px solid gray;")
+        textbox_first_name.setFixedHeight(35)
+        textbox_first_name.setFixedWidth(300)
+        textbox_first_name.setPlaceholderText("First Name")
+        grid_layout.addWidget(textbox_first_name, 1, 0)
+
+        textbox_last_name = QLineEdit(self)
+        textbox_last_name.setStyleSheet("background-color: rgb(237, 237, 237);border: 2px solid gray;")
+        textbox_last_name.setFixedHeight(35)
+        textbox_last_name.setFixedWidth(300)
+        textbox_last_name.setPlaceholderText("Last Name")
+        grid_layout.addWidget(textbox_last_name, 2, 0)
+
         self.add_dynamic_labels("Add debit/credit card :", grid_layout, 3, 0)
-        self.add_textbox("Card Number", grid_layout, 4, 0)
-        self.add_textbox("Card Name", grid_layout, 5, 0)
-        self.add_textbox("CVV", grid_layout, 6, 0)
+        textbox_card_number = QLineEdit(self)
+        textbox_card_number.setStyleSheet("background-color: rgb(237, 237, 237);border: 2px solid gray;")
+        textbox_card_number.setFixedHeight(35)
+        textbox_card_number.setFixedWidth(300)
+        textbox_card_number.setPlaceholderText("Card Number")
+        grid_layout.addWidget(textbox_card_number, 4, 0)
+
+        textbox_card_name = QLineEdit(self)
+        textbox_card_name.setStyleSheet("background-color: rgb(237, 237, 237);border: 2px solid gray;")
+        textbox_card_name.setFixedHeight(35)
+        textbox_card_name.setFixedWidth(300)
+        textbox_card_name.setPlaceholderText("Card Name")
+        grid_layout.addWidget(textbox_card_name, 5, 0)
+
+
+        textbox_cvv = QLineEdit(self)
+        textbox_cvv.setStyleSheet("background-color: rgb(237, 237, 237);border: 2px solid gray;")
+        textbox_cvv.setFixedHeight(35)
+        textbox_cvv.setFixedWidth(300)
+        textbox_cvv.setPlaceholderText("CVV")
+        grid_layout.addWidget(textbox_cvv, 6, 0)
         self.add_button(
             "Save Changes return MainPage", 5, 5, grid_layout, self.openHome_Page
         )
