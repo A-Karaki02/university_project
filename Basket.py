@@ -54,7 +54,7 @@ class Basket_page(QWidget):
     def add_dynamic_label(self, text, layout):
         layout_widget = QWidget(self)  # Create a widget to hold the layout
         layout_widget.setStyleSheet(
-            "background-color: rgb(131, 170, 229);"
+            "background-color: rgb(10,22,39);"
         )  # Set background color for the layout widget
 
         v_layout = QVBoxLayout(
@@ -63,7 +63,7 @@ class Basket_page(QWidget):
 
         label = QLabel(text, self)
         label.setStyleSheet(
-            "font-size: 32px;color: rgb(0, 0, 0);font-style: italic;font-weight: bold; background-color: rgb(131, 170, 229);"
+            "font-size: 32px;color: rgb(0, 0, 0);font-style: italic;font-weight: bold; background-color: rgb(10,22,39);"
         )
         label.setAlignment(Qt.AlignCenter)
         label.setFixedHeight(60)
@@ -76,7 +76,7 @@ class Basket_page(QWidget):
         dropdown = QComboBox(self)
         dropdown.addItems([user.get_username(), "Edit Profile", "Sign Out"])
         dropdown.setStyleSheet(
-            "background-color: rgb(131, 170, 229); color: rgb(0, 0, 0);border: 2px solid black;"
+            "background-color: rgb(10,22,39); color: rgb(0, 0, 0);border: 2px solid black;"
         )
         dropdown.setFixedHeight(30)
         dropdown.setFixedWidth(120)
@@ -93,7 +93,7 @@ class Basket_page(QWidget):
         button.setStyleSheet(
             """
                             QPushButton {
-                            background-color: rgb(131, 170, 229);
+                            background-color: rgb(10,22,39);
                             font-weight: bold;
                             font-size: 16px;
                             border: 2px solid black;
@@ -125,7 +125,7 @@ class Basket_page(QWidget):
     #     table_widget.setColumnCount(len(headers))
     #     table_widget.setHorizontalHeaderLabels(headers)
     #     header = table_widget.horizontalHeader()
-    #     header.setStyleSheet("background-color: rgb(131, 170, 229);")
+    #     header.setStyleSheet("background-color: rgb(10,22,39);")
     #     header.setSectionResizeMode(QHeaderView.Stretch)
     #     table_widget.verticalHeader().setVisible(False)  # Hide vertical header
     #     items = user.get_basket_items()
@@ -213,7 +213,7 @@ class Basket_page(QWidget):
         table_widget.setColumnCount(len(headers))
         table_widget.setHorizontalHeaderLabels(headers)
         header = table_widget.horizontalHeader()
-        header.setStyleSheet("background-color: rgb(131, 170, 229);")
+        header.setStyleSheet("background-color: rgb(10,22,39);")
         header.setSectionResizeMode(QHeaderView.Stretch)
         table_widget.verticalHeader().setVisible(False)  # Hide vertical header
 
