@@ -133,7 +133,7 @@ class UserManager:
         print(self.basket)
         print(self.db_basket)
 
-    def edit_user(self, firstName, lastName, phoneNumber, storeName):
+    def edit_user(self, firstName, lastName, userName, phoneNumber, storeName):
         if firstName != "":
             self.dtbs.child("users").child(self.__UID).update({"firstName": firstName})
         if lastName != "":
@@ -146,9 +146,14 @@ class UserManager:
             self.dtbs.child("users").child(self.__UID).update(
                 {"supplierName": storeName}
             )
+        if userName != "":
+            self.dtbs.child("users").child(self.__UID).update({"userName": userName})
 
     def passwordReset(self, email):
-        self.__auth.send_password_reset_email(email)
+        if email:
+            self.__auth.send_password_reset_email(email)
+        elif self.__email:
+            self.__auth.send_password_reset_email(self.__email)
 
     def checkout_items(self):
         now = datetime.now()
