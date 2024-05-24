@@ -133,7 +133,12 @@ class UserManager:
         print(self.basket)
         print(self.db_basket)
 
-    # def edit_user(self):
+    # def edit_user(self, currentPass, newPass, confPass, firstName, lastName, phoneNumber, email, supplierName):
+    #     if currentPass.strip() != "":
+    #         if newPass.strip() == confPass.strip():
+    #             update
+    def passwordReset(self, email):
+        self.__auth.send_password_reset_email(email)
 
     def checkout_items(self):
         now = datetime.now()
