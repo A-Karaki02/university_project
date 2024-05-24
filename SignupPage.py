@@ -34,8 +34,12 @@ class SignUpPage(QWidget):
         # the label for the Title
         self.label_build_smart = QLabel("BuildSmart", self)
         self.label_build_smart.setGeometry(0, 50, 1200, 100)
+        self.label_build_smart.setText(
+        '<span style="font-size: 46px; color: rgb(255, 0, 0); font-style: italic;">Build</span>'
+        '<span style="font-size: 46px; color: rgb(255, 255, 255); font-style: italic;">Smart</span>'
+        )
         self.label_build_smart.setStyleSheet(
-            "font-size: 32px;color: rgb(255, 255, 255); background-color: rgb(131, 170,229);font-style: italic;font-weight: bold;"
+            "background-color: rgb(10,22,39);"
         )  # Gray text on gray background
         self.label_build_smart.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
 
@@ -98,7 +102,7 @@ class SignUpPage(QWidget):
         self.__supplier_checkbox = QCheckBox("Supplier", self)
         self.__supplier_checkbox.setGeometry(625, 500, 125, 30)
         self.__supplier_checkbox.setStyleSheet(
-            "QCheckBox { color: rgb(0,0,0); font-weight: bold;}"
+            "QCheckBox { color: rgb(10,22,39); font-weight: bold;}"
         )
         self.__supplier_checkbox.toggled.connect(self.checkbox_changed)
 
@@ -116,9 +120,10 @@ class SignUpPage(QWidget):
         self.signup_button.setStyleSheet(
             """
                             QPushButton {
-                            background-color: rgb(131, 170,229);
+                            background-color: rgb(10,22,39);
                             font-weight: bold;
                             font-size: 16px;
+                            color:rgb(255,255,255);
                             border: 2px solid black;
                             border-radius: 30px;
                             }

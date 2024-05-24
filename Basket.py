@@ -47,7 +47,7 @@ class Basket_page(QWidget):
         self.add_button("Checkout", 0, 2, grid_layout, self.openCheckout_Page)
 
         self.setStyleSheet(
-            "background-color: rgb(255,255,255);font-weight: bold;"
+            "background-color: rgb(255,255,255);"
         )  # Black
         self.show()
 
@@ -62,8 +62,12 @@ class Basket_page(QWidget):
         )  # Use the layout widget as the parent for QVBoxLayout
 
         label = QLabel(text, self)
+        label.setText(
+        '<span style="font-size: 46px; color: rgb(255, 0, 0); font-style: italic;">Build</span>'
+        '<span style="font-size: 46px; color: rgb(255, 255, 255); font-style: italic;">Smart</span>'
+        )
         label.setStyleSheet(
-            "font-size: 32px;color: rgb(0, 0, 0);font-style: italic;font-weight: bold; background-color: rgb(10,22,39);"
+            "background-color: rgb(10,22,39);"
         )
         label.setAlignment(Qt.AlignCenter)
         label.setFixedHeight(60)
@@ -76,7 +80,7 @@ class Basket_page(QWidget):
         dropdown = QComboBox(self)
         dropdown.addItems([user.get_username(), "Edit Profile", "Sign Out"])
         dropdown.setStyleSheet(
-            "background-color: rgb(10,22,39); color: rgb(0, 0, 0);border: 2px solid black;"
+            "background-color: rgb(10,22,39); color: rgb(255,255, 255);border: 0px solid black;"
         )
         dropdown.setFixedHeight(30)
         dropdown.setFixedWidth(120)
@@ -96,6 +100,7 @@ class Basket_page(QWidget):
                             background-color: rgb(10,22,39);
                             font-weight: bold;
                             font-size: 16px;
+                            color : rgb(255,255,255);
                             border: 2px solid black;
                             border-radius: 30px;
                             }
@@ -256,6 +261,7 @@ class Basket_page(QWidget):
                 """
                 QPushButton {
                     background-color: rgb(255,0,0);
+                    color : rgb(255,255,255);
                     font-weight: bold;
                 }
                 QPushButton:hover {

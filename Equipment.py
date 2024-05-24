@@ -1,10 +1,14 @@
 import sys
 
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,QTableWidgetItem,QTableWidget,QGraphicsDropShadowEffect,
-                               QHBoxLayout,QSpacerItem,QSizePolicy,QLineEdit,QCheckBox,QHeaderView,
-                               QPushButton, QVBoxLayout, QWidget)
 from PySide6.QtGui import QColor
+from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox,
+                               QGraphicsDropShadowEffect, QGridLayout,
+                               QHBoxLayout, QHeaderView, QLabel, QLineEdit,
+                               QPushButton, QSizePolicy, QSpacerItem,
+                               QTableWidget, QTableWidgetItem, QVBoxLayout,
+                               QWidget)
+
 import EditProfile
 import LoginPage
 import Mainpage
@@ -15,7 +19,7 @@ from UserManager import user
 class EquipmentPrices(QWidget):
     def __init__(self):
         super().__init__()
-      
+
         self.initUI()
 
     def initUI(self):
@@ -27,7 +31,7 @@ class EquipmentPrices(QWidget):
 
         layout.addSpacing(20)
         self.add_dynamic_label("BuildSmart", layout)
-        
+
         items = [
             {"storeName": "Store A", "itemName": "Item 1", "itemType": "Type X", "price": 10, "quantity": 2, "profit_paid": "Profit"},
             {"storeName": "Store B", "itemName": "Item 2", "itemType": "Type Y", "price": 20, "quantity": 3, "profit_paid": "Paid"},
@@ -40,12 +44,12 @@ class EquipmentPrices(QWidget):
         #self.add_button("Done", 0, 2, grid_layout, self.openMain_Page)
         self.switch_function("Sorted By Paid", 0, 1, grid_layout)
 
-        
+
 
         # Set the layout
         self.setLayout(layout)
 
-        self.setStyleSheet("background-color: rgb(255, 255, 255);font-weight: bold;")  # Black
+        self.setStyleSheet("background-color: rgb(255, 255, 255);")  # Black
         self.show()
 
     def add_dynamic_label(self, text, layout):
@@ -55,8 +59,12 @@ class EquipmentPrices(QWidget):
         v_layout = QVBoxLayout(layout_widget)  # Use the layout widget as the parent for QVBoxLayout
 
         label = QLabel(text, self)
+        label.setText(
+        '<span style="font-size: 46px; color: rgb(255, 0, 0); font-style: italic;">Build</span>'
+        '<span style="font-size: 46px; color: rgb(255, 255, 255); font-style: italic;">Smart</span>'
+        )
         label.setStyleSheet(
-        "font-size: 32px;color: rgb(0, 0, 0);font-style: italic;font-weight: bold; background-color: rgb(10,22,39);"
+        "background-color: rgb(10,22,39);"
         )
         label.setAlignment(Qt.AlignCenter)
         label.setFixedHeight(60)
@@ -90,6 +98,7 @@ class EquipmentPrices(QWidget):
                             background-color: rgb(10,22,39);
                             font-weight: bold;
                             font-size: 16px;
+                            color:rgb(255,255,255);
                             border: 2px solid black;
                             border-radius: 30px;
                             }
@@ -119,9 +128,9 @@ class EquipmentPrices(QWidget):
             switch_state = (switch_state + 1) % 3
             switch_button.setText(switch_text[switch_state])
             print(f"{switch_text[switch_state]} clicked")
-        
+
         switch_button.clicked.connect(on_switch_clicked)  # Connect the clicked signal to the function
-        switch_button.setStyleSheet("background-color: rgb(131, 170,229);font-weight: bold;border: 2px solid black;border-radius: 10px;box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);")  # White
+        switch_button.setStyleSheet("background-color: rgb(10,22,39);color:rgb(255,255,255);font-weight: bold;border: 2px solid black;border-radius: 10px;box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);")  # White
         layout.addWidget(switch_button, row, col)
 
     def add_top_down_list(self, items, table_widget, layout):

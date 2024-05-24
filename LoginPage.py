@@ -72,6 +72,7 @@ class LoginPage(QWidget):
                             background-color: rgb(10,22,39);
                             font-weight: bold;
                             font-size: 16px;
+                            color: rgb(255, 255, 255);
                             border: 2px solid black;
                             border-radius: 30px;
                             }
@@ -101,7 +102,7 @@ class LoginPage(QWidget):
         '<span style="font-size: 46px; color: rgb(255, 255, 255); font-style: italic;">Smart</span>'
         )
         self.label_build_smart.setStyleSheet(
-            "color: rgb(237, 237, 237); background-color: rgb(10,22,39);"
+            "background-color: rgb(10,22,39);"
         )  # Gray text on gray background
         self.label_build_smart.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
 

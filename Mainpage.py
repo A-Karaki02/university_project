@@ -1,10 +1,12 @@
 import sys
 
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout,QSpacerItem,QSizePolicy,QGraphicsDropShadowEffect,
-                               QHBoxLayout, QLabel, QPushButton, QVBoxLayout,
-                               QWidget)
 from PySide6.QtGui import QColor
+from PySide6.QtWidgets import (QApplication, QComboBox,
+                               QGraphicsDropShadowEffect, QGridLayout,
+                               QHBoxLayout, QLabel, QPushButton, QSizePolicy,
+                               QSpacerItem, QVBoxLayout, QWidget)
+
 import Basket
 import Earning
 import EditProfile
@@ -43,7 +45,7 @@ class MainPage(QWidget):
         layout.addLayout(grid_layout)
         layout.addStretch(1)
 
-        self.setStyleSheet("background-color: rgb(255, 255, 255);font-weight: bold;")  # Black
+        self.setStyleSheet("background-color: rgb(255, 255, 255);")  # Black
         self.show()
 
     def add_button(self, button_text, row, col, layout, click_handler):
@@ -54,6 +56,7 @@ class MainPage(QWidget):
                             background-color: rgb(10,22,39);
                             font-weight: bold;
                             font-size: 16px;
+                             color:rgb(255,255,255);
                             border: 2px solid black;
                             border-radius: 30px;
                             }
@@ -66,10 +69,10 @@ class MainPage(QWidget):
         shadow.setBlurRadius(30)
         shadow.setColor(QColor(135,206,250))
         shadow.setOffset(5,5)
-    
+
         # Apply shadow to button
         button.setGraphicsEffect(shadow)
-        
+
         button.setFixedWidth(450)
         button.setFixedHeight(70)
         layout.addWidget(button, row, col)
@@ -81,8 +84,12 @@ class MainPage(QWidget):
         v_layout = QVBoxLayout(layout_widget)  # Use the layout widget as the parent for QVBoxLayout
 
         label = QLabel(text, self)
+        label.setText(
+        '<span style="font-size: 46px; color: rgb(255, 0, 0); font-style: italic;">Build</span>'
+        '<span style="font-size: 46px; color: rgb(255, 255, 255); font-style: italic;">Smart</span>'
+        )
         label.setStyleSheet(
-        "font-size: 32px;color: rgb(0, 0, 0);font-style: italic;font-weight: bold; background-color: rgb(10,22,39);"
+        "background-color: rgb(10,22,39);"
         )
         label.setAlignment(Qt.AlignCenter)
         label.setFixedHeight(60)
@@ -97,7 +104,7 @@ class MainPage(QWidget):
         [user.get_username(), "Edit Profile", "Sign Out"]
         )
         dropdown.setStyleSheet(
-        "background-color: rgb(10,22,39); color: rgb(0, 0, 0);border: 2px solid black;"
+        "background-color: rgb(10,22,39); color: rgb(255, 255, 255);border: 0px solid black;"
         )
         dropdown.setFixedHeight(30)
         dropdown.setFixedWidth(120)
@@ -115,7 +122,7 @@ class MainPage(QWidget):
             self.openLoginPage_Page()
 
     def openBasket_Page(self):
-        self.Basket = Basket.Basket_page()  
+        self.Basket = Basket.Basket_page()
         self.Basket.show()
         self.close()
 
@@ -149,7 +156,7 @@ class MainPage(QWidget):
         self.SignOut.show()
         self.close()
 
-    
+
 
 
 if __name__ == "__main__":

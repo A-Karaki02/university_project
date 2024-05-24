@@ -66,7 +66,7 @@ class Stores(QWidget):
         self.add_button("Search", 0, 0, grid_layout, self.search_page)
 
         self.setStyleSheet(
-            "background-color: rgb(255, 255, 255);font-weight: bold;"
+            "background-color: rgb(255, 255, 255);"
         )  # White background
         self.show()
 
@@ -81,8 +81,12 @@ class Stores(QWidget):
         )  # Use the layout widget as the parent for QVBoxLayout
 
         label = QLabel(text, self)
+        label.setText(
+        '<span style="font-size: 46px; color: rgb(255, 0, 0); font-style: italic;">Build</span>'
+        '<span style="font-size: 46px; color: rgb(255, 255, 255); font-style: italic;">Smart</span>'
+        )
         label.setStyleSheet(
-            "font-size: 32px;color: rgb(0, 0, 0);font-style: italic;font-weight: bold; background-color: rgb(10,22,39);"
+            "background-color: rgb(10,22,39);"
         )
         label.setAlignment(Qt.AlignCenter)
         label.setFixedHeight(60)
@@ -95,7 +99,7 @@ class Stores(QWidget):
         dropdown = QComboBox(self)
         dropdown.addItems([user.get_username(), "Edit Profile", "Sign Out"])
         dropdown.setStyleSheet(
-            "background-color: rgb(10,22,39); color: rgb(0, 0, 0);border: 2px solid black;"
+            "background-color: rgb(10,22,39); color: rgb(255, 255, 255);border: 0px solid black;"
         )
         dropdown.setFixedHeight(30)
         dropdown.setFixedWidth(120)
@@ -115,6 +119,7 @@ class Stores(QWidget):
                 background-color: rgb(10,22,39);
                 font-weight: bold;
                 font-size: 16px;
+                color: rgb(255,255,255);
                 border: 2px solid black;
                 border-radius: 30px;
             }
@@ -171,6 +176,7 @@ class Stores(QWidget):
                 """
                 QPushButton {
                     background-color: rgb(10,22,39);
+                    color: rgb(255, 255, 255);
                     font-weight: bold;
                 }
                 QPushButton:hover {

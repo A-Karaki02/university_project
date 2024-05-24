@@ -1,19 +1,25 @@
 import sys
 
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,QHBoxLayout,QSpacerItem,QSizePolicy,QGraphicsDropShadowEffect,QTableWidgetItem,QHeaderView,QTableWidget,
-                               QLineEdit, QPushButton, QVBoxLayout, QWidget)
 from PySide6.QtGui import QColor
+from PySide6.QtWidgets import (QApplication, QComboBox,
+                               QGraphicsDropShadowEffect, QGridLayout,
+                               QHBoxLayout, QHeaderView, QLabel, QLineEdit,
+                               QPushButton, QSizePolicy, QSpacerItem,
+                               QTableWidget, QTableWidgetItem, QVBoxLayout,
+                               QWidget)
+
 import EditProfile
 import LoginPage
 import Mainpage
 import SignupPage
 from UserManager import user
 
+
 class Stocks(QWidget):
     def __init__(self):
         super().__init__()
-       
+
         self.initUI()
 
     def initUI(self):
@@ -31,7 +37,7 @@ class Stocks(QWidget):
         items = ["Item 1", "Item 2", "Item 3"]
         table_widget = QTableWidget()
         self.add_top_down_list_with_buttons(items, table_widget, layout)
-        
+
         grid_layout = QGridLayout()
         layout.addLayout(grid_layout)
 
@@ -40,18 +46,22 @@ class Stocks(QWidget):
 
         #self.add_button("test", 0, 0, grid_layout, self.test)
 
-        self.setStyleSheet("background-color: rgb(255, 255, 255);font-weight: bold;")  # Black
+        self.setStyleSheet("background-color: rgb(255, 255, 255);")  # Black
         self.show()
 
     def add_dynamic_label(self, text, layout):
         layout_widget = QWidget(self)  # Create a widget to hold the layout
-        layout_widget.setStyleSheet("background-color: rgb(131, 170, 229);")  # Set background color for the layout widget
+        layout_widget.setStyleSheet("background-color: rgb(10,22,39);")  # Set background color for the layout widget
 
         v_layout = QVBoxLayout(layout_widget)  # Use the layout widget as the parent for QVBoxLayout
 
         label = QLabel(text, self)
+        label.setText(
+        '<span style="font-size: 46px; color: rgb(255, 0, 0); font-style: italic;">Build</span>'
+        '<span style="font-size: 46px; color: rgb(255, 255, 255); font-style: italic;">Smart</span>'
+        )
         label.setStyleSheet(
-        "font-size: 32px;color: rgb(0, 0, 0);font-style: italic;font-weight: bold; background-color: rgb(131, 170, 229);"
+        "background-color: rgb(10,22,39);"
         )
         label.setAlignment(Qt.AlignCenter)
         label.setFixedHeight(60)
@@ -66,7 +76,7 @@ class Stocks(QWidget):
         [user.get_username(), "Edit Profile", "Sign Out"]
         )
         dropdown.setStyleSheet(
-        "background-color: rgb(131, 170, 229); color: rgb(0, 0, 0);border: 2px solid black;"
+        "background-color: rgb(10,22,39); color: rgb(255, 255, 255);border: 0px solid black;"
         )
         dropdown.setFixedHeight(30)
         dropdown.setFixedWidth(120)
@@ -82,9 +92,11 @@ class Stocks(QWidget):
         button.clicked.connect(click_handler)
         button.setStyleSheet("""
                             QPushButton {
-                            background-color: rgb(131, 170, 229);
+                            background-color: rgb(10,22,39);
                             font-weight: bold;
                             font-size: 16px;
+                            color:rgb(255,255,255);
+                            color : rgb(255,255,255);
                             border: 2px solid black;
                             border-radius: 30px;
                             }
@@ -124,7 +136,8 @@ class Stocks(QWidget):
             button.setStyleSheet(
             """
             QPushButton {
-                background-color: rgb(131, 170, 229);
+                background-color: rgb(10,22,39);
+                color:rgb(255,255,255);
                 font-weight: bold;
                 font-size: 16px;
                 border: 2px solid black;
@@ -136,7 +149,7 @@ class Stocks(QWidget):
             )
             button.setFixedHeight(35)
             button.setFixedWidth(600)
-        
+
             # Connect button to a function if necessary
             button.clicked.connect(lambda checked, item=item: self.button_action(item))
 
@@ -144,12 +157,12 @@ class Stocks(QWidget):
             h_layout.addWidget(button)
             h_layout.setContentsMargins(0, 0, 0, 0)
             h_layout.setAlignment(Qt.AlignCenter)
-        
+
             cell_widget = QWidget()
             cell_widget.setLayout(h_layout)
             cell_widget.setContentsMargins(0, 0, 0, 0)
             table_widget.setCellWidget(row_position, 1, cell_widget)
-        
+
             for col in range(len(headers)):
                 if table_widget.item(row_position, col) is not None:
                     table_widget.item(row_position, col).setBackground(QColor(235, 235, 235))
