@@ -133,10 +133,20 @@ class UserManager:
         print(self.basket)
         print(self.db_basket)
 
-    # def edit_user(self, currentPass, newPass, confPass, firstName, lastName, phoneNumber, email, supplierName):
-    #     if currentPass.strip() != "":
-    #         if newPass.strip() == confPass.strip():
-    #             update
+    def edit_user(self, firstName, lastName, phoneNumber, storeName):
+        if firstName != "":
+            self.dtbs.child("users").child(self.__UID).update({"firstName": firstName})
+        if lastName != "":
+            self.dtbs.child("users").child(self.__UID).update({"lastName": lastName})
+        if phoneNumber != "":
+            self.dtbs.child("users").child(self.__UID).update(
+                {"phoneNumber": phoneNumber}
+            )
+        if storeName != "":
+            self.dtbs.child("users").child(self.__UID).update(
+                {"supplierName": storeName}
+            )
+
     def passwordReset(self, email):
         self.__auth.send_password_reset_email(email)
 
@@ -207,6 +217,54 @@ class UserManager:
 
         # Clear the user's basket after checkout
         self.basket.clear()
+
+    def fetch_history(self):
+        try:
+            data = self.dtbs.child("History").child(self.__UID).get().val()
+            print(
+                f"Data fetched from Firebase: {data}"
+            )  # Debug print to check the data structure
+
+            if data is None:
+                print("No data found in the Firebase database.")
+                return []
+
+            items = []
+
+            if isinstance(data, dict):
+                for person_key, person_items in data.items():
+                    if isinstance(person_items, dict):
+                        for item_number, item_data in person_items.items():
+                            item_data["personKey"] = person_key
+                            item_data["itemNumber"] = item_number
+                            items.append(item_data)
+                    elif isinstance(person_items, list):
+                        for index, item_data in enumerate(person_items):
+                            if item_data is not None:  # Filter out None values
+                                item_data["personKey"] = person_key
+                                item_data["itemNumber"] = index
+                                items.append(item_data)
+            elif isinstance(data, list):
+                for index, person_items in enumerate(data):
+                    if isinstance(person_items, dict):
+                        for item_number, item_data in person_items.items():
+                            item_data["personKey"] = index
+                            item_data["itemNumber"] = item_number
+                            items.append(item_data)
+                    elif isinstance(person_items, list):
+                        for item_index, item_data in enumerate(person_items):
+                            if item_data is not None:  # Filter out None values
+                                item_data["personKey"] = index
+                                item_data["itemNumber"] = item_index
+                                items.append(item_data)
+            else:
+                print("Unexpected data structure from Firebase.")
+                return []
+
+            return items
+        except Exception as e:
+            print(f"Error fetching data from Firebase: {e}")
+            return []
 
     def add_to_purchased_items(self, key, itemNum):
         pass
