@@ -141,7 +141,7 @@ class Stores(QWidget):
             "Store Name",
             "Item Name",
             "Item Type",
-            "Price",
+            "Price/Kg",
             "Quantity",
             "Add To Basket",
         ]

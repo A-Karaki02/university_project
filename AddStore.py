@@ -32,7 +32,7 @@ class add_store(QWidget):
         layout.addWidget(Item_type_label)
         layout.addWidget(self.Item_type_combo)
 
-        self.Price_label = QLabel("Price:")
+        self.Price_label = QLabel("Price/Kg:")
         self.Price_edit = QLineEdit()
         layout.addWidget(self.Price_label)
         layout.addWidget(self.Price_edit)

@@ -5,7 +5,7 @@ import pyrebase
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QColor
 from PySide6.QtWidgets import (QApplication, QGraphicsDropShadowEffect, QLabel,
-                               QLineEdit, QPushButton, QWidget)
+                               QLineEdit, QMessageBox, QPushButton, QWidget)
 
 import Mainpage
 import SignupPage
@@ -43,7 +43,7 @@ class LoginPage(QWidget):
 
         # the button for login
         self.login_button = QPushButton("Login", self)
-        self.login_button.setGeometry(500, 350, 200, 30)
+        self.login_button.setGeometry(500, 370, 200, 30)
         self.login_button.clicked.connect(self.handle_login_click)
         self.login_button.setStyleSheet("""
                             QPushButton {
@@ -65,7 +65,7 @@ class LoginPage(QWidget):
 
         # the button for Sign Up
         self.signup_button = QPushButton("Sign Up", self)
-        self.signup_button.setGeometry(525, 400, 150, 30)
+        self.signup_button.setGeometry(525, 420, 150, 30)
         self.signup_button.clicked.connect(self.openSignupPage)
         self.signup_button.setStyleSheet("""
                             QPushButton {
@@ -106,6 +106,11 @@ class LoginPage(QWidget):
         )  # Gray text on gray background
         self.label_build_smart.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
 
+        self.error_label = QLabel(self)
+        self.error_label.setGeometry(450, 335, 300, 30)
+        self.error_label.setStyleSheet("color: rgb(255,0,0);")
+        self.error_label.setText("")
+
         # Set background color using RGB for the window
         self.setStyleSheet("background-color: rgb(255, 255, 255);")  # Black
 
@@ -129,12 +134,14 @@ class LoginPage(QWidget):
             self.main_page.show()
             self.close()
             return
-
-        if user.set_user(email, password):
-            self.main_page = Mainpage.MainPage()
-            self.main_page.show()
-            self.close()
-            print("Signed in successfully!")
-
-        else:
-            print("Error, cant find user credintials.")
+        try:
+            if user.set_user(email, password):
+                self.main_page = Mainpage.MainPage()
+                self.main_page.show()
+                self.close()
+                print("Signed in successfully!")
+                self.error_label.setText("")
+            else:
+                self.error_label.setText("Error: Can't find user credentials.")
+        except :
+            self.error_label.setText("Error: Error: Can't find user credentials.")

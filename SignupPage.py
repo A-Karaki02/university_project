@@ -6,7 +6,7 @@ from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QColor
 from PySide6.QtWidgets import (QApplication, QCheckBox,
                                QGraphicsDropShadowEffect, QLabel, QLineEdit,
-                               QPushButton, QWidget)
+                               QMessageBox, QPushButton, QWidget)
 
 import LoginPage
 from DataBase import DataBase as db
@@ -171,6 +171,12 @@ class SignUpPage(QWidget):
             "color: rgb(140, 140, 140);font-weight: bold;font-weight: bold;"
         )  # gray
 
+        self.error_label = QLabel(self)
+        self.error_label.setGeometry(780, 300, 400, 150)
+        self.error_label.setStyleSheet("color: rgb(255,0,0);")
+        self.error_label.setText("")
+        self.error_label.setWordWrap(True)
+
         # Set background color using RGB for the window
         self.setStyleSheet("background-color: rgb(255, 255, 255)")  # Black
 
@@ -186,19 +192,42 @@ class SignUpPage(QWidget):
 
     def password_check(self, password):
         pattern = re.compile(
-            r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*!-+=()])(?=\S+$).{8,}$"
-        )
-        if re.match(pattern, password):
-            print("Valid password")
-            return True
-        else:
-            print("Invalid password. Please ensure it meets the following criteria:")
-            print("- At least 8 characters long")
-            print("- Contains at least one digit (0-9)")
-            print("- Contains at least one lowercase letter (a-z)")
-            print("- Contains at least one uppercase letter (A-Z)")
-            print("- Contains at least one special character (@#$%^&*!-+=())")
-            print("- No whitespace characters allowed")
+        r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*!-+=()])(?=\S+$).{8,}$"
+    )
+        try:
+            if re.match(pattern, password):
+                print("Valid password")
+                return True
+            else:
+                error_messages = [
+                "Invalid password",
+                "Please ensure it meets the following criteria:",
+                "- At least 8 characters long",
+                "- Contains at least one digit (0-9)",
+                "- Contains at least one lowercase letter (a-z)",
+                "- Contains at least one uppercase letter (A-Z)",
+                "- Contains at least one special character (@#$%^&*!-+=())",
+                "- No whitespace characters allowed"
+            ]
+                # Set the error messages to the error_label QLabel
+                self.error_label.setText("\n".join(error_messages))
+                self.repaint()  # Force window repaint
+                return False
+        except Exception as e:
+            print(e)
+            error_messages = [
+            "Invalid password",
+            "Please ensure it meets the following criteria:",
+            "- At least 8 characters long",
+            "- Contains at least one digit (0-9)",
+            "- Contains at least one lowercase letter (a-z)",
+            "- Contains at least one uppercase letter (A-Z)",
+            "- Contains at least one special character (@#$%^&*!-+=())",
+            "- No whitespace characters allowed"
+        ]
+            # Set the error messages to the error_label QLabel
+            self.error_label.setText("\n".join(error_messages))
+            self.repaint()  # Force window repaint
             return False
 
     # a function to hash the password **********************************************************
