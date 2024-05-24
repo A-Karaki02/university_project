@@ -35,7 +35,7 @@ class SignUpPage(QWidget):
         self.label_build_smart = QLabel("BuildSmart", self)
         self.label_build_smart.setGeometry(0, 50, 1200, 100)
         self.label_build_smart.setStyleSheet(
-            "font-size: 32px;color: rgb(0, 0, 0); background-color: rgb(131, 170,229);font-style: italic;font-weight: bold;"
+            "font-size: 32px;color: rgb(255, 255, 255); background-color: rgb(131, 170,229);font-style: italic;font-weight: bold;"
         )  # Gray text on gray background
         self.label_build_smart.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
 

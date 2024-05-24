@@ -4,8 +4,9 @@ import os
 import pyrebase
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QColor
-from PySide6.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget,QGraphicsDropShadowEffect
-from PySide6.QtGui import QColor
+from PySide6.QtWidgets import (QApplication, QGraphicsDropShadowEffect, QLabel,
+                               QLineEdit, QPushButton, QWidget)
+
 import Mainpage
 import SignupPage
 from UserManager import user
@@ -93,10 +94,14 @@ class LoginPage(QWidget):
         self.contact_label1.setStyleSheet("color: rgb(140, 140, 140);font-weight: bold;")  # gray
 
         # the label for the Title
-        self.label_build_smart = QLabel("BuildSmart", self)
+        self.label_build_smart = QLabel(self)
         self.label_build_smart.setGeometry(0, 50, 1200, 100)
+        self.label_build_smart.setText(
+        '<span style="font-size: 46px; color: rgb(255, 0, 0); font-style: italic;">Build</span>'
+        '<span style="font-size: 46px; color: rgb(255, 255, 255); font-style: italic;">Smart</span>'
+        )
         self.label_build_smart.setStyleSheet(
-            "font-size: 32px;color: rgb(0, 0, 0); background-color: rgb(10,22,39);font-style: italic;font-weight: bold;"
+            "color: rgb(237, 237, 237); background-color: rgb(10,22,39);"
         )  # Gray text on gray background
         self.label_build_smart.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
 
