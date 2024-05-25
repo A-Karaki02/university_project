@@ -28,7 +28,9 @@ class add_store(QWidget):
 
         Item_type_label = QLabel("Item Type:")
         self.Item_type_combo = QComboBox()
-        self.Item_type_combo.addItems(["Iron and Cement", "Electricals"])
+        self.Item_type_combo.addItems(
+            ["Construction Materiales", "Electricals", "Mechanices"]
+        )
         layout.addWidget(Item_type_label)
         layout.addWidget(self.Item_type_combo)
 

@@ -125,7 +125,7 @@ class Stocks(QWidget):
         layout.addWidget(button, row, col)
 
     def add_top_down_list_with_buttons(self, items, table_widget, layout):
-        headers = ["Item", "Action"]
+        headers = ["Item", "Stocks"]
         table_widget.setColumnCount(len(headers))
         table_widget.setHorizontalHeaderLabels(headers)
         header = table_widget.horizontalHeader()
@@ -139,7 +139,7 @@ class Stocks(QWidget):
 
             table_widget.setItem(row_position, 0, QTableWidgetItem(item["name"]))
 
-            button = QPushButton("Action")
+            button = QPushButton("Stock")
             button.setStyleSheet(
                 """
                 QPushButton {
