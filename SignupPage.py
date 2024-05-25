@@ -3,7 +3,7 @@ import os
 import re
 
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtGui import QColor
+from PySide6.QtGui import QColor, QIcon
 from PySide6.QtWidgets import (QApplication, QCheckBox,
                                QGraphicsDropShadowEffect, QLabel, QLineEdit,
                                QMessageBox, QPushButton, QWidget)
@@ -28,15 +28,16 @@ class SignUpPage(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle("GRADUATION PROJECT")
+        self.setWindowTitle("BuildSmart")
+        self.setWindowIcon(QIcon("icon.png"))
         self.setFixedSize(QSize(1200, 600))
 
         # the label for the Title
         self.label_build_smart = QLabel("BuildSmart", self)
         self.label_build_smart.setGeometry(0, 50, 1200, 100)
         self.label_build_smart.setText(
-        '<span style="font-size: 46px; color: rgb(255, 0, 0); font-style: italic;">Build</span>'
-        '<span style="font-size: 46px; color: rgb(255, 255, 255); font-style: italic;">Smart</span>'
+            '<span style="font-size: 46px; color: rgb(255, 0, 0); font-style: italic;">Build</span>'
+            '<span style="font-size: 46px; color: rgb(255, 255, 255); font-style: italic;">Smart</span>'
         )
         self.label_build_smart.setStyleSheet(
             "background-color: rgb(10,22,39);"
@@ -192,23 +193,23 @@ class SignUpPage(QWidget):
 
     def password_check(self, password):
         pattern = re.compile(
-        r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*!-+=()])(?=\S+$).{8,}$"
-    )
+            r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*!-+=()])(?=\S+$).{8,}$"
+        )
         try:
             if re.match(pattern, password):
                 print("Valid password")
                 return True
             else:
                 error_messages = [
-                "Invalid password",
-                "Please ensure it meets the following criteria:",
-                "- At least 8 characters long",
-                "- Contains at least one digit (0-9)",
-                "- Contains at least one lowercase letter (a-z)",
-                "- Contains at least one uppercase letter (A-Z)",
-                "- Contains at least one special character (@#$%^&*!-+=())",
-                "- No whitespace characters allowed"
-            ]
+                    "Invalid password",
+                    "Please ensure it meets the following criteria:",
+                    "- At least 8 characters long",
+                    "- Contains at least one digit (0-9)",
+                    "- Contains at least one lowercase letter (a-z)",
+                    "- Contains at least one uppercase letter (A-Z)",
+                    "- Contains at least one special character (@#$%^&*!-+=())",
+                    "- No whitespace characters allowed",
+                ]
                 # Set the error messages to the error_label QLabel
                 self.error_label.setText("\n".join(error_messages))
                 self.repaint()  # Force window repaint
@@ -216,15 +217,15 @@ class SignUpPage(QWidget):
         except Exception as e:
             print(e)
             error_messages = [
-            "Invalid password",
-            "Please ensure it meets the following criteria:",
-            "- At least 8 characters long",
-            "- Contains at least one digit (0-9)",
-            "- Contains at least one lowercase letter (a-z)",
-            "- Contains at least one uppercase letter (A-Z)",
-            "- Contains at least one special character (@#$%^&*!-+=())",
-            "- No whitespace characters allowed"
-        ]
+                "Invalid password",
+                "Please ensure it meets the following criteria:",
+                "- At least 8 characters long",
+                "- Contains at least one digit (0-9)",
+                "- Contains at least one lowercase letter (a-z)",
+                "- Contains at least one uppercase letter (A-Z)",
+                "- Contains at least one special character (@#$%^&*!-+=())",
+                "- No whitespace characters allowed",
+            ]
             # Set the error messages to the error_label QLabel
             self.error_label.setText("\n".join(error_messages))
             self.repaint()  # Force window repaint

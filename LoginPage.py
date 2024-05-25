@@ -2,8 +2,8 @@ import hashlib
 import os
 
 import pyrebase
-from PySide6.QtCore import QSize, Qt, Signal
-from PySide6.QtGui import QColor
+from PySide6.QtCore import QEvent, QSize, Qt, Signal
+from PySide6.QtGui import QColor, QIcon
 from PySide6.QtWidgets import (QApplication, QGraphicsDropShadowEffect, QLabel,
                                QLineEdit, QMessageBox, QPushButton,
                                QVBoxLayout, QWidget)
@@ -22,7 +22,8 @@ class LoginPage(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle("GRADUATION PROJECT")
+        self.setWindowTitle("BuildSmart")
+        self.setWindowIcon(QIcon("icon.png"))
         self.setFixedSize(QSize(1200, 600))
 
         # the textbox for email
@@ -46,7 +47,8 @@ class LoginPage(QWidget):
         self.login_button = QPushButton("Login", self)
         self.login_button.setGeometry(500, 370, 200, 30)
         self.login_button.clicked.connect(self.handle_login_click)
-        self.login_button.setStyleSheet("""
+        self.login_button.setStyleSheet(
+            """
                             QPushButton {
                             background-color: rgb(237, 237, 237);
                             font-weight: bold;
@@ -58,17 +60,18 @@ class LoginPage(QWidget):
                             background-color: rgb(169,169,169);
                             }
                             """
-                            )  # White
+        )  # White
         shadow = QGraphicsDropShadowEffect()
         shadow.setBlurRadius(30)
-        shadow.setColor(QColor(135,206,250))
-        shadow.setOffset(5,5)
+        shadow.setColor(QColor(135, 206, 250))
+        shadow.setOffset(5, 5)
 
         # the button for Sign Up
         self.signup_button = QPushButton("Sign Up", self)
         self.signup_button.setGeometry(525, 420, 150, 30)
         self.signup_button.clicked.connect(self.openSignupPage)
-        self.signup_button.setStyleSheet("""
+        self.signup_button.setStyleSheet(
+            """
                             QPushButton {
                             background-color: rgb(10,22,39);
                             font-weight: bold;
@@ -81,20 +84,21 @@ class LoginPage(QWidget):
                             background-color: rgb(0,0,205);
                             }
                             """
-                            )  # White
+        )  # White
         shadow = QGraphicsDropShadowEffect()
         shadow.setBlurRadius(30)
-        shadow.setColor(QColor(135,206,250))
-        shadow.setOffset(5,5)
+        shadow.setColor(QColor(135, 206, 250))
+        shadow.setOffset(5, 5)
 
         layout = QVBoxLayout(self)
 
         # Create and add the clickable label
         self.clickable_label = QLabel("Forgot Password?", self)
         self.clickable_label.setGeometry(550, 450, 100, 30)
-        self.clickable_label.setStyleSheet("color: blue; text-decoration: underline; cursor: pointer;")
+        self.clickable_label.setStyleSheet(
+            "color: blue; text-decoration: underline; cursor: pointer;"
+        )
         self.clickable_label.mouseReleaseEvent = self.label_clicked
-
 
         # the label for the contact
         self.contact_label1 = QLabel(
@@ -102,14 +106,16 @@ class LoginPage(QWidget):
             self,
         )
         self.contact_label1.setGeometry(50, 500, 200, 100)
-        self.contact_label1.setStyleSheet("color: rgb(140, 140, 140);font-weight: bold;")  # gray
+        self.contact_label1.setStyleSheet(
+            "color: rgb(140, 140, 140);font-weight: bold;"
+        )  # gray
 
         # the label for the Title
         self.label_build_smart = QLabel(self)
         self.label_build_smart.setGeometry(0, 50, 1200, 100)
         self.label_build_smart.setText(
-        '<span style="font-size: 46px; color: rgb(255, 0, 0); font-style: italic;">Build</span>'
-        '<span style="font-size: 46px; color: rgb(255, 255, 255); font-style: italic;">Smart</span>'
+            '<span style="font-size: 46px; color: rgb(255, 0, 0); font-style: italic;">Build</span>'
+            '<span style="font-size: 46px; color: rgb(255, 255, 255); font-style: italic;">Smart</span>'
         )
         self.label_build_smart.setStyleSheet(
             "background-color: rgb(10,22,39);"
@@ -121,8 +127,15 @@ class LoginPage(QWidget):
         self.error_label.setStyleSheet("color: rgb(255,0,0);")
         self.error_label.setText("")
 
+        self.email_error_label = QLabel(self)
+        self.email_error_label.setGeometry(450, 215, 300, 30)
+        self.email_error_label.setStyleSheet("color: rgb(255,0,0);")
+        self.email_error_label.setText("")
+
         # Set background color using RGB for the window
         self.setStyleSheet("background-color: rgb(255, 255, 255);")  # Black
+
+        self.email_error_label.installEventFilter(self)
 
         self.show()
 
@@ -153,7 +166,18 @@ class LoginPage(QWidget):
                 self.error_label.setText("")
             else:
                 self.error_label.setText("Error: Can't find user credentials.")
-        except :
-            self.error_label.setText("Error: Error: Can't find user credentials.")
-    def label_clicked(self, event):
-        QMessageBox.information(self, "Info", "Label clicked!")
+        except:
+            self.error_label.setText("Error: Can't find user credentials.")
+
+    def label_clicked(self, event=None):
+        if self.email_textbox.text().strip() == "":
+            self.email_error_label.setText("Please fill in the email field first.")
+        else:
+            email = self.email_textbox.text().strip()
+            user.passwordReset(email)
+
+    def eventFilter(self, source, event):
+        if event.type() == QEvent.MouseButtonPress and source is self.email_error_label:
+            self.label_clicked(event)
+            return True
+        return super().eventFilter(source, event)

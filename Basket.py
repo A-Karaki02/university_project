@@ -1,7 +1,7 @@
 import sys
 
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtGui import QColor
+from PySide6.QtGui import QColor, QIcon
 from PySide6.QtWidgets import (QApplication, QComboBox,
                                QGraphicsDropShadowEffect, QGridLayout,
                                QHBoxLayout, QHeaderView, QLabel, QLineEdit,
@@ -25,7 +25,8 @@ class Basket_page(QWidget):
     def initUI(self):
         layout = QVBoxLayout(self)
 
-        self.setWindowTitle("GRADUATION PROJECT")
+        self.setWindowTitle("BuildSmart")
+        self.setWindowIcon(QIcon("icon.png"))
         self.setGeometry(0, 0, 1200, 600)
 
         layout.addSpacing(20)
@@ -46,9 +47,7 @@ class Basket_page(QWidget):
         self.add_button("Back", 0, 0, grid_layout, self.openMain_Page)
         self.add_button("Checkout", 0, 2, grid_layout, self.openCheckout_Page)
 
-        self.setStyleSheet(
-            "background-color: rgb(255,255,255);"
-        )  # Black
+        self.setStyleSheet("background-color: rgb(255,255,255);")  # Black
         self.show()
 
     def add_dynamic_label(self, text, layout):
@@ -63,12 +62,10 @@ class Basket_page(QWidget):
 
         label = QLabel(text, self)
         label.setText(
-        '<span style="font-size: 46px; color: rgb(255, 0, 0); font-style: italic;">Build</span>'
-        '<span style="font-size: 46px; color: rgb(255, 255, 255); font-style: italic;">Smart</span>'
+            '<span style="font-size: 46px; color: rgb(255, 0, 0); font-style: italic;">Build</span>'
+            '<span style="font-size: 46px; color: rgb(255, 255, 255); font-style: italic;">Smart</span>'
         )
-        label.setStyleSheet(
-            "background-color: rgb(10,22,39);"
-        )
+        label.setStyleSheet("background-color: rgb(10,22,39);")
         label.setAlignment(Qt.AlignCenter)
         label.setFixedHeight(60)
         v_layout.addWidget(label)

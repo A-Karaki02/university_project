@@ -1,7 +1,7 @@
 import sys
 
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtGui import QColor
+from PySide6.QtGui import QColor, QIcon
 from PySide6.QtWidgets import (QApplication, QComboBox,
                                QGraphicsDropShadowEffect, QGridLayout,
                                QHBoxLayout, QLabel, QLineEdit, QPushButton,
@@ -22,7 +22,8 @@ class EditProfile(QWidget):
     def initUI(self):
         layout = QVBoxLayout(self)
 
-        self.setWindowTitle("GRADUATION PROJECT")
+        self.setWindowTitle("BuildSmart")
+        self.setWindowIcon(QIcon("icon.png"))
         self.setGeometry(0, 0, 1200, 600)
 
         layout.addSpacing(20)
@@ -119,9 +120,7 @@ class EditProfile(QWidget):
         layout.addLayout(grid_layout)
         layout.addStretch(2)
 
-        self.setStyleSheet(
-            "background-color: rgb(255, 255, 255);"
-        )  # Black
+        self.setStyleSheet("background-color: rgb(255, 255, 255);")  # Black
         self.show()
 
     def add_button(self, button_text, row, col, layout, click_handler):

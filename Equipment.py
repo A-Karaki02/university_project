@@ -1,7 +1,7 @@
 import sys
 
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtGui import QColor
+from PySide6.QtGui import QColor, QIcon
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox,
                                QGraphicsDropShadowEffect, QGridLayout,
                                QHBoxLayout, QHeaderView, QLabel, QLineEdit,
@@ -25,7 +25,8 @@ class EquipmentPrices(QWidget):
         self.layout = QVBoxLayout(self)
         self.table_widget = QTableWidget()
 
-        self.setWindowTitle("GRADUATION PROJECT")
+        self.setWindowTitle("BuildSmart")
+        self.setWindowIcon(QIcon("icon.png"))
         self.setGeometry(0, 0, 1200, 600)
 
         self.layout.addSpacing(20)

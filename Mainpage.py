@@ -1,14 +1,13 @@
 import sys
 
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QColor
+from PySide6.QtGui import QColor, QIcon
 from PySide6.QtWidgets import (QApplication, QComboBox,
                                QGraphicsDropShadowEffect, QGridLayout,
                                QHBoxLayout, QLabel, QPushButton, QSizePolicy,
                                QSpacerItem, QVBoxLayout, QWidget)
 
 import Basket
-import Earning
 import EditProfile
 import Equipment
 import LoginPage
@@ -26,9 +25,10 @@ class MainPage(QWidget):
     def initUI(self):
         layout = QVBoxLayout(self)
 
-        self.setGeometry(0,0,1200,600)
+        self.setGeometry(0, 0, 1200, 600)
         self.initial_geometry = self.geometry()
-        self.setWindowTitle("GRADUATION PROJECT")
+        self.setWindowTitle("BuildSmart")
+        self.setWindowIcon(QIcon("icon.png"))
 
         layout.addSpacing(20)
         self.add_dynamic_label("BuildSmart", layout)
@@ -40,7 +40,7 @@ class MainPage(QWidget):
         self.add_button("Stocks", 0, 1, grid_layout, self.openstockes_Page)
         self.add_button("Store", 1, 0, grid_layout, self.openStore_Page)
         self.add_button("Basket", 1, 1, grid_layout, self.openBasket_Page)
-        #self.add_button("Earning", 2, 0, grid_layout, self.open_earning_page)
+        # self.add_button("Earning", 2, 0, grid_layout, self.open_earning_page)
 
         layout.addLayout(grid_layout)
         layout.addStretch(1)
@@ -51,7 +51,8 @@ class MainPage(QWidget):
     def add_button(self, button_text, row, col, layout, click_handler):
         button = QPushButton(button_text, self)
         button.clicked.connect(click_handler)
-        button.setStyleSheet("""
+        button.setStyleSheet(
+            """
                             QPushButton {
                             background-color: rgb(10,22,39);
                             font-weight: bold;
@@ -64,11 +65,11 @@ class MainPage(QWidget):
                             background-color: rgb(0,0,205);
                             }
                             """
-                            )  # White
+        )  # White
         shadow = QGraphicsDropShadowEffect()
         shadow.setBlurRadius(30)
-        shadow.setColor(QColor(135,206,250))
-        shadow.setOffset(5,5)
+        shadow.setColor(QColor(135, 206, 250))
+        shadow.setOffset(5, 5)
 
         # Apply shadow to button
         button.setGraphicsEffect(shadow)
@@ -79,32 +80,32 @@ class MainPage(QWidget):
 
     def add_dynamic_label(self, text, layout):
         layout_widget = QWidget(self)  # Create a widget to hold the layout
-        layout_widget.setStyleSheet("background-color: rgb(10,22,39);")  # Set background color for the layout widget
+        layout_widget.setStyleSheet(
+            "background-color: rgb(10,22,39);"
+        )  # Set background color for the layout widget
 
-        v_layout = QVBoxLayout(layout_widget)  # Use the layout widget as the parent for QVBoxLayout
+        v_layout = QVBoxLayout(
+            layout_widget
+        )  # Use the layout widget as the parent for QVBoxLayout
 
         label = QLabel(text, self)
         label.setText(
-        '<span style="font-size: 46px; color: rgb(255, 0, 0); font-style: italic;">Build</span>'
-        '<span style="font-size: 46px; color: rgb(255, 255, 255); font-style: italic;">Smart</span>'
+            '<span style="font-size: 46px; color: rgb(255, 0, 0); font-style: italic;">Build</span>'
+            '<span style="font-size: 46px; color: rgb(255, 255, 255); font-style: italic;">Smart</span>'
         )
-        label.setStyleSheet(
-        "background-color: rgb(10,22,39);"
-        )
+        label.setStyleSheet("background-color: rgb(10,22,39);")
         label.setAlignment(Qt.AlignCenter)
         label.setFixedHeight(60)
         v_layout.addWidget(label)
 
         h_layout = QHBoxLayout()
-        spacer = QSpacerItem( 40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        spacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         h_layout.addItem(spacer)  # Add spacer to push the dropdown to the right
 
         dropdown = QComboBox(self)
-        dropdown.addItems(
-        [user.get_username(), "Edit Profile", "Sign Out"]
-        )
+        dropdown.addItems([user.get_username(), "Edit Profile", "Sign Out"])
         dropdown.setStyleSheet(
-        "background-color: rgb(10,22,39); color: rgb(255, 255, 255);border: 0px solid black;"
+            "background-color: rgb(10,22,39); color: rgb(255, 255, 255);border: 0px solid black;"
         )
         dropdown.setFixedHeight(30)
         dropdown.setFixedWidth(120)
@@ -163,7 +164,6 @@ class MainPage(QWidget):
 
     def store_current_size(self):
         self.stored_geometry = self.geometry()
-
 
 
 if __name__ == "__main__":

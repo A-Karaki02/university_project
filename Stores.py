@@ -1,7 +1,7 @@
 import sys
 
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QColor
+from PySide6.QtGui import QColor, QIcon
 from PySide6.QtWidgets import (QApplication, QComboBox,
                                QGraphicsDropShadowEffect, QGridLayout,
                                QHBoxLayout, QHeaderView, QLabel, QPushButton,
@@ -32,7 +32,8 @@ class Stores(QWidget):
     def initUI(self):
         self.layout = QVBoxLayout(self)
         self.setLayout(self.layout)  # Set the main layout of the widget
-        self.setWindowTitle("GRADUATION PROJECT")
+        self.setWindowTitle("BuildSmart")
+        self.setWindowIcon(QIcon("icon.png"))
         self.setGeometry(0, 0, 1200, 600)
 
         self.layout.addSpacing(20)
@@ -65,9 +66,7 @@ class Stores(QWidget):
         self.add_button("Back", 1, 0, grid_layout, self.openMain_Page)
         self.add_button("Search", 0, 0, grid_layout, self.search_page)
 
-        self.setStyleSheet(
-            "background-color: rgb(255, 255, 255);"
-        )  # White background
+        self.setStyleSheet("background-color: rgb(255, 255, 255);")  # White background
         self.show()
 
     def add_dynamic_label(self, text, layout):
@@ -82,12 +81,10 @@ class Stores(QWidget):
 
         label = QLabel(text, self)
         label.setText(
-        '<span style="font-size: 46px; color: rgb(255, 0, 0); font-style: italic;">Build</span>'
-        '<span style="font-size: 46px; color: rgb(255, 255, 255); font-style: italic;">Smart</span>'
+            '<span style="font-size: 46px; color: rgb(255, 0, 0); font-style: italic;">Build</span>'
+            '<span style="font-size: 46px; color: rgb(255, 255, 255); font-style: italic;">Smart</span>'
         )
-        label.setStyleSheet(
-            "background-color: rgb(10,22,39);"
-        )
+        label.setStyleSheet("background-color: rgb(10,22,39);")
         label.setAlignment(Qt.AlignCenter)
         label.setFixedHeight(60)
         v_layout.addWidget(label)
@@ -320,7 +317,6 @@ class Stores(QWidget):
     def search_page(self):
         self.Search = search.search_page()
         self.Search.show()
-
 
 
 if __name__ == "__main__":
