@@ -75,18 +75,11 @@ class SignUpPage(QWidget):
         self.password_textbox.setStyleSheet(
             "background-color: rgb(237, 237, 237);border: 2px solid gray;"
         )  # White
-
-        # the textbox for Confirm Password
-        self.confirm_password_textbox = QLineEdit(self)
-        self.confirm_password_textbox.setGeometry(450, 350, 300, 30)
-        self.confirm_password_textbox.setPlaceholderText("Confirm Password")
-        self.confirm_password_textbox.setStyleSheet(
-            "background-color: rgb(237, 237, 237);border: 2px solid gray;"
-        )  # White
+        self.password_textbox.setEchoMode(QLineEdit.Password)
 
         # the textbox for User Name
         self.username_textbox = QLineEdit(self)
-        self.username_textbox.setGeometry(450, 400, 300, 30)
+        self.username_textbox.setGeometry(450, 350, 300, 30)
         self.username_textbox.setPlaceholderText("User Name")
         self.username_textbox.setStyleSheet(
             "background-color: rgb(237, 237, 237);border: 2px solid gray;"
@@ -94,21 +87,21 @@ class SignUpPage(QWidget):
 
         # the textbox for Phone Number
         self.phone_number_textbox = QLineEdit(self)
-        self.phone_number_textbox.setGeometry(450, 450, 300, 30)
+        self.phone_number_textbox.setGeometry(450, 400, 300, 30)
         self.phone_number_textbox.setPlaceholderText("Phone Number")
         self.phone_number_textbox.setStyleSheet(
             "background-color: rgb(237, 237, 237);border: 2px solid gray;"
         )  # White
 
         self.__supplier_checkbox = QCheckBox("Supplier", self)
-        self.__supplier_checkbox.setGeometry(625, 500, 125, 30)
+        self.__supplier_checkbox.setGeometry(625, 450, 125, 30)
         self.__supplier_checkbox.setStyleSheet(
             "QCheckBox { color: rgb(10,22,39); font-weight: bold;}"
         )
         self.__supplier_checkbox.toggled.connect(self.checkbox_changed)
 
         self.store_name_textbox = QLineEdit(self)
-        self.store_name_textbox.setGeometry(450, 500, 125, 30)
+        self.store_name_textbox.setGeometry(450, 450, 125, 30)
         self.store_name_textbox.setPlaceholderText("Store Name")
         self.store_name_textbox.setStyleSheet(
             "background-color: rgb(237, 237, 237);border: 2px solid gray;"
