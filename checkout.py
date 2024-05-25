@@ -21,70 +21,71 @@ class Checkout_page(QWidget):
 
         layout = QVBoxLayout(self)
 
-        Item_type_label = QLabel("Payment Method:")
-        self.Item_type_combo = QComboBox()
-        self.Item_type_combo.addItems(["Choose", "Visa", "MasterCard", "Cash"])
-        layout.addWidget(Item_type_label)
-        layout.addWidget(self.Item_type_combo)
+        payment_method_label = QLabel("Payment Method:")
+        self.payment_method_combo = QComboBox()
+        self.payment_method_combo.addItems(["Choose", "Visa", "MasterCard", "Cash"])
+        layout.addWidget(payment_method_label)
+        layout.addWidget(self.payment_method_combo)
 
-        Item_type_label = QLabel("My Cards (Saved Cards):")
-        self.Item_type_combo = QComboBox()
-        self.Item_type_combo.addItems(
+        saved_cards_label = QLabel("My Cards (Saved Cards):")
+        self.saved_cards_combo = QComboBox()
+        self.saved_cards_combo.addItems(
             ["**** **** **** 1432", "**** **** **** 3729", "**** **** **** 9284"]
         )
-        layout.addWidget(Item_type_label)
-        layout.addWidget(self.Item_type_combo)
+        layout.addWidget(saved_cards_label)
+        layout.addWidget(self.saved_cards_combo)
 
-        self.Card_label = QLabel("Card No.:")
-        layout.addWidget(self.Card_label)
+        self.card_label = QLabel("Card No.:")
+        layout.addWidget(self.card_label)
 
-        self.Card_textbox = QLineEdit(self)
-        self.Card_textbox.setPlaceholderText("Ex : 1234 5678 9101 2345")
-        layout.addWidget(self.Card_textbox)
+        self.card_textbox = QLineEdit(self)
+        self.card_textbox.setPlaceholderText("Ex: 1234 5678 9101 2345")
+        layout.addWidget(self.card_textbox)
 
-        self.CVV_label = QLabel("CVV :")
-        layout.addWidget(self.CVV_label)
+        self.cvv_label = QLabel("CVV:")
+        layout.addWidget(self.cvv_label)
 
-        self.CVV_textbox = QLineEdit(self)
-        self.CVV_textbox.setPlaceholderText("Ex : 123")
-        layout.addWidget(self.CVV_textbox)
+        self.cvv_textbox = QLineEdit(self)
+        self.cvv_textbox.setPlaceholderText("Ex: 123")
+        layout.addWidget(self.cvv_textbox)
 
-        self.Validation_label = QLabel("Validation :")
-        layout.addWidget(self.Validation_label)
+        self.validation_label = QLabel("Validation:")
+        layout.addWidget(self.validation_label)
 
-        self.Validation_textbox = QLineEdit(self)
-        self.Validation_textbox.setPlaceholderText("Ex : 12/30")
-        layout.addWidget(self.Validation_textbox)
+        self.validation_textbox = QLineEdit(self)
+        self.validation_textbox.setPlaceholderText("Ex: 12/30")
+        layout.addWidget(self.validation_textbox)
+
+        self.set_textboxes_enabled(False)  # Initially disable the textboxes
 
         add_button = QPushButton("Buy")
         add_button.clicked.connect(self.handle_add_item)
         layout.addWidget(add_button)
 
-        self.Item_type_combo.currentTextChanged.connect(
+        self.payment_method_combo.currentTextChanged.connect(
             self.handle_payment_method_change
         )
         self.show()
 
+    def set_textboxes_enabled(self, enabled):
+        self.card_textbox.setEnabled(enabled)
+        self.cvv_textbox.setEnabled(enabled)
+        self.validation_textbox.setEnabled(enabled)
+
     def handle_payment_method_change(self, text):
-        # Enable textboxes if Visa or MasterCard is selected
         if text in ["Visa", "MasterCard"]:
-            self.Card_textbox.setEnabled(True)
-            self.CVV_textbox.setEnabled(True)
-            self.Validation_textbox.setEnabled(True)
+            self.set_textboxes_enabled(True)
         else:
-            # Disable textboxes otherwise
-            self.Card_textbox.setEnabled(False)
-            self.CVV_textbox.setEnabled(False)
-            self.Validation_textbox.setEnabled(False)
+            self.set_textboxes_enabled(False)
 
     def Checkout(self):
         if user.is_supplier():
             store_name = user.get_store_name()
         else:
             store_name = user.get_username()
-        item_name = self.Item_name_edit.text()
-        item_type = self.Item_type_combo.currentText()
-        price = self.Price_edit.text()
+        item_name = self.item_name_edit.text()
+        item_type = self.payment_method_combo.currentText()
+        price = self.price_edit.text()
         self.items = {
             "storeName": store_name,
             "itemName": item_name,
@@ -93,6 +94,11 @@ class Checkout_page(QWidget):
         }
 
     def handle_add_item(self):
-
         user.checkout_items()
         self.close()
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = Checkout_page()
+    sys.exit(app.exec())
