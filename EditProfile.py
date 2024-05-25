@@ -130,6 +130,7 @@ class EditProfile(QWidget):
                             QPushButton {
                             background-color: rgb(10,22,39);
                             font-weight: bold;
+                            color : rgb(255,255,255);
                             font-size: 16px;
                             border: 2px solid black;
                             border-radius: 30px;
@@ -158,8 +159,12 @@ class EditProfile(QWidget):
         )  # Use the layout widget as the parent for QVBoxLayout
 
         label = QLabel(text, self)
+        label.setText(
+        '<span style="font-size: 46px; color: rgb(255, 0, 0); font-style: italic;">Build</span>'
+        '<span style="font-size: 46px; color: rgb(255, 255, 255); font-style: italic;">Smart</span>'
+        )
         label.setStyleSheet(
-            "font-size: 32px;color: rgb(0, 0, 0);font-style: italic;font-weight: bold; background-color: rgb(10,22,39);"
+            "background-color: rgb(10,22,39);"
         )
         label.setAlignment(Qt.AlignCenter)
         label.setFixedHeight(60)
@@ -227,12 +232,12 @@ class EditProfile(QWidget):
     def save_changes(self):
         self.handle_save_changes()
         self.Main = Mainpage.MainPage()
-        self.Login_page.show()
+        self.Main.show()
         self.close()
 
     def back_button(self):
         self.Main = Mainpage.MainPage()
-        self.Login_page.show()
+        self.Main.show()
         self.close()
 
     def openLoginPage_Page(self):
