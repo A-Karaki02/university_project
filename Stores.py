@@ -33,7 +33,7 @@ class Stores(QWidget):
         self.layout = QVBoxLayout(self)
         self.setLayout(self.layout)  # Set the main layout of the widget
         self.setWindowTitle("GRADUATION PROJECT")
-        self.setGeometry(100, 100, 1200, 600)
+        self.setGeometry(0, 0, 1200, 600)
 
         self.layout.addSpacing(20)
         self.add_dynamic_label("BuildSmart", self.layout)
@@ -202,6 +202,10 @@ class Stores(QWidget):
             table_widget.setCellWidget(
                 row_count, len(headers) - 1, button
             )  # Add button to the last column
+            for col in range(len(headers)):
+                item = table_widget.item(row_count, col)
+                if item:
+                    item.setFlags(item.flags() & ~Qt.ItemIsEditable)
 
             # Set the background color of the row to white
             for col in range(len(headers)):
@@ -220,52 +224,6 @@ class Stores(QWidget):
         else:
             print("No items to display.")
 
-    # def fetch_data_from_firebase(self):
-    #     try:
-    #         data = db.child("items").get().val()
-    #         print(
-    #             f"Data fetched from Firebase: {data}"
-    #         )  # Debug print to check the data structure
-
-    #         if data is None:
-    #             print("No data found in the Firebase database.")
-    #             return []
-
-    #         items = []
-
-    #         # Check if the data is a list or a dictionary
-    #         if isinstance(data, dict):
-    #             for person_key, person_items in data.items():
-    #                 if isinstance(person_items, dict):
-    #                     for item_number, item_data in person_items.items():
-    #                         item_data["personKey"] = person_key
-    #                         item_data["itemNumber"] = item_number
-    #                         items.append(item_data)
-    #                 elif isinstance(person_items, list):
-    #                     for index, item_data in enumerate(person_items):
-    #                         item_data["personKey"] = person_key
-    #                         item_data["itemNumber"] = index
-    #                         items.append(item_data)
-    #         elif isinstance(data, list):
-    #             for index, person_items in enumerate(data):
-    #                 if isinstance(person_items, dict):
-    #                     for item_number, item_data in person_items.items():
-    #                         item_data["personKey"] = index
-    #                         item_data["itemNumber"] = item_number
-    #                         items.append(item_data)
-    #                 elif isinstance(person_items, list):
-    #                     for item_index, item_data in enumerate(person_items):
-    #                         item_data["personKey"] = index
-    #                         item_data["itemNumber"] = item_index
-    #                         items.append(item_data)
-    #         else:
-    #             print("Unexpected data structure from Firebase.")
-    #             return []
-
-    #         return items
-    #     except Exception as e:
-    #         print(f"Error fetching data from Firebase: {e}")
-    #         return []
     def fetch_data_from_firebase(self):
         try:
             data = db.child("items").get().val()
@@ -317,6 +275,7 @@ class Stores(QWidget):
 
     def openMain_Page(self):
         self.main = Mainpage.MainPage()
+        self.main.setGeometry(self.geometry())  # Set geometry to match current window
         self.main.show()
         self.close()
 
@@ -328,6 +287,7 @@ class Stores(QWidget):
 
     def openEditProfile_Page(self):
         self.Edit = EditProfile.EditProfile()
+        self.Edit.setGeometry(self.geometry())  # Set geometry to match current window
         self.Edit.show()
         self.close()
 
@@ -360,7 +320,7 @@ class Stores(QWidget):
     def search_page(self):
         self.Search = search.search_page()
         self.Search.show()
-        self.close()
+
 
 
 if __name__ == "__main__":

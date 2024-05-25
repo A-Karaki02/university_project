@@ -26,7 +26,7 @@ class Stocks(QWidget):
         layout = QVBoxLayout(self)
 
         self.setWindowTitle("GRADUATION PROJECT")
-        self.setGeometry(100, 100, 1200, 600)
+        self.setGeometry(0, 0, 1200, 600)
 
         layout.addSpacing(20)
         self.add_dynamic_label("BuildSmart", layout)
@@ -134,34 +134,36 @@ class Stocks(QWidget):
             # Add button
             button = QPushButton("Action")
             button.setStyleSheet(
-            """
-            QPushButton {
-                background-color: rgb(10,22,39);
-                color:rgb(255,255,255);
-                font-weight: bold;
-                font-size: 16px;
-                border: 2px solid black;
-            }
-            QPushButton:hover {
-                background-color: rgb(0,0,205);
-            }
-            """
-            )
+                """
+                QPushButton {
+                    background-color: rgb(10,22,39);
+                    color: rgb(255,255,255);
+                    font-weight: bold;
+                    font-size: 16px;
+                    border: 2px solid black;
+                }
+                QPushButton:hover {
+                    background-color: rgb(0,0,205);
+                }
+                """
+                )
             button.setFixedHeight(35)
-            button.setFixedWidth(600)
-
-            # Connect button to a function if necessary
-            button.clicked.connect(lambda checked, item=item: self.button_action(item))
 
             h_layout = QHBoxLayout()
             h_layout.addWidget(button)
             h_layout.setContentsMargins(0, 0, 0, 0)
+            h_layout.setSpacing(0)
             h_layout.setAlignment(Qt.AlignCenter)
 
             cell_widget = QWidget()
             cell_widget.setLayout(h_layout)
-            cell_widget.setContentsMargins(0, 0, 0, 0)
+            h_layout.setStretch(0, 1)
             table_widget.setCellWidget(row_position, 1, cell_widget)
+
+            for col in range(len(headers)):
+                item = table_widget.item(row_position, col)
+                if item:
+                    item.setFlags(item.flags() & ~Qt.ItemIsEditable)
 
             for col in range(len(headers)):
                 if table_widget.item(row_position, col) is not None:
@@ -174,6 +176,7 @@ class Stocks(QWidget):
 
     def openMain_Page(self):
         self.main = Mainpage.MainPage()
+        self.main.setGeometry(self.geometry())  # Set geometry to match current window
         self.main.show()
         self.close()
 
@@ -185,6 +188,7 @@ class Stocks(QWidget):
 
     def openEditProfile_Page(self):
         self.Edit = EditProfile.EditProfile()
+        self.Edit.setGeometry(self.geometry())  # Set geometry to match current window
         self.Edit.show()
         self.close()
 
@@ -193,5 +197,5 @@ class Stocks(QWidget):
         self.SignOut.show()
         self.close()
 
-    def test(self):
-        pass
+    def set_stored_size(self, size):
+        self.setFixedSize(size)

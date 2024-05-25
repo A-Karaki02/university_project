@@ -26,7 +26,7 @@ class EquipmentPrices(QWidget):
         self.table_widget = QTableWidget()
 
         self.setWindowTitle("GRADUATION PROJECT")
-        self.setGeometry(100, 100, 1200, 600)
+        self.setGeometry(0, 0, 1200, 600)
 
         self.layout.addSpacing(20)
         self.add_dynamic_label("BuildSmart", self.layout)
@@ -122,7 +122,7 @@ class EquipmentPrices(QWidget):
 
         switch_button.clicked.connect(on_switch_clicked)
         switch_button.setStyleSheet(
-            "background-color: rgb(10,22,39);color:rgb(255,255,255);font-weight: bold;border: 2px solid black;border-radius: 10px;box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);"
+            "background-color: rgb(10,22,39);color:rgb(255,255,255);font-weight: bold;border: 2px solid black;box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);"
         )
         layout.addWidget(switch_button, row, col)
 
@@ -213,6 +213,7 @@ class EquipmentPrices(QWidget):
 
     def openMain_Page(self):
         self.main = Mainpage.MainPage()
+        self.main.setGeometry(self.geometry())  # Set geometry to match current window
         self.main.show()
         self.close()
 
@@ -224,6 +225,7 @@ class EquipmentPrices(QWidget):
 
     def openEditProfile_Page(self):
         self.Edit = EditProfile.EditProfile()
+        self.Edit.setGeometry(self.geometry())  # Set geometry to match current window
         self.Edit.show()
         self.close()
 

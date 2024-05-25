@@ -50,7 +50,7 @@ class search_page(QWidget):
         layout.addWidget(self.Quantity_label)
         layout.addWidget(self.Quantity_edit)
 
-        add_button = QPushButton("Add Item")
+        add_button = QPushButton("Search")
         add_button.clicked.connect(self.handle_add_item)
         layout.addWidget(add_button)
 

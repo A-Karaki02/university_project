@@ -26,7 +26,7 @@ class MainPage(QWidget):
     def initUI(self):
         layout = QVBoxLayout(self)
 
-        self.setGeometry(100,100,1200,600)
+        self.setGeometry(0,0,1200,600)
         self.initial_geometry = self.geometry()
         self.setWindowTitle("GRADUATION PROJECT")
 
@@ -122,40 +122,47 @@ class MainPage(QWidget):
             self.openLoginPage_Page()
 
     def openBasket_Page(self):
+        self.main_page_size = self.size()
+        self.hide()
         self.Basket = Basket.Basket_page()
+        self.Basket.resize(self.main_page_size or self.size())
         self.Basket.show()
-        self.close()
 
     def openStore_Page(self):
+        self.main_page_size = self.size()
+        self.hide()
         self.Store = Stores.Stores()
+        self.Store.resize(self.main_page_size or self.size())
         self.Store.show()
-        self.close()
 
     def openequipment_Page(self):
+        self.main_page_size = self.size()
+        self.hide()
         self.Equipment = Equipment.EquipmentPrices()
+        self.Equipment.resize(self.main_page_size or self.size())
         self.Equipment.show()
-        self.close()
 
     def openstockes_Page(self):
+        self.main_page_size = self.size()
+        self.hide()
         self.Stockes = Stockes.Stocks()
+        self.Stockes.resize(self.main_page_size or self.size())
         self.Stockes.show()
-        self.close()
 
     def openEditProfile_Page(self):
+        self.main_page_size = self.size()
+        self.hide()
         self.Edit = EditProfile.EditProfile()
+        self.Edit.resize(self.main_page_size or self.size())
         self.Edit.show()
-        self.close()
 
     def openLoginPage_Page(self):
-        self.SignOut = LoginPage.LoginPage()
-        self.SignOut.show()
+        self.login = LoginPage.LoginPage()
+        self.login.show()
         self.close()
 
-    def open_earning_page(self):
-        self.Earning = Earning.Earning_page()
-        self.SignOut.show()
-        self.close()
-
+    def store_current_size(self):
+        self.stored_geometry = self.geometry()
 
 
 

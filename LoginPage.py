@@ -2,10 +2,11 @@ import hashlib
 import os
 
 import pyrebase
-from PySide6.QtCore import QSize, Qt
+from PySide6.QtCore import QSize, Qt, Signal
 from PySide6.QtGui import QColor
 from PySide6.QtWidgets import (QApplication, QGraphicsDropShadowEffect, QLabel,
-                               QLineEdit, QMessageBox, QPushButton, QWidget)
+                               QLineEdit, QMessageBox, QPushButton,
+                               QVBoxLayout, QWidget)
 
 import Mainpage
 import SignupPage
@@ -86,6 +87,15 @@ class LoginPage(QWidget):
         shadow.setColor(QColor(135,206,250))
         shadow.setOffset(5,5)
 
+        layout = QVBoxLayout(self)
+
+        # Create and add the clickable label
+        self.clickable_label = QLabel("Forgot Password?", self)
+        self.clickable_label.setGeometry(550, 450, 100, 30)
+        self.clickable_label.setStyleSheet("color: blue; text-decoration: underline; cursor: pointer;")
+        self.clickable_label.mouseReleaseEvent = self.label_clicked
+
+
         # the label for the contact
         self.contact_label1 = QLabel(
             "Contact Us\nEmail: jom.proj@gmail.com\nTelephone: 0798727686\nFax: 06111111",
@@ -145,3 +155,5 @@ class LoginPage(QWidget):
                 self.error_label.setText("Error: Can't find user credentials.")
         except :
             self.error_label.setText("Error: Error: Can't find user credentials.")
+    def label_clicked(self, event):
+        QMessageBox.information(self, "Info", "Label clicked!")
