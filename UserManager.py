@@ -93,6 +93,9 @@ class UserManager:
     def get_store_name(self):
         return self.__store_name
 
+    def get_user_email(self):
+        return self.__email
+
     def add_to_basket(
         self, storeKey, itemKey, storeName, itemName, itemType, price, quantity
     ):
@@ -152,8 +155,12 @@ class UserManager:
     def passwordReset(self, email):
         if email:
             self.__auth.send_password_reset_email(email)
-        elif self.__email:
+            print("password reset email sent")
+        elif email == "" and self.__email:
             self.__auth.send_password_reset_email(self.__email)
+            print("password reset email sent")
+        else:
+            return False
 
     def checkout_items(self):
         now = datetime.now()
