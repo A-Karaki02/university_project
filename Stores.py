@@ -4,9 +4,10 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QIcon
 from PySide6.QtWidgets import (QApplication, QComboBox,
                                QGraphicsDropShadowEffect, QGridLayout,
-                               QHBoxLayout, QHeaderView, QLabel, QPushButton,
-                               QSizePolicy, QSpacerItem, QTableWidget,
-                               QTableWidgetItem, QVBoxLayout, QWidget)
+                               QHBoxLayout, QHeaderView, QLabel, QLineEdit,
+                               QPushButton, QSizePolicy, QSpacerItem,
+                               QTableWidget, QTableWidgetItem, QVBoxLayout,
+                               QWidget)
 
 import AddStore
 import Basket
@@ -14,7 +15,6 @@ import EditProfile
 import LoginPage
 import Mainpage
 import openAddBasketPage
-import search
 from DataBase import DataBase
 from UserManager import user
 
@@ -40,6 +40,11 @@ class Stores(QWidget):
         self.add_dynamic_label("BuildSmart", self.layout)
         self.layout.addSpacing(20)
 
+        # Search input field
+        self.search_input = QLineEdit(self)
+        self.search_input.setPlaceholderText("Search...")
+        self.layout.addWidget(self.search_input)
+
         self.table_widget = QTableWidget()
         self.add_top_down_list([], self.table_widget)  # Initialize with empty data
         self.layout.addWidget(
@@ -57,14 +62,10 @@ class Stores(QWidget):
             self.add_button("Go To Basket", 0, 1, grid_layout, self.openBasket_Page)
         else:
             self.add_button(
-                f"Go To Basket ({numInBasket})",
-                0,
-                1,
-                grid_layout,
-                self.openBasket_Page,
+                f"Go To Basket ({numInBasket})", 0, 1, grid_layout, self.openBasket_Page
             )
         self.add_button("Back", 1, 0, grid_layout, self.openMain_Page)
-        self.add_button("Search", 0, 0, grid_layout, self.search_page)
+        self.add_button("Search", 0, 0, grid_layout, self.search_items)
 
         self.setStyleSheet("background-color: rgb(255, 255, 255);")  # White background
         self.show()
@@ -215,9 +216,9 @@ class Stores(QWidget):
         table_widget.setStyleSheet("border: 2px solid black;font-size: 16px;")
 
     def load_items(self):
-        items = self.fetch_data_from_firebase()
-        if items:  # Check if items are fetched successfully
-            self.add_top_down_list(items, self.table_widget)
+        self.items = self.fetch_data_from_firebase()
+        if self.items:  # Check if items are fetched successfully
+            self.add_top_down_list(self.items, self.table_widget)
         else:
             print("No items to display.")
 
@@ -304,7 +305,6 @@ class Stores(QWidget):
             person_key, item_key, storeName, itemName, itemType, price, quantity
         )
         self.main.show()
-
         print(
             f"Add button clicked for item with person key: {person_key} and item key: {item_key}"
         )
@@ -314,9 +314,17 @@ class Stores(QWidget):
         self.Basket.show()
         self.close()
 
-    def search_page(self):
-        self.Search = search.search_page()
-        self.Search.show()
+    def search_items(self):
+        query = self.search_input.text().lower()
+        filtered_items = [
+            item
+            for item in self.items
+            if query in item.get("storeName", "").lower()
+            or query in item.get("itemName", "").lower()
+            or query in item.get("itemType", "").lower()
+        ]
+        self.table_widget.setRowCount(0)  # Clear the table
+        self.add_top_down_list(filtered_items, self.table_widget)
 
 
 if __name__ == "__main__":
