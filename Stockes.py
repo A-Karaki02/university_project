@@ -1,4 +1,6 @@
 import sys
+import urllib.parse
+import webbrowser
 
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QColor, QIcon
@@ -35,7 +37,15 @@ class Stocks(QWidget):
         grid_layout = QGridLayout()
         layout.addLayout(grid_layout)
 
-        items = ["Item 1", "Item 2", "Item 3"]
+        items = [
+            {"name": "Iron", "url": "https://www.marketwatch.com/investing/stock/iron"},
+            {
+                "name": "Cement",
+                "url": "https://www.moneycontrol.com/india/stockpricequote/cement-major/ultratechcement/UTC01",
+            },
+            {"name": "Wood", "url": "https://finance.yahoo.com/quote/WOOD/"},
+            {"name": "Copper", "url": "https://finance.yahoo.com/quote/HG%3DF/"},
+        ]
         table_widget = QTableWidget()
         self.add_top_down_list_with_buttons(items, table_widget, layout)
 
@@ -43,9 +53,6 @@ class Stocks(QWidget):
         layout.addLayout(grid_layout)
 
         self.add_button("Back", 5, 0, grid_layout, self.openMain_Page)
-        # self.add_button("Done", 5, 2, grid_layout, self.openMain_Page)
-
-        # self.add_button("test", 0, 0, grid_layout, self.test)
 
         self.setStyleSheet("background-color: rgb(255, 255, 255);")  # Black
         self.show()
@@ -124,16 +131,14 @@ class Stocks(QWidget):
         header = table_widget.horizontalHeader()
         header.setStyleSheet("background-color: rgb(131, 170, 229);")
         header.setSectionResizeMode(QHeaderView.Stretch)
-        table_widget.verticalHeader().setVisible(False)  # Hide vertical header
+        table_widget.verticalHeader().setVisible(False)
 
         for item in items:
             row_position = table_widget.rowCount()
             table_widget.insertRow(row_position)
 
-            # Add item name
-            table_widget.setItem(row_position, 0, QTableWidgetItem(item))
+            table_widget.setItem(row_position, 0, QTableWidgetItem(item["name"]))
 
-            # Add button
             button = QPushButton("Action")
             button.setStyleSheet(
                 """
@@ -151,6 +156,11 @@ class Stocks(QWidget):
             )
             button.setFixedHeight(35)
 
+            # Use a lambda function with a parameter to capture the current value of `item["url"]`
+            button.clicked.connect(
+                lambda checked=None, url=item["url"]: self.open_url(url)
+            )
+
             h_layout = QHBoxLayout()
             h_layout.addWidget(button)
             h_layout.setContentsMargins(0, 0, 0, 0)
@@ -163,19 +173,16 @@ class Stocks(QWidget):
             table_widget.setCellWidget(row_position, 1, cell_widget)
 
             for col in range(len(headers)):
-                item = table_widget.item(row_position, col)
-                if item:
-                    item.setFlags(item.flags() & ~Qt.ItemIsEditable)
-
-            for col in range(len(headers)):
+                table_item = table_widget.item(row_position, col)
+                if table_item:
+                    table_item.setFlags(table_item.flags() & ~Qt.ItemIsEditable)
                 if table_widget.item(row_position, col) is not None:
                     table_widget.item(row_position, col).setBackground(
                         QColor(235, 235, 235)
                     )
-            # Add borders between all rows and columns
+
         table_widget.setStyleSheet("border: 2px solid black;font-size: 16px;")
 
-        # Add the table to the layout
         layout.addWidget(table_widget)
 
     def openMain_Page(self):
@@ -203,3 +210,15 @@ class Stocks(QWidget):
 
     def set_stored_size(self, size):
         self.setFixedSize(size)
+
+    def open_url(self, url):
+        print("Opening URL:", url)  # Print the URL to verify it
+
+        try:
+            # Attempt to open the URL in a web browser
+            webbrowser.open_new(url)  # Open the URL in a new browser window
+        except Exception as e:
+            print("Error:", e)
+
+            # Open the URL in the default web browser
+            webbrowser.open_new_tab(str(url))
