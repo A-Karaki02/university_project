@@ -14,6 +14,7 @@ import EditProfile
 import LoginPage
 import Mainpage
 import SignupPage
+from Stores import numInBasket
 from UserManager import user
 
 
@@ -206,6 +207,7 @@ class Basket_page(QWidget):
     def remove_item(self, row, table_widget, pK, iK):
         user.remove_item_from_basket(pK, iK)
         table_widget.removeRow(row)
+        numInBasket -= 1
 
     def openMain_Page(self):
         self.main = Mainpage.MainPage()

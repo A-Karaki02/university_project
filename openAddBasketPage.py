@@ -63,6 +63,14 @@ class add_basket(QWidget):
         item_type = self.itemType
         price = self.pricee
         quantity = self.Quantity_edit.text()
+
+        if store_name == user.get_username or store_name == user.get_store_name:
+            return False
+
+        if int(quantity) > int(self.quantity):
+            return False
+
+        oQuantity = self.quantity
         user.add_to_basket(
             self.person_key,
             self.item_key,
@@ -71,7 +79,9 @@ class add_basket(QWidget):
             item_type,
             price,
             quantity,
+            oQuantity,
         )
+
         user.add_to_db_basket(self.person_key, self.item_key)
         Stores.numInBasket += 1
 

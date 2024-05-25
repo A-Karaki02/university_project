@@ -97,7 +97,15 @@ class UserManager:
         return self.__email
 
     def add_to_basket(
-        self, storeKey, itemKey, storeName, itemName, itemType, price, quantity
+        self,
+        storeKey,
+        itemKey,
+        storeName,
+        itemName,
+        itemType,
+        price,
+        quantity,
+        oQuantity,
     ):
         self.basket.append(
             {
@@ -108,6 +116,7 @@ class UserManager:
                 "itemType": itemType,
                 "price": price,
                 "quantity": quantity,
+                "oQuantity": oQuantity,
             }
         )
         print(self.basket)
@@ -221,6 +230,15 @@ class UserManager:
             )
 
             # Update the item's quantity if the quantity is 0 remove it
+            newQuantity = int(item["oQuantity"]) - int(item["quantity"])
+            if newQuantity == 0:
+                self.dtbs.child("items").child(seller).child(
+                    item["itemNumber"]
+                ).remove()
+            elif newQuantity > 0:
+                self.dtbs.child("items").child(seller).child(item["itemNumber"]).update(
+                    {"quantity": str(newQuantity)}
+                )
 
         # Update the user's itemsHistoryNumber
         self.dtbs.child("users").child(self.__UID).update(
