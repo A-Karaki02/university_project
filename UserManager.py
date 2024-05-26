@@ -296,8 +296,19 @@ class UserManager:
             print(f"Error fetching data from Firebase: {e}")
             return []
 
-    def add_to_purchased_items(self, key, itemNum):
-        pass
+    def remove_item(self, itemNum):
+        self.dtbs.child("items").child(self.__UID).child(itemNum).remove()
+
+    def edit_item(self, itemNum, quantity, price):
+        if quantity != "":
+            self.dtbs.child("items").child(self.__UID).child(itemNum).update(
+                {"quantity": int(quantity)}
+            )
+
+        if price != "":
+            self.dtbs.child("items").child(self.__UID).child(itemNum).update(
+                {"price": price}
+            )
 
     def token_expiry(self):
         pass
