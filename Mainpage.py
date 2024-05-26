@@ -36,7 +36,7 @@ class MainPage(QWidget):
 
         grid_layout = QGridLayout()
         grid_layout.setSpacing(50)
-        self.add_button("Earning", 0, 0, grid_layout, self.openequipment_Page)
+        self.add_button("History", 0, 0, grid_layout, self.openequipment_Page)
         self.add_button("Stocks", 0, 1, grid_layout, self.openstockes_Page)
         self.add_button("Store", 1, 0, grid_layout, self.openStore_Page)
         self.add_button("Basket", 1, 1, grid_layout, self.openBasket_Page)

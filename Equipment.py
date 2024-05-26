@@ -70,7 +70,7 @@ class EquipmentPrices(QWidget):
         dropdown = QComboBox(self)
         dropdown.addItems([user.get_username(), "Edit Profile", "Sign Out"])
         dropdown.setStyleSheet(
-            "background-color: rgb(10,22,39); color: rgb(0, 0, 0);border: 2px solid black;"
+            "background-color: rgb(10,22,39); color: rgb(255, 255, 255);border: 0px solid black;"
         )
         dropdown.setFixedHeight(30)
         dropdown.setFixedWidth(120)

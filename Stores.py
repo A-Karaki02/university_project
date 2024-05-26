@@ -41,9 +41,52 @@ class Stores(QWidget):
         self.layout.addSpacing(20)
 
         # Search input field
+        search_layout = QHBoxLayout()
         self.search_input = QLineEdit(self)
         self.search_input.setPlaceholderText("Search...")
-        self.layout.addWidget(self.search_input)
+
+        search_button = QPushButton("Search", self)
+        search_button.clicked.connect(self.search_items)
+        search_button.setStyleSheet(
+            """
+            QPushButton {
+                background-color: rgb(10,22,39);
+                font-weight: bold;
+                font-size: 16px;
+                color: rgb(255,255,255);
+                border: 2px solid black;
+                border-radius: 30px;
+            }
+            QPushButton:hover {
+                background-color: rgb(0,0,205);
+            }
+            """
+        )
+        search_button.setFixedWidth(150)
+
+        delete_button = QPushButton("Delete Search", self)
+        delete_button.clicked.connect(self.delete_search)
+        delete_button.setStyleSheet(
+            """
+            QPushButton {
+                background-color: rgb(10,22,39);
+                font-weight: bold;
+                font-size: 16px;
+                color: rgb(255,255,255);
+                border: 2px solid black;
+                border-radius: 30px;
+            }
+            QPushButton:hover {
+                background-color: rgb(0,0,205);
+            }
+            """
+        )
+        delete_button.setFixedWidth(150)
+
+        search_layout.addWidget(self.search_input)
+        search_layout.addWidget(search_button)
+        search_layout.addWidget(delete_button)
+        self.layout.addLayout(search_layout)
 
         self.table_widget = QTableWidget()
         self.add_top_down_list([], self.table_widget)  # Initialize with empty data
@@ -57,15 +100,15 @@ class Stores(QWidget):
         grid_layout = QGridLayout()
         self.layout.addLayout(grid_layout)
 
-        self.add_button("Add Item", 1, 1, grid_layout, self.openAddStorePage)
+        self.add_button("Add Item", 0, 1, grid_layout, self.openAddStorePage)
         if numInBasket == 0:
-            self.add_button("Go To Basket", 0, 1, grid_layout, self.openBasket_Page)
+            self.add_button("Go To Basket", 0, 2, grid_layout, self.openBasket_Page)
         else:
             self.add_button(
-                f"Go To Basket ({numInBasket})", 0, 1, grid_layout, self.openBasket_Page
+                f"Go To Basket ({numInBasket})", 0, 2, grid_layout, self.openBasket_Page
             )
-        self.add_button("Back", 1, 0, grid_layout, self.openMain_Page)
-        self.add_button("Search", 0, 0, grid_layout, self.search_items)
+        self.add_button("Back", 0, 0, grid_layout, self.openMain_Page)
+        # self.add_button("Search", 0, 0, grid_layout, self.search_items)
 
         self.setStyleSheet("background-color: rgb(255, 255, 255);")  # White background
         self.show()
@@ -325,6 +368,13 @@ class Stores(QWidget):
         ]
         self.table_widget.setRowCount(0)  # Clear the table
         self.add_top_down_list(filtered_items, self.table_widget)
+
+    def delete_search(self):
+        self.search_input.clear()
+        self.table_widget.setRowCount(0)  # Clear the table
+        self.add_top_down_list(
+            self.items, self.table_widget
+        )  # Repopulate with all items
 
 
 if __name__ == "__main__":
