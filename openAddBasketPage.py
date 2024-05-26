@@ -2,8 +2,8 @@ import sys
 
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,
-                               QLineEdit, QPushButton, QSpinBox, QVBoxLayout,
-                               QWidget)
+                               QLineEdit, QMessageBox, QPushButton, QSpinBox,
+                               QVBoxLayout, QWidget)
 
 import Stores
 from DataBase import DataBase as db
@@ -69,6 +69,7 @@ class add_basket(QWidget):
             return False
 
         if int(quantity) > int(oQuantity):
+            self.show_error_message("Ordered quantity exceeds available quantity.")
             return False
 
         user.add_to_basket(
@@ -85,9 +86,22 @@ class add_basket(QWidget):
         user.add_to_db_basket(self.person_key, self.item_key)
         Stores.numInBasket += 1
 
+        return True
+
     def handle_add_item(self):
-        self.add_store()
-        self.close()
+        if self.add_store():
+            self.close()
+        else:
+            # If add_store returns False (meaning error), do not close the window
+            pass
+
+    def show_error_message(self, message):  # Define show_error_message method
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Warning)
+        msg_box.setWindowTitle("Error")
+        msg_box.setText(message)
+        msg_box.setStandardButtons(QMessageBox.Ok)
+        msg_box.exec()
 
 
 if __name__ == "__main__":
