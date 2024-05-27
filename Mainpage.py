@@ -13,6 +13,7 @@ import Equipment
 import LoginPage
 import Stockes
 import Stores
+import StoresSupplier
 from UserManager import user
 
 
@@ -38,8 +39,12 @@ class MainPage(QWidget):
         grid_layout.setSpacing(50)
         self.add_button("History", 0, 0, grid_layout, self.openequipment_Page)
         self.add_button("Stocks", 0, 1, grid_layout, self.openstockes_Page)
-        self.add_button("Store", 1, 0, grid_layout, self.openStore_Page)
-        self.add_button("Basket", 1, 1, grid_layout, self.openBasket_Page)
+        if user.is_supplier():
+            self.add_button("Store", 1, 0, grid_layout, self.openStoreSupplier_Page)
+        else:
+            self.add_button("Store", 1, 0, grid_layout, self.openStore_Page)
+            self.add_button("Basket", 1, 1, grid_layout, self.openBasket_Page)
+
         # self.add_button("Earning", 2, 0, grid_layout, self.open_earning_page)
 
         layout.addLayout(grid_layout)
@@ -161,6 +166,13 @@ class MainPage(QWidget):
         self.login = LoginPage.LoginPage()
         self.login.show()
         self.close()
+
+    def openStoreSupplier_Page(self):
+        self.main_page_size = self.size()
+        self.hide()
+        self.Store = StoresSupplier.StoresSupplier()
+        self.Store.resize(self.main_page_size or self.size())
+        self.Store.show()
 
     def store_current_size(self):
         self.stored_geometry = self.geometry()

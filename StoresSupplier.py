@@ -15,6 +15,7 @@ import EditProfile
 import LoginPage
 import Mainpage
 import openAddBasketPage
+import openEditItem
 from DataBase import DataBase
 from UserManager import user
 
@@ -23,7 +24,7 @@ db = DataBase.firebase.database()
 numInBasket = 0
 
 
-class Stores(QWidget):
+class StoresSupplier(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
@@ -321,19 +322,12 @@ class Stores(QWidget):
         self.SignOut.show()
         self.close()
 
-    def openAddStorePage(self):
-        self.add_store_page = AddStore.add_store()
-        self.add_store_page.show()
-
     def remove_item(self, item_number):
-        # Placeholder for removing an item
-        print(f"Remove item with number: {item_number}")
-        # Actual implementation should delete the item from Firebase
+        user.remove_item(item_number)
 
     def edit_item(self, item_number):
-        # Placeholder for editing an item
-        print(f"Edit item with number: {item_number}")
-        # Actual implementation should edit the item in Firebase
+        self.edit = openEditItem.edit_item(item_number)
+        self.edit.show()
 
     def search_items(self):
         query = self.search_input.text().lower()
@@ -353,9 +347,6 @@ class Stores(QWidget):
             self.items, self.table_widget
         )  # Repopulate with all items
 
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    mainWin = Stores()
-    mainWin.show()
-    sys.exit(app.exec())
+    def openAddStorePage(self):
+        self.add_store_page = AddStore.add_store()
+        self.add_store_page.show()

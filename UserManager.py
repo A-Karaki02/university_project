@@ -51,12 +51,6 @@ class UserManager:
         self.__items_number = users["itemsNumber"]
         self.__HistoryNum = users["itemsHistoryNumber"]
 
-        # print(self._email)
-        # print(self._username)
-        # print(self._first_name)
-        # print(self._last_name)
-        # print(self._phonenumber)
-
     def get_username(self):
         return self.__username
 
@@ -302,13 +296,15 @@ class UserManager:
     def edit_item(self, itemNum, quantity, price):
         if quantity != "":
             self.dtbs.child("items").child(self.__UID).child(itemNum).update(
-                {"quantity": int(quantity)}
+                {"quantity": str(quantity)}
             )
+            print("updated quantity successfully")
 
         if price != "":
             self.dtbs.child("items").child(self.__UID).child(itemNum).update(
-                {"price": price}
+                {"price": str(price)}
             )
+            print("updated price successfully")
 
     def token_expiry(self):
         pass
